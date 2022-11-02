@@ -11,9 +11,23 @@ namespace EntityLayer.Concrete
 {
     public class AppUser : IdentityUser<Guid>
     {
+        public AppUser()
+        {
+            this.Questions = new HashSet<Question>();
+        }
+
+        public string FullName { get; set; }
         public bool ImageUrl { get; set; }
+        public bool Status { get; set; } = true;
+        public bool IsDeleted { get; set; } = false;
+
+        public Guid UserTypeId { get; set; }
+
+        public UserType UserType { get; set; }
 
         [NotMapped]
         public IFormFile Image { get; set; }
+
+        public ICollection<Question> Questions { get; set; }
     }
 }
