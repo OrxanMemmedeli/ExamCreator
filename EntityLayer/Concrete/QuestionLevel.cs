@@ -10,8 +10,14 @@ namespace EntityLayer.Concrete
 {
     public class QuestionLevel:BaseEntity
     {
+        public QuestionLevel()
+        {
+            this.Questions = new HashSet<Question>();
+        }
         public string Name { get; set; }
         [Range(1,5)]
         public short Level { get; set; }
+        public ICollection<Question> Questions { get; set; }
+
     }
 }

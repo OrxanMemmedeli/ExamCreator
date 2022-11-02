@@ -9,6 +9,14 @@ namespace EntityLayer.Concrete
 {
     public class Grade : BaseEntity
     {
+        public Grade()
+        {
+            this.Questions = new HashSet<Question>();
+        }
+
         public string Name { get; set; }
+
+        public ICollection<Question> Questions { get; set; }
+
     }
 }

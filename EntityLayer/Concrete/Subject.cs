@@ -12,10 +12,15 @@ namespace EntityLayer.Concrete
         public Subject()
         {
             this.Sections = new HashSet<Section>();
+            this.Responces = new HashSet<Response>();
+            this.Questions = new HashSet<Question>();
         }
         public string Name { get; set; }
         public decimal? AmountForQuestion{ get; set; }
 
         public ICollection<Section> Sections { get; set; }
+        public ICollection<Response> Responces { get; set; }
+        public ICollection<Question> Questions { get; set; }
+
     }
 }
