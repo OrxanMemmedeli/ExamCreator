@@ -12,9 +12,9 @@ namespace DataAccess.Abstract
         void Insert(T t);
         void Update(T t);
         void Delete(T t);
-        Task<IQueryable<T>> GetAllAsnyc();
-        Task<T> GetByIdAsnyc(int id);
-        Task<IQueryable<T>> GetAllAsnyc(Expression<Func<T, bool>> filter);
+        IQueryable<T> GetAllAsnyc();
+        Task<T> GetByIdAsnyc(Guid id);
+        IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter);
         Task<T> GetByAsnyc(Expression<Func<T, bool>> filter);
 
     }
