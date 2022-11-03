@@ -11,7 +11,7 @@ namespace EntityLayer.Concrete
     {
         public Question()
         {
-            this.Responces = new HashSet<Response>();
+            this.Responses = new HashSet<Response>();
         }
 
         public string Content { get; set; }
@@ -36,6 +36,6 @@ namespace EntityLayer.Concrete
         public Grade Grade { get; set; }
         
 
-        public ICollection<Response> Responces { get; set; }
+        public ICollection<Response> Responses { get; set; }
     }
 }

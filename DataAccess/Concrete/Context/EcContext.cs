@@ -1,5 +1,6 @@
 ﻿using EntityLayer.Concrete;
 using EntityLayer.Concrete.Base;
+using EntityLayer.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,6 +26,13 @@ namespace DataAccess.Concrete.Context
         public DbSet<Section> Sections { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new QuestionConfig());
+            builder.ApplyConfiguration(new ResponseConig());
+            builder.ApplyConfiguration(new SectionConfig());
+        }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

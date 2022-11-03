@@ -21,39 +21,44 @@ namespace DataAccess.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public void Delete(T t)
+        private async Task<int> SaveAsync() => await _context.SaveChangesAsync();
+
+        public async void Delete(T t)
         {
-            throw new NotImplementedException();
+            Table.Remove(t);
+            await SaveAsync();
         }
 
-        public Task<IQueryable<T>> GetAllAsnyc()
+        public IQueryable<T> GetAllAsnyc()
         {
-            throw new NotImplementedException();
+            return Table.AsQueryable();
         }
 
-        public Task<IQueryable<T>> GetAllAsnyc(Expression<Func<T, bool>> filter)
+        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            return Table.Where(filter).AsQueryable();
         }
 
-        public Task<T> GetByAsnyc(Expression<Func<T, bool>> filter)
+        public async Task<T> GetByAsnyc(Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            return await Table.FirstOrDefaultAsync(filter);
         }
 
-        public Task<T> GetByIdAsnyc(int id)
+        public async Task<T> GetByIdAsnyc(Guid id)
         {
-            throw new NotImplementedException();
+            return await Table.FindAsync(id);
         }
 
-        public void Insert(T t)
+        public async void Insert(T t)
         {
-            throw new NotImplementedException();
+            Table.Add(t);
+            await SaveAsync();
         }
 
-        public void Update(T t)
+        public async void Update(T t)
         {
-            throw new NotImplementedException();
+            Table.Update(t);
+            await SaveAsync();
         }
     }
 }
