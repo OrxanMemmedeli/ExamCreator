@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EntityLayer.Concrete.Base;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace EntityLayer.Concrete
     {
         public AppUser()
         {
-            this.Questions = new HashSet<Question>();
+            this.CreatUsers = new HashSet<BaseEntity>();
+            this.ModifyUsers = new HashSet<BaseEntity>();
         }
 
         public string FullName { get; set; }
@@ -28,6 +30,7 @@ namespace EntityLayer.Concrete
         [NotMapped]
         public IFormFile Image { get; set; }
 
-        public ICollection<Question> Questions { get; set; }
+        public ICollection<BaseEntity> CreatUsers { get; set; }
+        public ICollection<BaseEntity> ModifyUsers { get; set; }
     }
 }
