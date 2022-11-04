@@ -13,10 +13,6 @@ namespace EntityLayer.Configuration
     {
         public void Configure(EntityTypeBuilder<Question> builder)
         {
-            builder.HasOne(x => x.AppUser)
-                .WithMany(x => x.Questions)
-                .HasForeignKey(x => x.AppUserId);
-
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.Questions)
                 .HasForeignKey(x => x.SubjectId);

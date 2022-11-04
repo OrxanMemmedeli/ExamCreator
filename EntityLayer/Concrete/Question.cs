@@ -16,10 +16,6 @@ namespace EntityLayer.Concrete
 
         public string Content { get; set; }
 
-
-        public Guid AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
-
         public Guid SubjectId { get; set; }
         public Subject Subject { get; set; }
 

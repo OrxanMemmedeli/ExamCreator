@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +33,10 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new QuestionConfig());
             builder.ApplyConfiguration(new ResponseConig());
             builder.ApplyConfiguration(new SectionConfig());
+            builder.ApplyConfiguration(new BaseEntityConfig());
+
+            base.OnModelCreating(builder);
+
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
