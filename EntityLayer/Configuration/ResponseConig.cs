@@ -13,9 +13,20 @@ namespace EntityLayer.Configuration
     {
         public void Configure(EntityTypeBuilder<Response> builder)
         {
-            builder.HasOne(x => x.Subject).WithMany(x => x.Responses).HasForeignKey(x => x.SubjectId);
-            builder.HasOne(x => x.Question).WithMany(x => x.Responses).HasForeignKey(x => x.QuestionId);
-            builder.HasOne(x => x.QuestionType).WithMany(x => x.Responses).HasForeignKey(x => x.QuestionTypeId);
+            builder.HasOne(x => x.Subject)
+                .WithMany(x => x.Responses)
+                .HasForeignKey(x => x.SubjectId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.HasOne(x => x.Question)
+                .WithMany(x => x.Responses)
+                .HasForeignKey(x => x.QuestionId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.HasOne(x => x.QuestionType)
+                .WithMany(x => x.Responses)
+                .HasForeignKey(x => x.QuestionTypeId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

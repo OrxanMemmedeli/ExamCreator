@@ -15,23 +15,28 @@ namespace EntityLayer.Configuration
         {
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.Questions)
-                .HasForeignKey(x => x.SubjectId);
+                .HasForeignKey(x => x.SubjectId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(x => x.Section)
                 .WithMany(x => x.Questions)
-                .HasForeignKey(x => x.SectionId);
+                .HasForeignKey(x => x.SectionId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(x => x.QuestionType)
                 .WithMany(x => x.Questions)
-                .HasForeignKey(x => x.QuestionTypeId);
+                .HasForeignKey(x => x.QuestionTypeId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(x => x.QuestionLevel)
                 .WithMany(x => x.Questions)
-                .HasForeignKey(x => x.QuestionLevelId);
+                .HasForeignKey(x => x.QuestionLevelId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(x => x.Grade)
                 .WithMany(x => x.Questions)
-                .HasForeignKey(x => x.GradeId);
+                .HasForeignKey(x => x.GradeId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

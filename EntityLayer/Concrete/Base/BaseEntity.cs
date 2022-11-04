@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete.Base
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = new Guid();
+        public Guid Id { get; set; } = Guid.NewGuid();
         public bool Status { get; set; } = true;
         public bool IsDeleted { get; set; } = false;
         public DateTime CreatedDate { get; set; }
-        public DateTime ModifyedDate { get; set; }
+        public DateTime ModifyedDate { get; set; } 
 
         public Guid? CreatUserId { get; set; }
         public Guid? ModifyUserId { get; set; }

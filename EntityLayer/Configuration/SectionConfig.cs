@@ -13,7 +13,10 @@ namespace EntityLayer.Configuration
     {
         public void Configure(EntityTypeBuilder<Section> builder)
         {
-            builder.HasOne(x => x.Subject).WithMany(x => x.Sections).HasForeignKey(x => x.SubjectId);
+            builder.HasOne(x => x.Subject)
+                .WithMany(x => x.Sections)
+                .HasForeignKey(x => x.SubjectId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }
