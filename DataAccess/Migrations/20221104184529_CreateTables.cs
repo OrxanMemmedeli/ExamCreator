@@ -187,31 +187,7 @@ namespace DataAccess.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    QuestionLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GradeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    QuestionLevel_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Level = table.Column<short>(type: "smallint", nullable: true),
-                    ResponseType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResponseCount = table.Column<double>(type: "float", nullable: true),
-                    IsShowAnswer = table.Column<bool>(type: "bit", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Response_Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsTrue = table.Column<bool>(type: "bit", nullable: true),
-                    Response_SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Response_QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Section_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Section_SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Subject_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AmountForQuestion = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -226,60 +202,186 @@ namespace DataAccess.Migrations
                         column: x => x.ModifyUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Grades",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Grades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_GradeId",
-                        column: x => x.GradeId,
+                        name: "FK_Grades_BaseEntity_Id",
+                        column: x => x.Id,
                         principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionLevels",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Level = table.Column<short>(type: "smallint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionLevels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_QuestionId",
-                        column: x => x.QuestionId,
+                        name: "FK_QuestionLevels_BaseEntity_Id",
+                        column: x => x.Id,
                         principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionTypes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ResponseType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ResponseCount = table.Column<double>(type: "float", nullable: true),
+                    IsShowAnswer = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_QuestionLevelId",
-                        column: x => x.QuestionLevelId,
+                        name: "FK_QuestionTypes_BaseEntity_Id",
+                        column: x => x.Id,
                         principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AmountForQuestion = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_QuestionTypeId",
-                        column: x => x.QuestionTypeId,
+                        name: "FK_Subjects_BaseEntity_Id",
+                        column: x => x.Id,
                         principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sections",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sections", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_Response_QuestionTypeId",
-                        column: x => x.Response_QuestionTypeId,
+                        name: "FK_Sections_BaseEntity_Id",
+                        column: x => x.Id,
                         principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_Response_SubjectId",
-                        column: x => x.Response_SubjectId,
-                        principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_Section_SubjectId",
-                        column: x => x.Section_SubjectId,
-                        principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_SectionId",
-                        column: x => x.SectionId,
-                        principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BaseEntity_BaseEntity_SubjectId",
+                        name: "FK_Sections_Subjects_SubjectId",
                         column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Questions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GradeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Questions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Questions_BaseEntity_Id",
+                        column: x => x.Id,
                         principalTable: "BaseEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Questions_Grades_GradeId",
+                        column: x => x.GradeId,
+                        principalTable: "Grades",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Questions_QuestionLevels_QuestionLevelId",
+                        column: x => x.QuestionLevelId,
+                        principalTable: "QuestionLevels",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Questions_QuestionTypes_QuestionTypeId",
+                        column: x => x.QuestionTypeId,
+                        principalTable: "QuestionTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Questions_Sections_SectionId",
+                        column: x => x.SectionId,
+                        principalTable: "Sections",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Questions_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Responses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsTrue = table.Column<bool>(type: "bit", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Responses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Responses_BaseEntity_Id",
+                        column: x => x.Id,
+                        principalTable: "BaseEntity",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Responses_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Responses_QuestionTypes_QuestionTypeId",
+                        column: x => x.QuestionTypeId,
+                        principalTable: "QuestionTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Responses_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -332,53 +434,53 @@ namespace DataAccess.Migrations
                 column: "CreatUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_GradeId",
-                table: "BaseEntity",
-                column: "GradeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BaseEntity_ModifyUserId",
                 table: "BaseEntity",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_QuestionId",
-                table: "BaseEntity",
-                column: "QuestionId");
+                name: "IX_Questions_GradeId",
+                table: "Questions",
+                column: "GradeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_QuestionLevelId",
-                table: "BaseEntity",
+                name: "IX_Questions_QuestionLevelId",
+                table: "Questions",
                 column: "QuestionLevelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_QuestionTypeId",
-                table: "BaseEntity",
+                name: "IX_Questions_QuestionTypeId",
+                table: "Questions",
                 column: "QuestionTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_Response_QuestionTypeId",
-                table: "BaseEntity",
-                column: "Response_QuestionTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_Response_SubjectId",
-                table: "BaseEntity",
-                column: "Response_SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_Section_SubjectId",
-                table: "BaseEntity",
-                column: "Section_SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_SectionId",
-                table: "BaseEntity",
+                name: "IX_Questions_SectionId",
+                table: "Questions",
                 column: "SectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_SubjectId",
-                table: "BaseEntity",
+                name: "IX_Questions_SubjectId",
+                table: "Questions",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Responses_QuestionId",
+                table: "Responses",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Responses_QuestionTypeId",
+                table: "Responses",
+                column: "QuestionTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Responses_SubjectId",
+                table: "Responses",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sections_SubjectId",
+                table: "Sections",
                 column: "SubjectId");
         }
 
@@ -400,10 +502,31 @@ namespace DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "BaseEntity");
+                name: "Responses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Questions");
+
+            migrationBuilder.DropTable(
+                name: "Grades");
+
+            migrationBuilder.DropTable(
+                name: "QuestionLevels");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTypes");
+
+            migrationBuilder.DropTable(
+                name: "Sections");
+
+            migrationBuilder.DropTable(
+                name: "Subjects");
+
+            migrationBuilder.DropTable(
+                name: "BaseEntity");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

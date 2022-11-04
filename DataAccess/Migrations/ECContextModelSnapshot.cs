@@ -146,10 +146,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -169,8 +165,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("ModifyUserId");
 
                     b.ToTable("BaseEntity");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseEntity");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.UserType", b =>
@@ -185,7 +179,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserTypes");
+                    b.ToTable("UserTypes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -299,7 +293,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("Grade");
+                    b.ToTable("Grades", (string)null);
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Question", b =>
@@ -335,7 +329,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.HasDiscriminator().HasValue("Question");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.QuestionLevel", b =>
@@ -347,10 +341,9 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("QuestionLevel_Name");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("QuestionLevel");
+                    b.ToTable("QuestionLevels", (string)null);
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.QuestionType", b =>
@@ -371,7 +364,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("QuestionType");
+                    b.ToTable("QuestionTypes", (string)null);
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Response", b =>
@@ -379,8 +372,7 @@ namespace DataAccess.Migrations
                     b.HasBaseType("EntityLayer.Concrete.Base.BaseEntity");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Response_Content");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsTrue")
                         .HasColumnType("bit");
@@ -389,12 +381,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("QuestionTypeId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Response_QuestionTypeId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SubjectId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Response_SubjectId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -405,7 +395,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.HasDiscriminator().HasValue("Response");
+                    b.ToTable("Responses", (string)null);
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Section", b =>
@@ -414,16 +404,14 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Section_Name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SubjectId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Section_SubjectId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasIndex("SubjectId");
 
-                    b.HasDiscriminator().HasValue("Section");
+                    b.ToTable("Sections", (string)null);
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Subject", b =>
@@ -435,10 +423,9 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Subject_Name");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("Subject");
+                    b.ToTable("Subjects", (string)null);
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.AppUser", b =>
@@ -456,11 +443,13 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("EntityLayer.Concrete.AppUser", "CreatUser")
                         .WithMany("CreatUsers")
-                        .HasForeignKey("CreatUserId");
+                        .HasForeignKey("CreatUserId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("EntityLayer.Concrete.AppUser", "ModifyUser")
                         .WithMany("ModifyUsers")
-                        .HasForeignKey("ModifyUserId");
+                        .HasForeignKey("ModifyUserId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("CreatUser");
 
@@ -518,36 +507,51 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Grade", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Base.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Concrete.Grade", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Question", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.Grade", "Grade")
                         .WithMany("Questions")
                         .HasForeignKey("GradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrete.Base.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Concrete.Question", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.QuestionLevel", "QuestionLevel")
                         .WithMany("Questions")
                         .HasForeignKey("QuestionLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.QuestionType", "QuestionType")
                         .WithMany("Questions")
                         .HasForeignKey("QuestionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Section", "Section")
                         .WithMany("Questions")
                         .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Subject", "Subject")
                         .WithMany("Questions")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Grade");
@@ -561,24 +565,48 @@ namespace DataAccess.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.QuestionLevel", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Base.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Concrete.QuestionLevel", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.QuestionType", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Base.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Concrete.QuestionType", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Response", b =>
                 {
+                    b.HasOne("EntityLayer.Concrete.Base.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Concrete.Response", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
                     b.HasOne("EntityLayer.Concrete.Question", "Question")
                         .WithMany("Responses")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.QuestionType", "QuestionType")
                         .WithMany("Responses")
                         .HasForeignKey("QuestionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Subject", "Subject")
                         .WithMany("Responses")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Question");
@@ -590,13 +618,28 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("EntityLayer.Concrete.Section", b =>
                 {
+                    b.HasOne("EntityLayer.Concrete.Base.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Concrete.Section", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
                     b.HasOne("EntityLayer.Concrete.Subject", "Subject")
                         .WithMany("Sections")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Subject", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Base.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Concrete.Subject", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.AppUser", b =>

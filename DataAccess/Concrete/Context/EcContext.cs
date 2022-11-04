@@ -35,6 +35,16 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new SectionConfig());
             builder.ApplyConfiguration(new BaseEntityConfig());
 
+            // For Table Per Type
+            builder.Entity<Grade>().ToTable("Grades");
+            builder.Entity<Question>().ToTable("Questions");
+            builder.Entity<QuestionLevel>().ToTable("QuestionLevels");
+            builder.Entity<QuestionType>().ToTable("QuestionTypes");
+            builder.Entity<Response>().ToTable("Responses");
+            builder.Entity<Section>().ToTable("Sections");
+            builder.Entity<Subject>().ToTable("Subjects");
+            builder.Entity<UserType>().ToTable("UserTypes");
+
             base.OnModelCreating(builder);
 
         }

@@ -18,6 +18,8 @@ namespace DataAccess.Repositories
         {
             _context = context;
         }
+        
+        var test = _context.Grades.First().
 
         public DbSet<T> Table => _context.Set<T>();
 
