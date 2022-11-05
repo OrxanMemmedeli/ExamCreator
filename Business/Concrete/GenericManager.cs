@@ -18,24 +18,29 @@ namespace Business.Concrete
             _dal = dal;
         }
 
-        public void Delete(T t)
+        public async Task Delete(T t)
         {
-            _dal.Delete(t); 
+            await _dal.Delete(t);
         }
 
-        public IQueryable<T> GetAllAsnyc()
+        public async Task Remove(T t)
         {
-            return _dal.GetAllAsnyc();
+            await _dal.Remove(t);
         }
 
-        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter)
+        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> include = null)
         {
-            return GetAllAsnyc(filter);
+            return _dal.GetAllAsnyc(include);
         }
 
-        public Task<T> GetByAsnyc(Expression<Func<T, bool>> filter)
+        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null)
         {
-            return GetByAsnyc(filter);
+            return GetAllAsnyc(filter, include);
+        }
+
+        public Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null)
+        {
+            return GetByAsnyc(filter, include);
         }
 
         public Task<T> GetByIdAsnyc(Guid id)
@@ -43,14 +48,14 @@ namespace Business.Concrete
             return _dal.GetByIdAsnyc(id);
         }
 
-        public void Insert(T t)
+        public async Task Insert(T t)
         {
-            _dal.Insert(t);
+            await _dal.Insert(t);
         }
 
-        public void Update(T t)
+        public async Task Update(T t)
         {
-            _dal.Update(t);
+            await _dal.Update(t);
         }
     }
 }
