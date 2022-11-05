@@ -9,13 +9,14 @@ namespace DataAccess.Abstract
 {
     public interface IGenericDal<T> where T : class
     {
-        void Insert(T t);
-        void Update(T t);
-        void Delete(T t);
-        IQueryable<T> GetAllAsnyc();
+        Task Insert(T t);
+        Task Update(T t);
+        Task Delete(T t);
+        Task Remove(T t);
+        IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> include = null);
         Task<T> GetByIdAsnyc(Guid id);
-        IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter);
-        Task<T> GetByAsnyc(Expression<Func<T, bool>> filter);
+        IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null);
+        Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null);
 
     }
 }
