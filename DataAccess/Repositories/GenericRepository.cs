@@ -57,7 +57,8 @@ namespace DataAccess.Repositories
 
         public async Task<T> GetByIdAsnyc(Guid id)
         {
-            return await Table.FindAsync(id);
+            var data = await Table.FindAsync(id);
+            return data;
         }
 
         public async Task Insert(T t)

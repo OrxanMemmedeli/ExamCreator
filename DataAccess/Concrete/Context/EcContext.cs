@@ -61,6 +61,7 @@ namespace DataAccess.Concrete.Context
                     data.Entity.Status = true;
                     data.Entity.IsDeleted = false;
                     data.Entity.CreatedDate = DateTime.Now;
+                    data.Entity.CreatedDate = default(DateTime);
                     //data.Entity.CreatUserId = 
                 }
                 else if (data.State == EntityState.Modified)

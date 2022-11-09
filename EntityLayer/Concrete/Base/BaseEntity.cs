@@ -15,8 +15,8 @@ namespace EntityLayer.Concrete.Base
         public Guid Id { get; set; } = Guid.NewGuid();
         public bool Status { get; set; } = true;
         public bool IsDeleted { get; set; } = false;
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifyedDate { get; set; } 
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
+        public DateTime? ModifyedDate { get; set; } = default(DateTime);
 
         public Guid? CreatUserId { get; set; }
         public Guid? ModifyUserId { get; set; }

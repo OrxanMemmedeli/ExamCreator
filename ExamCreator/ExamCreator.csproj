@@ -38,7 +38,6 @@
     <Folder Include="Areas\Teacher\Controllers\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Areas\Teacher\Models\" />
-    <Folder Include="Areas\Teacher\Views\" />
   </ItemGroup>
 
 </Project>
