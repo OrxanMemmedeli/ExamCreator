@@ -1,7 +1,16 @@
+using DataAccess.Concrete.Context;
+using ExamCreator;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+builder.Services.AddHttpContextAccessor(); 
+builder.Services.AddDbContext<DbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.Register();
 
 var app = builder.Build();
 
