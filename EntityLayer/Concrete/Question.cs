@@ -30,7 +30,9 @@ namespace EntityLayer.Concrete
 
         public Guid GradeId { get; set; }
         public Grade Grade { get; set; }
-        
+
+        public Guid AcademicYearId { get; set; }
+        public AcademicYear AcademicYear { get; set; }
 
         public ICollection<Response> Responses { get; set; }
     }

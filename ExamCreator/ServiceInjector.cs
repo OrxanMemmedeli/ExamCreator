@@ -13,6 +13,7 @@ namespace ExamCreator
         public static void Register(this IServiceCollection services)
         {
             services.AddTransient<ECContext, ECContext>();
+
             services.AddTransient<IGradeService, GradeManager>().AddTransient<IGradeDal, EFGradeRepository>();
 
             //services.AddTransient<IGenericService<Grade>, GenericManager<Grade>>()
