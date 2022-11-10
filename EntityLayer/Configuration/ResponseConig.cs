@@ -27,6 +27,11 @@ namespace EntityLayer.Configuration
                 .WithMany(x => x.Responses)
                 .HasForeignKey(x => x.QuestionTypeId)
                 .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.HasOne(x => x.AcademicYear)
+                .WithMany(x => x.Responses)
+                .HasForeignKey(x => x.AcademicYearId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

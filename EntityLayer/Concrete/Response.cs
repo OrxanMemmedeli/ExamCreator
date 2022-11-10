@@ -16,7 +16,9 @@ namespace EntityLayer.Concrete
         public Guid SubjectId { get; set; }
         public Guid QuestionId { get; set; }
         public Guid QuestionTypeId { get; set; }
+        public Guid AcademicYearId { get; set; }
 
+        public AcademicYear AcademicYear { get; set; }
         public Subject Subject { get; set; }
         public Question Question { get; set; }
         public QuestionType QuestionType { get; set; }
