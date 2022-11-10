@@ -27,6 +27,7 @@ namespace DataAccess.Concrete.Context
         public DbSet<Section> Sections { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<AcademicYear> AcademicYears { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,6 +45,7 @@ namespace DataAccess.Concrete.Context
             builder.Entity<Section>().ToTable("Sections");
             builder.Entity<Subject>().ToTable("Subjects");
             builder.Entity<UserType>().ToTable("UserTypes");
+            builder.Entity<AcademicYear>().ToTable("AcademicYears");
 
             base.OnModelCreating(builder);
 
@@ -51,27 +53,63 @@ namespace DataAccess.Concrete.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var datas = ChangeTracker.Entries<BaseEntity>();
+            //var datas = ChangeTracker.Entries<BaseEntity>();
 
-            foreach (var data in datas)
+            //foreach (var data in datas)
+            //{
+            //    if (data.State == EntityState.Added)
+            //    {
+            //        data.Entity.Id = Guid.NewGuid();
+            //        data.Entity.Status = true;
+            //        data.Entity.IsDeleted = false;
+            //        data.Entity.CreatedDate = DateTime.Now;
+            //        data.Entity.ModifyedDate = default(DateTime);
+            //        //data.Entity.CreatUserId = 
+            //    }
+
+            //    if (data.State == EntityState.Modified)
+            //    {
+            //        data.Entity.ModifyedDate = DateTime.Now;
+
+            //        //data.Entity.ModifyUserId =
+            //    }
+            //}
+
+            var addeds = this.ChangeTracker.Entries()
+                .Where(e => e.Entity is BaseEntity && e.State == EntityState.Added)
+                .Select(e => e.Entity as BaseEntity);
+
+            var updateds = this.ChangeTracker.Entries()
+                .Where(e => e.Entity is BaseEntity && e.State == EntityState.Modified)
+                .Select(e => e.Entity as BaseEntity);
+
+            if (addeds.Count() >= 0)
             {
-                if (data.State == EntityState.Added)
+                foreach (var data in addeds)
                 {
-                    data.Entity.Id = Guid.NewGuid();
-                    data.Entity.Status = true;
-                    data.Entity.IsDeleted = false;
-                    data.Entity.CreatedDate = DateTime.Now;
-                    data.Entity.CreatedDate = default(DateTime);
-                    //data.Entity.CreatUserId = 
-                }
-                else if (data.State == EntityState.Modified)
-                {
-                    data.Entity.ModifyedDate = DateTime.Now;
-                    //data.Entity.ModifyUserId =
+                    data.Id = Guid.NewGuid();
+                    data.Status = true;
+                    data.IsDeleted = false;
+                    data.CreatedDate = DateTime.Now;
+                    data.ModifyedDate = default(DateTime);
+                    //data.CreatUserId = 
                 }
             }
+            else if (updateds.Count() >= 0)
+            {
+                foreach (var data in addeds)
+                {
+                    data.ModifyedDate = DateTime.Now;
+                    //data.ModifyUserId =
+                }
 
-            return await base.SaveChangesAsync(cancellationToken);
+            }
+
+
+
+
+
+            return await base.SaveChangesAsync(); 
         }
     }
 }
