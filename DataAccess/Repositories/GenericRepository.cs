@@ -1,6 +1,7 @@
 ﻿using DataAccess.Abstract;
 using DataAccess.Concrete.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,9 +68,18 @@ namespace DataAccess.Repositories
             await SaveAsync();
         }
 
-        public async Task Update(T t)
+        public async Task Update(T t, Guid id)
         {
-            Table.Update(t);
+            EntityEntry entityEntry = Table.Update(t);
+
+            var local = await Table.FindAsync(id);
+            if (local != null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            entityEntry.State = EntityState.Modified;
+
             await SaveAsync();
         }
     }

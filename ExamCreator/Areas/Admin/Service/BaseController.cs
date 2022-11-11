@@ -56,13 +56,13 @@ namespace ExamCreator.Areas.Admin.Service
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> EditBase(T t)
+        public virtual async Task<IActionResult> EditBase(T t, Guid id)
         {
             if (!ModelState.IsValid)
             {
                 return View(t);
             }
-            _genericService.Update(t);
+            await _genericService.Update(t, id);
             return RedirectToAction(nameof(Index));
         }
 

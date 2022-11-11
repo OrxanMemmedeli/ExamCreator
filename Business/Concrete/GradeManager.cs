@@ -54,9 +54,9 @@ namespace Business.Concrete
             await _dal.Remove(t);
         }
 
-        public async Task Update(Grade t)
+        public async Task Update(Grade t, Guid id)
         {
-            await _dal.Update(t);
+            await _dal.Update(t, id);
         }
     }
 }

@@ -53,9 +53,9 @@ namespace Business.Concrete
             await _dal.Insert(t);
         }
 
-        public async Task Update(T t)
+        public async Task Update(T t, Guid id)
         {
-            await _dal.Update(t);
+            await _dal.Update(t, id);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace ExamCreator.Areas.Admin.Controllers
             {
                 return View(t);
             }
-            _gradeService.Update(t);
+            await _gradeService.Update(t, t.Id);
             return RedirectToAction(nameof(Index));
         }
 
