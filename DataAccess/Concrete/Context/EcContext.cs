@@ -16,7 +16,8 @@ namespace DataAccess.Concrete.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
+            //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
+            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
         }
 
         public DbSet<Grade> Grades { get; set; }
@@ -53,63 +54,29 @@ namespace DataAccess.Concrete.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            //var datas = ChangeTracker.Entries<BaseEntity>();
+            var datas = ChangeTracker.Entries<BaseEntity>();
 
-            //foreach (var data in datas)
-            //{
-            //    if (data.State == EntityState.Added)
-            //    {
-            //        data.Entity.Id = Guid.NewGuid();
-            //        data.Entity.Status = true;
-            //        data.Entity.IsDeleted = false;
-            //        data.Entity.CreatedDate = DateTime.Now;
-            //        data.Entity.ModifyedDate = default(DateTime);
-            //        //data.Entity.CreatUserId = 
-            //    }
-
-            //    if (data.State == EntityState.Modified)
-            //    {
-            //        data.Entity.ModifyedDate = DateTime.Now;
-
-            //        //data.Entity.ModifyUserId =
-            //    }
-            //}
-
-            var addeds = this.ChangeTracker.Entries()
-                .Where(e => e.Entity is BaseEntity && e.State == EntityState.Added)
-                .Select(e => e.Entity as BaseEntity);
-
-            var updateds = this.ChangeTracker.Entries()
-                .Where(e => e.Entity is BaseEntity && e.State == EntityState.Modified)
-                .Select(e => e.Entity as BaseEntity);
-
-            if (addeds.Count() >= 0)
+            foreach (var data in datas)
             {
-                foreach (var data in addeds)
+                if (data.State == EntityState.Added)
                 {
-                    data.Id = Guid.NewGuid();
-                    data.Status = true;
-                    data.IsDeleted = false;
-                    data.CreatedDate = DateTime.Now;
-                    data.ModifyedDate = default(DateTime);
-                    //data.CreatUserId = 
-                }
-            }
-            else if (updateds.Count() >= 0)
-            {
-                foreach (var data in addeds)
-                {
-                    data.ModifyedDate = DateTime.Now;
-                    //data.ModifyUserId =
+                    data.Entity.Id = Guid.NewGuid();
+                    data.Entity.Status = true;
+                    data.Entity.IsDeleted = false;
+                    data.Entity.CreatedDate = DateTime.Now;
+                    data.Entity.ModifyedDate = default(DateTime);
+                    //data.Entity.CreatUserId = 
                 }
 
+                if (data.State == EntityState.Modified)
+                {
+                    data.Entity.ModifyedDate = DateTime.Now;
+
+                    //data.Entity.ModifyUserId =
+                }
             }
 
-
-
-
-
-            return await base.SaveChangesAsync(); 
+            return await base.SaveChangesAsync(cancellationToken); 
         }
     }
 }

@@ -13,10 +13,10 @@ namespace EntityLayer.Concrete.Base
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
-        public bool Status { get; set; } = true;
-        public bool IsDeleted { get; set; } = false;
-        public DateTime? CreatedDate { get; set; } = DateTime.Now;
-        public DateTime? ModifyedDate { get; set; } = default(DateTime);
+        public bool Status { get; set; } 
+        public bool IsDeleted { get; set; } 
+        public DateTime? CreatedDate { get; set; } 
+        public DateTime? ModifyedDate { get; set; }
 
         public Guid? CreatUserId { get; set; }
         public Guid? ModifyUserId { get; set; }

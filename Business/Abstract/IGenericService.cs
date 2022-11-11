@@ -10,7 +10,7 @@ namespace Business.Abstract
     public interface IGenericService<T> where T : class
     {
         Task Insert(T t);
-        Task Update(T t);
+        Task Update(T t, Guid id);
         Task Delete(T t);
         Task Remove(T t);
         IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> include = null);
