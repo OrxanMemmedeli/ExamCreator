@@ -16,12 +16,13 @@ namespace EntityLayer.Configuration
             builder.HasOne(x => x.CreatUser)
                 .WithMany(x => x.CreatUsers)
                 .HasForeignKey(x => x.CreatUserId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.ModifyUser)
                 .WithMany(x => x.ModifyUsers)
                 .HasForeignKey(x => x.ModifyUserId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

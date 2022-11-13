@@ -16,22 +16,22 @@ namespace EntityLayer.Configuration
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.Responses)
                 .HasForeignKey(x => x.SubjectId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.Question)
                 .WithMany(x => x.Responses)
                 .HasForeignKey(x => x.QuestionId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.QuestionType)
                 .WithMany(x => x.Responses)
                 .HasForeignKey(x => x.QuestionTypeId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.AcademicYear)
                 .WithMany(x => x.Responses)
                 .HasForeignKey(x => x.AcademicYearId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
