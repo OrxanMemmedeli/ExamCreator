@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using DataAccess.Concrete.Context;
+using EntityLayer.Concrete.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -29,15 +30,19 @@ namespace DataAccess.Repositories
         {
             Type type = t.GetType();
             PropertyInfo? prop = type.GetProperty("IsDeleted");
-            var value = prop.GetValue(type);
-            value = false;
+            //object obj = prop.GetValue(t, null);
+            prop.SetValue(t, true, null);
 
             await SaveAsync();
         }
 
         public async Task Remove(T t)
         {
-            Table.Remove(t);
+            Table.Attach(t);
+            EntityEntry entityEntry = _context.Entry(t);
+            entityEntry.State = EntityState.Deleted;
+
+            //Table.Remove(t);
             await SaveAsync();
         }
 

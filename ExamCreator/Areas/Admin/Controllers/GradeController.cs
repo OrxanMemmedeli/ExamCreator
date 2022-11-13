@@ -77,7 +77,7 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
             await _gradeService.Delete(data.Result);
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public virtual async Task<IActionResult> Remove(Guid id)
@@ -92,7 +92,7 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
             _gradeService.Remove(data.Result);
-            return View();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace EntityLayer.Configuration
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.Sections)
                 .HasForeignKey(x => x.SubjectId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
