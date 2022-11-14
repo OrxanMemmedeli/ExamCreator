@@ -38,7 +38,6 @@ namespace DataAccess.Repositories
 
         public async Task Remove(T t)
         {
-            Table.Attach(t);
             EntityEntry entityEntry = _context.Entry(t);
             entityEntry.State = EntityState.Deleted;
 
