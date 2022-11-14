@@ -17,11 +17,12 @@ namespace DataAccess.Concrete.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
-            //optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
 
         }
 
+        public DbSet<BaseEntity> BaseEntity { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionLevel> QuestionLevels { get; set; }
