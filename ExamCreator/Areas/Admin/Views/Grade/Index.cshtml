@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EntityLayer.Concrete.Grade>
+﻿@model IEnumerable<ExamCreator.Areas.Admin.Models.ViewModels.Grade.ListGrade>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,59 +14,67 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                SİNİF
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                STATUS
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
+                SİLİNMİŞ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
+                YARADILDI
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifyedDate)
+                DƏYİŞDİRİLDİ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatUser)
+                YARADAN
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifyUser)
+                DƏYİŞDİRƏN
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifyedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatUser.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifyUser.FullName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Remove" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <span class="badge badge-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Passiv</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifyedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatUserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifyUserName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

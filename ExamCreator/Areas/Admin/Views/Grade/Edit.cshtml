@@ -1,54 +1,39 @@
-﻿@model EntityLayer.Concrete.Grade
+﻿@model ExamCreator.Areas.Admin.Models.ViewModels.Grade.EditGrade
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "SİNİFİ Yenilə";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
 
-<h4>Grade</h4>
+<h4>SİNİFİ Yenilə</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" hidden />
+            <input asp-for="CreatedDate" hidden />
+            <input asp-for="ModifyedDate" hidden />
+            <input asp-for="CreatUserId" hidden />
+            <input asp-for="ModifyUserId" hidden />
+
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">SİNİF</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                    <input class="form-check-input" asp-for="Status" /> STATUS
                 </label>
             </div>
-@*            <div class="form-group form-check">
+            <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                    <input class="form-check-input" asp-for="IsDeleted" /> SİLİNMİŞ
                 </label>
-            </div>*@
-@*            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ModifyedDate" class="control-label"></label>
-                <input asp-for="ModifyedDate" class="form-control" />
-                <span asp-validation-for="ModifyedDate" class="text-danger"></span>
-            </div>*@
-@*            <div class="form-group">
-                <label asp-for="CreatUserId" class="control-label"></label>
-                <select asp-for="CreatUserId" class="form-control" asp-items="ViewBag.CreatUserId"></select>
-                <span asp-validation-for="CreatUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifyUserId" class="control-label"></label>
-                <select asp-for="ModifyUserId" class="form-control" asp-items="ViewBag.ModifyUserId"></select>
-                <span asp-validation-for="ModifyUserId" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

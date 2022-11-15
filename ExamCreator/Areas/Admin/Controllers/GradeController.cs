@@ -1,5 +1,7 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using EntityLayer.Concrete;
+using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,16 +10,19 @@ namespace ExamCreator.Areas.Admin.Controllers
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
+        private readonly IMapper _mapper;
 
-        public GradeController(IGradeService gradeService)
+        public GradeController(IGradeService gradeService, IMapper mapper = null)
         {
             _gradeService = gradeService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public virtual async Task<IActionResult> Index(int page = 1)
         {
-            var datas = await _gradeService.GetAllAsnyc().ToListAsync();
+            var grades = await _gradeService.GetAllAsnyc().ToListAsync();
+            var datas = _mapper.Map<List<Grade>, List<ListGrade>>(grades);
             return View(datas);
         }
 
@@ -28,14 +33,16 @@ namespace ExamCreator.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Create(Grade t)
+        public virtual async Task<IActionResult> Create(CreateGrade t)
         {
             if (!ModelState.IsValid)
             {
                 return View(t);
             }
 
-            await _gradeService.Insert(t);
+            var model = _mapper.Map<CreateGrade, Grade>(t);
+
+            await _gradeService.Insert(model);
             return RedirectToAction(nameof(Index));
         }
 
@@ -46,22 +53,27 @@ namespace ExamCreator.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var data = _gradeService.GetByIdAsnyc(id);
-            if (data.Result == null)
+            var data = await _gradeService.GetByIdAsnyc(id);
+            if (data == null)
             {
                 return NotFound();
             }
-            return View(data.Result);
+
+            var model = _mapper.Map<Grade, EditGrade>(data);
+
+            return View(model);
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Edit(Grade t)
+        public virtual async Task<IActionResult> Edit(EditGrade t)
         {
             if (!ModelState.IsValid)
             {
                 return View(t);
             }
-            await _gradeService.Update(t, t.Id);
+            var model = _mapper.Map<EditGrade, Grade>(t);
+
+            await _gradeService.Update(model, model.Id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -71,12 +83,12 @@ namespace ExamCreator.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var data = _gradeService.GetByIdAsnyc(id);
+            var data = await _gradeService.GetByIdAsnyc(id);
             if (data == null)
             {
                 return NotFound();
             }
-            await _gradeService.Delete(data.Result);
+            await _gradeService.Delete(data);
             return RedirectToAction(nameof(Index));
         }
 
@@ -86,12 +98,12 @@ namespace ExamCreator.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var data = _gradeService.GetByIdAsnyc(id);
+            var data = await _gradeService.GetByIdAsnyc(id);
             if (data == null)
             {
                 return NotFound();
             }
-            _gradeService.Remove(data.Result);
+            _gradeService.Remove(data);
             return RedirectToAction(nameof(Index));
         }
     }
