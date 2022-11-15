@@ -33,6 +33,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Create(CreateGrade t)
         {
             if (!ModelState.IsValid)
@@ -65,6 +66,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(EditGrade t)
         {
             if (!ModelState.IsValid)
