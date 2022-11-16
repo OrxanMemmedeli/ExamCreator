@@ -9,14 +9,12 @@
 
 
 <p>
-    <a asp-action="Create" title="Yeni məlumat" style="justify-content: center;">
-        <div class="d-none d-xl-block ps-2">
-            <div>Yeni SİNİF</div>
+    <a asp-action="Create" class="btn btn-vimeo" title="Yeni məlumat" style="justify-content: center;">
+                  Yeni SİNİF
             <lord-icon src="https://cdn.lordicon.com/rfbqeber.json"
                        trigger="hover"
-                       style="width:70px;height:70px">
+                       style="width:auto;height:40px">
             </lord-icon>
-        </div>
     </a>
 
 </p>
@@ -86,13 +84,13 @@
                                style="width:40px;height:40px">
                         </lord-icon>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəmiş statusuna keçiriləcəkdir. \n Status dəyişikliyi edilsinmi?')">
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəmiş statusuna keçiriləcəkdir. \nStatusa dəyişikliyi edilsinmi?')">
                         <lord-icon src="https://cdn.lordicon.com/qjwkduhc.json"
                                trigger="hover"
                                style="width:40px;height:40px">
                         </lord-icon>
                     </a>
-                    <a asp-action="Remove" asp-route-id="@item.Id" title="Birdəfəlik Sil" onclick="return confirm('Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')">
+                    <a asp-action="Remove" asp-route-id="@item.Id" title="Birdəfəlik Sil" onclick="return confirm('Silinən məlumatların geri qaytarılması mümkün deyil. \nSətiri yənədə silmək istəyirsinizmi?')">
                         <lord-icon src="https://cdn.lordicon.com/inrunzby.json"
                                trigger="hover"
                                style="width:40px;height:40px">

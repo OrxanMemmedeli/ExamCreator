@@ -1,5 +1,6 @@
 using DataAccess.Concrete.Context;
 using ExamCreator;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpContextAccessor(); 
 builder.Services.AddDbContext<DbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.Register();
+
+builder.Services.Register(); //dependence ucun
+builder.Services.Validators(); // validation ucun
 
 var app = builder.Build();
 
