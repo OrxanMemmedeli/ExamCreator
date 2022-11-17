@@ -36,12 +36,13 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Create(CreateGrade t)
         {
+            ModelState.Clear();
+            var model = _mapper.Map<CreateGrade, Grade>(t);
             if (!ModelState.IsValid)
             {
                 return View(t);
             }
 
-            var model = _mapper.Map<CreateGrade, Grade>(t);
 
             await _gradeService.Insert(model);
             return RedirectToAction(nameof(Index));

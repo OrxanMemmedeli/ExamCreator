@@ -10,8 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpContextAccessor(); 
 builder.Services.AddDbContext<DbContext>();
-builder.Services.AddControllersWithViews().AddFluentValidation();
+builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddFluentValidationClientsideAdapters();
+
+builder.Services.AddFluentValidationAutoValidation(config =>
+{
+     config.ImplicitlyValidateChildProperties = true;
+    config.DisableDataAnnotationsValidation = true;
+    config.ImplicitlyValidateRootCollectionElements = true;
+
+});
 
 builder.Services.Register(); //dependence ucun
 builder.Services.Validators(); // validation ucun
