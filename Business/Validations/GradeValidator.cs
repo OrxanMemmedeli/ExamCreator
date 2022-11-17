@@ -16,7 +16,7 @@ namespace Business.Validations
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Sinif"))
                 .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Sinif"))
-                .MaximumLength(25).WithMessage(String.Format(ValidationMessage.MaximumLength, "Sinif" , 25));
+                .MaximumLength(2).WithMessage(String.Format(ValidationMessage.MaximumLength, "Sinif" , 25));
         }
     }
 }

@@ -8,7 +8,6 @@ using DataAccess.Repositories;
 using EntityLayer.Concrete;
 using EntityLayer.Concrete.Base;
 using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
-using ExamCreator.Models.ViewModelValidations.Grade;
 using FluentValidation;
 using System.Configuration;
 using System.Reflection.Metadata;
@@ -31,8 +30,6 @@ namespace ExamCreator
         {
             services.AddTransient<IValidator<BaseEntity>, BaseEntityValidator>();
             services.AddTransient<IValidator<Grade>, GradeValidator>();
-            services.AddTransient<IValidator<CreateGrade>, CreateGradeValidation>();
-            services.AddTransient<IValidator<EditGrade>, EditGradeValidation>();
         }
     }
 }
