@@ -13,10 +13,6 @@ namespace Business.Validations
     {
         public GradeValidator()
         {
-
-
-
-
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Sinif"))
                 .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Sinif"))
