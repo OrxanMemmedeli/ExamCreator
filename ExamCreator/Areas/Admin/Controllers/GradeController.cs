@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.Validations;
 using EntityLayer.Concrete;
 using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
@@ -11,11 +13,13 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IGradeService _gradeService;
         private readonly IMapper _mapper;
+        private readonly GradeValidator _gradeValidator;
 
-        public GradeController(IGradeService gradeService, IMapper mapper = null)
+        public GradeController(IGradeService gradeService, IMapper mapper, GradeValidator gradeValidator)
         {
             _gradeService = gradeService;
             _mapper = mapper;
+            _gradeValidator = gradeValidator;
         }
 
         [HttpGet]
@@ -36,13 +40,14 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Create(CreateGrade t)
         {
-            ModelState.Clear();
             var model = _mapper.Map<CreateGrade, Grade>(t);
-            if (!ModelState.IsValid)
+            var modelState = _gradeValidator.Validate(model);
+            if (!modelState.IsValid)
             {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
-
 
             await _gradeService.Insert(model);
             return RedirectToAction(nameof(Index));
