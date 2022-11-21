@@ -23,16 +23,19 @@ namespace ExamCreator
 
             services.AddTransient<IGradeService, GradeManager>().AddTransient<IGradeDal, EFGradeRepository>();
 
-
-
-            //services.AddTransient<IGenericService<Grade>, GenericManager<Grade>>()
-            //    .AddTransient<IGenericDal<Grade>, GenericRepository<Grade>> ();
         }
 
         public static void Validators(this IServiceCollection services)
         {
             services.AddValidatorsFromAssemblyContaining<BaseEntityValidator>();
             services.AddValidatorsFromAssemblyContaining<GradeValidator>();
+            services.AddValidatorsFromAssemblyContaining<QuestionLevelValidator>();
+            services.AddValidatorsFromAssemblyContaining<QuestionTypeValidator>();
+            services.AddValidatorsFromAssemblyContaining<QuestionValidator>();
+            services.AddValidatorsFromAssemblyContaining<ResponseValidator>();
+            services.AddValidatorsFromAssemblyContaining<SectionValidator>();
+            services.AddValidatorsFromAssemblyContaining<SubjectValidator>();
+            services.AddValidatorsFromAssemblyContaining<UserTypeValidator>();
 
         }
     }

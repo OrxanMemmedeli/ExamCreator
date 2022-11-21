@@ -27,9 +27,9 @@ namespace Business.Validations
                 .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Yaradan istifadəçi"))
                 .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Yaradan istifadəçi"));
 
-            //RuleFor(x => x.ModifyUserId)
-            //    .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Düzəliş edən istifadəçi"))
-            //    .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Düzəliş edən istifadəçi"));
+            RuleFor(x => x.ModifyUserId)
+                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Düzəliş edən istifadəçi"))
+                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Düzəliş edən istifadəçi"));
         }
     }
 }

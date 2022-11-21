@@ -19,5 +19,6 @@ namespace CoreLayer.Constants
         public static string EqualPassword { get; private set; } = "Şifrə ilə təkrarı arasında uyğunsuzluq var";
         public static string NotEqual { get; private set; } = "{0} sahələri eyni ola bilməz";
         public static string LessThanOrEqualTo { get; private set; } = "{0} tarixin ən kiçik qiyməti {1} ola bilər";
+        public static string InclusiveBetween { get; private set; } = "qiymət aralığı {0} - {1} kimi olmalıdır";
     }
 }
