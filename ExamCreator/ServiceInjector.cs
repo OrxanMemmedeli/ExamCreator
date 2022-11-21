@@ -9,6 +9,7 @@ using EntityLayer.Concrete;
 using EntityLayer.Concrete.Base;
 using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using System.Configuration;
 using System.Reflection.Metadata;
 
@@ -22,14 +23,17 @@ namespace ExamCreator
 
             services.AddTransient<IGradeService, GradeManager>().AddTransient<IGradeDal, EFGradeRepository>();
 
+
+
             //services.AddTransient<IGenericService<Grade>, GenericManager<Grade>>()
             //    .AddTransient<IGenericDal<Grade>, GenericRepository<Grade>> ();
         }
 
         public static void Validators(this IServiceCollection services)
         {
-            services.AddTransient<IValidator<BaseEntity>, BaseEntityValidator>();
-            services.AddTransient<IValidator<Grade>, GradeValidator>();
+            services.AddValidatorsFromAssemblyContaining<BaseEntityValidator>();
+            services.AddValidatorsFromAssemblyContaining<GradeValidator>();
+
         }
     }
 }

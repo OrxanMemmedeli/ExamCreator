@@ -1,5 +1,7 @@
+using Business.Validations;
 using DataAccess.Concrete.Context;
 using ExamCreator;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,22 +10,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
-builder.Services.AddHttpContextAccessor(); 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<DbContext>();
-builder.Services.AddControllersWithViews();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddFluentValidationClientsideAdapters();
-
-builder.Services.AddFluentValidationAutoValidation(config =>
-{
-     config.ImplicitlyValidateChildProperties = true;
+builder.Services.AddControllersWithViews().AddFluentValidation(config => {
+    config.ConfigureClientsideValidation(enabled: false);
+    config.ImplicitlyValidateChildProperties = true;
     config.DisableDataAnnotationsValidation = true;
     config.ImplicitlyValidateRootCollectionElements = true;
-
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.Register(); //dependence ucun
 builder.Services.Validators(); // validation ucun
+//builder.Services.AddFluentValidationClientsideAdapters(); // Clinet teref ucun auto mehdudiyyet
 
 var app = builder.Build();
 
