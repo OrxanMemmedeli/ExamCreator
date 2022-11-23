@@ -9,22 +9,17 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class SectionConfig : IEntityTypeConfiguration<Section>
+    public class GradeConfig : IEntityTypeConfiguration<Grade>
     {
-        public void Configure(EntityTypeBuilder<Section> builder)
+        public void Configure(EntityTypeBuilder<Grade> builder)
         {
-            builder.HasOne(x => x.Subject)
-                .WithMany(x => x.Sections)
-                .HasForeignKey(x => x.SubjectId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-
             builder.HasOne(x => x.CreatUser)
-                .WithMany(x => x.Sections)
+                .WithMany(x => x.Grades)
                 .HasForeignKey(x => x.CreatUserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(x => x.ModifyUser)
-                .WithMany(x => x.SectionsM)
+                .WithMany(x => x.GradesM)
                 .HasForeignKey(x => x.ModifyUserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
         }

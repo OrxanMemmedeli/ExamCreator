@@ -1,4 +1,4 @@
-﻿using EntityLayer.Concrete.Base;
+﻿using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,20 +9,19 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class BaseEntityConfig : IEntityTypeConfiguration<BaseEntity>
+    public class QuestionTypeConfig : IEntityTypeConfiguration<QuestionType>
     {
-        public void Configure(EntityTypeBuilder<BaseEntity> builder)
+        public void Configure(EntityTypeBuilder<QuestionType> builder)
         {
             builder.HasOne(x => x.CreatUser)
-                .WithMany(x => x.CreatUsers)
+                .WithMany(x => x.QuestionTypes)
                 .HasForeignKey(x => x.CreatUserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(x => x.ModifyUser)
-                .WithMany(x => x.ModifyUsers)
+                .WithMany(x => x.QuestionTypesM)
                 .HasForeignKey(x => x.ModifyUserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
-
         }
     }
 }
