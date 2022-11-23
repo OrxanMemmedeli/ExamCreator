@@ -1,8 +1,9 @@
-﻿using EntityLayer.Concrete;
-using EntityLayer.Concrete.Base;
+﻿using CoreLayer.Entities;
+using EntityLayer.Concrete;
 using EntityLayer.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,6 @@ namespace DataAccess.Concrete.Context
 
         }
 
-        public DbSet<BaseEntity> BaseEntity { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionLevel> QuestionLevels { get; set; }
@@ -39,50 +39,74 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new QuestionConfig());
             builder.ApplyConfiguration(new ResponseConig());
             builder.ApplyConfiguration(new SectionConfig());
-            builder.ApplyConfiguration(new BaseEntityConfig());
+            builder.ApplyConfiguration(new AcademicYearConfig());
+            builder.ApplyConfiguration(new GradeConfig());
+            builder.ApplyConfiguration(new QuestionLevelConfig());
+            builder.ApplyConfiguration(new QuestionTypeConfig());
+            builder.ApplyConfiguration(new SubjectConfig());
 
             // For Table Per Type
-            builder.Entity<Grade>().ToTable("Grades");
-            builder.Entity<Question>().ToTable("Questions");
-            builder.Entity<QuestionLevel>().ToTable("QuestionLevels");
-            builder.Entity<QuestionType>().ToTable("QuestionTypes");
-            builder.Entity<Response>().ToTable("Responses");
-            builder.Entity<Section>().ToTable("Sections");
-            builder.Entity<Subject>().ToTable("Subjects");
-            builder.Entity<UserType>().ToTable("UserTypes");
-            builder.Entity<AcademicYear>().ToTable("AcademicYears");
+            //builder.Entity<Grade>().ToTable("Grades");
+            //builder.Entity<Question>().ToTable("Questions");
+            //builder.Entity<QuestionLevel>().ToTable("QuestionLevels");
+            //builder.Entity<QuestionType>().ToTable("QuestionTypes");
+            //builder.Entity<Response>().ToTable("Responses");
+            //builder.Entity<Section>().ToTable("Sections");
+            //builder.Entity<Subject>().ToTable("Subjects");
+            //builder.Entity<UserType>().ToTable("UserTypes");
+            //builder.Entity<AcademicYear>().ToTable("AcademicYears");
 
             base.OnModelCreating(builder);
 
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            var datas = ChangeTracker.Entries<BaseEntity>();
+        //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    var datas = ChangeTracker.Entries<IEntity>();
+        //    var baseDatas = ChangeTracker.Entries<IEntityBase>();
 
-            foreach (var data in datas)
-            {
-                if (data.State == EntityState.Added)
-                {
-                    data.Entity.Id = Guid.NewGuid();
-                    data.Entity.Status = true;
-                    data.Entity.IsDeleted = false;
-                    data.Entity.CreatedDate = DateTime.Now;
-                    data.Entity.ModifyedDate = default(DateTime);
-                    //data.Entity.CreatUserId = 
-                }
+        //    foreach (var data in datas)
+        //    {
+        //        if (data.State == EntityState.Added)
+        //        {
+        //            data.Entity.Id = Guid.NewGuid();
+        //            data.Entity.Status = true;
+        //            data.Entity.IsDeleted = false;
+        //            data.Entity.CreatedDate = DateTime.Now;
+        //            data.Entity.ModifyedDate = default(DateTime);
+        //            //data.Entity.CreatUserId = 
+        //        }
 
-                if (data.State == EntityState.Modified)
-                {
-                    data.Entity.ModifyedDate = DateTime.Now;
+        //        if (data.State == EntityState.Modified)
+        //        {
+        //            data.Entity.ModifyedDate = DateTime.Now;
 
-                    //data.Entity.ModifyUserId =
-                }
+        //            //data.Entity.ModifyUserId =
+        //        }
+        //    }
 
 
-            }
+        //    foreach (var data in baseDatas)
+        //    {
+        //        if (data.State == EntityState.Added)
+        //        {
+        //            data.Entity.Id = Guid.NewGuid();
+        //            data.Entity.Status = true;
+        //            data.Entity.IsDeleted = false;
+        //            data.Entity.CreatedDate = DateTime.Now;
+        //            data.Entity.ModifyedDate = default(DateTime);
+        //        }
 
-            return await base.SaveChangesAsync(cancellationToken);
-        }
+        //        if (data.State == EntityState.Modified)
+        //        {
+        //            data.Entity.ModifyedDate = DateTime.Now;
+        //        }
+        //    }
+
+        //    return await base.SaveChangesAsync(cancellationToken);
+
+        //}
+
+
     }
 }

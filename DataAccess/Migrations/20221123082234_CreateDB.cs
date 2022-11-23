@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class CreateTables : Migration
+    public partial class CreateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,11 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,7 +69,7 @@ namespace DataAccess.Migrations
                     ImageUrl = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    UserTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -88,8 +92,35 @@ namespace DataAccess.Migrations
                         name: "FK_AspNetUsers_UserTypes_UserTypeId",
                         column: x => x.UserTypeId,
                         principalTable: "UserTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AcademicYears",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AcademicYears", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AcademicYears_AspNetUsers_CreatUserId",
+                        column: x => x.CreatUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AcademicYears_AspNetUsers_ModifyUserId",
+                        column: x => x.ModifyUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -178,46 +209,30 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BaseEntity",
+                name: "Grades",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BaseEntity", x => x.Id);
+                    table.PrimaryKey("PK_Grades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BaseEntity_AspNetUsers_CreatUserId",
+                        name: "FK_Grades_AspNetUsers_CreatUserId",
                         column: x => x.CreatUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_BaseEntity_AspNetUsers_ModifyUserId",
+                        name: "FK_Grades_AspNetUsers_ModifyUserId",
                         column: x => x.ModifyUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Grades",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Grades", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Grades_BaseEntity_Id",
-                        column: x => x.Id,
-                        principalTable: "BaseEntity",
                         principalColumn: "Id");
                 });
 
@@ -227,15 +242,26 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Level = table.Column<short>(type: "smallint", nullable: false)
+                    Level = table.Column<short>(type: "smallint", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QuestionLevels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionLevels_BaseEntity_Id",
-                        column: x => x.Id,
-                        principalTable: "BaseEntity",
+                        name: "FK_QuestionLevels_AspNetUsers_CreatUserId",
+                        column: x => x.CreatUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_QuestionLevels_AspNetUsers_ModifyUserId",
+                        column: x => x.ModifyUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
@@ -247,15 +273,26 @@ namespace DataAccess.Migrations
                     ResponseType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ResponseCount = table.Column<double>(type: "float", nullable: true),
                     IsShowAnswer = table.Column<bool>(type: "bit", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QuestionTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionTypes_BaseEntity_Id",
-                        column: x => x.Id,
-                        principalTable: "BaseEntity",
+                        name: "FK_QuestionTypes_AspNetUsers_CreatUserId",
+                        column: x => x.CreatUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_QuestionTypes_AspNetUsers_ModifyUserId",
+                        column: x => x.ModifyUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
@@ -265,15 +302,26 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AmountForQuestion = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    AmountForQuestion = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subjects_BaseEntity_Id",
-                        column: x => x.Id,
-                        principalTable: "BaseEntity",
+                        name: "FK_Subjects_AspNetUsers_CreatUserId",
+                        column: x => x.CreatUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Subjects_AspNetUsers_ModifyUserId",
+                        column: x => x.ModifyUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
@@ -283,15 +331,26 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sections", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sections_BaseEntity_Id",
-                        column: x => x.Id,
-                        principalTable: "BaseEntity",
+                        name: "FK_Sections_AspNetUsers_CreatUserId",
+                        column: x => x.CreatUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Sections_AspNetUsers_ModifyUserId",
+                        column: x => x.ModifyUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Sections_Subjects_SubjectId",
@@ -310,15 +369,32 @@ namespace DataAccess.Migrations
                     SectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuestionLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GradeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GradeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AcademicYearId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questions_BaseEntity_Id",
-                        column: x => x.Id,
-                        principalTable: "BaseEntity",
+                        name: "FK_Questions_AcademicYears_AcademicYearId",
+                        column: x => x.AcademicYearId,
+                        principalTable: "AcademicYears",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Questions_AspNetUsers_CreatUserId",
+                        column: x => x.CreatUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Questions_AspNetUsers_ModifyUserId",
+                        column: x => x.ModifyUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Questions_Grades_GradeId",
@@ -357,15 +433,32 @@ namespace DataAccess.Migrations
                     IsTrue = table.Column<bool>(type: "bit", nullable: false),
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AcademicYearId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifyedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifyUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Responses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Responses_BaseEntity_Id",
-                        column: x => x.Id,
-                        principalTable: "BaseEntity",
+                        name: "FK_Responses_AcademicYears_AcademicYearId",
+                        column: x => x.AcademicYearId,
+                        principalTable: "AcademicYears",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Responses_AspNetUsers_CreatUserId",
+                        column: x => x.CreatUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Responses_AspNetUsers_ModifyUserId",
+                        column: x => x.ModifyUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Responses_Questions_QuestionId",
@@ -383,6 +476,16 @@ namespace DataAccess.Migrations
                         principalTable: "Subjects",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcademicYears_CreatUserId",
+                table: "AcademicYears",
+                column: "CreatUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcademicYears_ModifyUserId",
+                table: "AcademicYears",
+                column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -429,19 +532,44 @@ namespace DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_CreatUserId",
-                table: "BaseEntity",
+                name: "IX_Grades_CreatUserId",
+                table: "Grades",
                 column: "CreatUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BaseEntity_ModifyUserId",
-                table: "BaseEntity",
+                name: "IX_Grades_ModifyUserId",
+                table: "Grades",
                 column: "ModifyUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionLevels_CreatUserId",
+                table: "QuestionLevels",
+                column: "CreatUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionLevels_ModifyUserId",
+                table: "QuestionLevels",
+                column: "ModifyUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_AcademicYearId",
+                table: "Questions",
+                column: "AcademicYearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_CreatUserId",
+                table: "Questions",
+                column: "CreatUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_GradeId",
                 table: "Questions",
                 column: "GradeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_ModifyUserId",
+                table: "Questions",
+                column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuestionLevelId",
@@ -464,6 +592,31 @@ namespace DataAccess.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuestionTypes_CreatUserId",
+                table: "QuestionTypes",
+                column: "CreatUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionTypes_ModifyUserId",
+                table: "QuestionTypes",
+                column: "ModifyUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Responses_AcademicYearId",
+                table: "Responses",
+                column: "AcademicYearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Responses_CreatUserId",
+                table: "Responses",
+                column: "CreatUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Responses_ModifyUserId",
+                table: "Responses",
+                column: "ModifyUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Responses_QuestionId",
                 table: "Responses",
                 column: "QuestionId");
@@ -479,9 +632,29 @@ namespace DataAccess.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Sections_CreatUserId",
+                table: "Sections",
+                column: "CreatUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sections_ModifyUserId",
+                table: "Sections",
+                column: "ModifyUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sections_SubjectId",
                 table: "Sections",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_CreatUserId",
+                table: "Subjects",
+                column: "CreatUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_ModifyUserId",
+                table: "Subjects",
+                column: "ModifyUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -511,6 +684,9 @@ namespace DataAccess.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
+                name: "AcademicYears");
+
+            migrationBuilder.DropTable(
                 name: "Grades");
 
             migrationBuilder.DropTable(
@@ -524,9 +700,6 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Subjects");
-
-            migrationBuilder.DropTable(
-                name: "BaseEntity");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

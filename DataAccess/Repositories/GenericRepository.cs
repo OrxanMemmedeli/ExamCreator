@@ -1,6 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using CoreLayer.Entities;
+using DataAccess.Abstract;
 using DataAccess.Concrete.Context;
-using EntityLayer.Concrete.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
         {
             _context = context;
         }
-        
+
         public DbSet<T> Table => _context.Set<T>();
 
         private async Task<int> SaveAsync() => await _context.SaveChangesAsync();
@@ -47,7 +47,7 @@ namespace DataAccess.Repositories
 
         public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> include = null)
         {
-            return include != null ? Table.AsQueryable().Include(include) : Table.AsQueryable(); 
+            return include != null ? Table.AsQueryable().Include(include) : Table.AsQueryable();
         }
 
         public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null)
@@ -68,12 +68,34 @@ namespace DataAccess.Repositories
 
         public async Task Insert(T t)
         {
+            addBaseFields(t);
+
             await Table.AddAsync(t);
             await SaveAsync();
         }
 
+        private static void addBaseFields(T t)
+        {
+            Type type = t.GetType();
+            PropertyInfo? propId = type.GetProperty("Id");
+            PropertyInfo? propStatus = type.GetProperty("Status");
+            PropertyInfo? propIsDeleted = type.GetProperty("IsDeleted");
+            PropertyInfo? propCreatedDate = type.GetProperty("CreatedDate");
+            PropertyInfo? propModifyedDate = type.GetProperty("ModifyedDate");
+            //PropertyInfo? propCreatUserId = type.GetProperty("CreatUserId");
+
+            propId.SetValue(t, Guid.NewGuid(), null);
+            propStatus.SetValue(t, true, null);
+            propIsDeleted.SetValue(t, false, null);
+            propCreatedDate.SetValue(t, DateTime.Now, null);
+            propModifyedDate.SetValue(t, default(DateTime), null);
+            //propCreatUserId.SetValue(t, , null);
+        }
+
         public async Task Update(T t, Guid id)
         {
+            updateBaseField(t);
+
             EntityEntry entityEntry = Table.Update(t);
 
             var local = await Table.FindAsync(id);
@@ -84,7 +106,19 @@ namespace DataAccess.Repositories
 
             entityEntry.State = EntityState.Modified;
 
+
+
             await SaveAsync();
+        }
+
+        private static void updateBaseField(T t)
+        {
+            Type type = t.GetType();
+            PropertyInfo? propModifyedDate = type.GetProperty("ModifyedDate");
+            //PropertyInfo? propModifyUserId = type.GetProperty("ModifyUserId");
+
+            propModifyedDate.SetValue(t, DateTime.Now, null);
+            //propModifyUserId.SetValue(t, , null);
         }
     }
 }

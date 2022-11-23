@@ -6,7 +6,6 @@ using DataAccess.Concrete.Context;
 using DataAccess.EntityFramework;
 using DataAccess.Repositories;
 using EntityLayer.Concrete;
-using EntityLayer.Concrete.Base;
 using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +26,6 @@ namespace ExamCreator
 
         public static void Validators(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssemblyContaining<BaseEntityValidator>();
             services.AddValidatorsFromAssemblyContaining<GradeValidator>();
             services.AddValidatorsFromAssemblyContaining<QuestionLevelValidator>();
             services.AddValidatorsFromAssemblyContaining<QuestionTypeValidator>();
