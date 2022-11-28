@@ -1,8 +1,9 @@
 ﻿using EntityLayer.Concrete;
+using ExamCreator.Areas.Admin.Models.ViewModels.BaseFields;
 
 namespace ExamCreator.Areas.Admin.Models.ViewModels.Grade
 {
-    public class EditGrade
+    public class EditGrade : IBaseFieldsForEdit
     {
         public Guid Id { get; set; } 
         public bool Status { get; set; }

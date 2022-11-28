@@ -9,7 +9,6 @@ namespace ExamCreator.AutoMapper
         public GradeProfile()
         {
             CreateMap<Grade, ListGrade>()
-                .ForMember(dest => dest.CreatUserName, opt => opt.MapFrom(src => src.CreatUser.UserName))
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
 
             CreateMap<Grade, CreateGrade>().ReverseMap();
