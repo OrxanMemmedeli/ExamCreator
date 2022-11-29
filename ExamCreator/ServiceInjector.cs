@@ -21,6 +21,14 @@ namespace ExamCreator
             services.AddTransient<ECContext, ECContext>();
 
             services.AddTransient<IGradeService, GradeManager>().AddTransient<IGradeDal, EFGradeRepository>();
+            services.AddTransient<IAcademicYearService, AcademicYearManager>().AddTransient<IAcademicYearDal, EFAcademicYearRepository>();
+            services.AddTransient<IQuestionService, QuestionManager>().AddTransient<IQuestionDal, EFQuestionRepository>();
+            services.AddTransient<IQuestionLevelService, QuestionLevelManager>().AddTransient<IQuestionLevelDal, EFQuestionLevelRepository>();
+            services.AddTransient<IQuestionTypeService, QuestionTypeManager>().AddTransient<IQuestionTypeDal, EFQuestionTypeRepository>();
+            services.AddTransient<IResponseService, ResponseManager>().AddTransient<IResponseDal, EFResponseRepository>();
+            services.AddTransient<ISectionService, SectionManager>().AddTransient<ISectionDal, EFSectionRepository>();
+            services.AddTransient<ISubjectService, SubjectManager>().AddTransient<ISubjectDal, EFSubjectRepository>();
+            services.AddTransient<IUserTypeService, UserTypeManager>().AddTransient<IUserTypeDal, EFUserTypeRepository>();
 
         }
 

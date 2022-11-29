@@ -20,6 +20,8 @@ namespace Business.Validations
                 .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, "Cavab tipi", 50));
 
             RuleFor(x => x.Description)
+                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Açıqlama"))
+                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Açıqlama"))
                 .MaximumLength(500).WithMessage(String.Format(ValidationMessage.MaximumLength, "Açıqlama", 500));
         }
     }

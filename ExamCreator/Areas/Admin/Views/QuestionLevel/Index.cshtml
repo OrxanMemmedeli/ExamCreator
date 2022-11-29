@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ExamCreator.Areas.Admin.Models.ViewModels.QuestionLevel.ListQuestionLevel>
+@{
+    ViewData["Title"] = "Sual Səviyyəsi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Sual Səviyyəsi</h1>
+
+
+<p>
+    <a asp-action="Create" class="btn btn-vimeo" title="Yeni məlumat" style="justify-content: center;">
+        Yeni SİNİF
+        <lord-icon src="https://cdn.lordicon.com/rfbqeber.json"
+                   trigger="hover"
+                   style="width:40px;height:40px">
+        </lord-icon>
+    </a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                SƏVİYYƏ
+            </th>
+            <th>
+                ÇƏTİNLİK
+            </th>
+            <th>
+                STATUS
+            </th>
+            <th>
+                SİLİNMİŞ
+            </th>
+            <th>
+                DƏYİŞDİRİLDİ
+            </th>
+            <th>
+                DƏYİŞDİRƏN
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @for (int i = 0; i < item.Level; i++)
+                    {
+                        <span>*</span>
+                    }
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <span class="badge badge-pill text-white bg-green">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-pill text-white bg-muted">Passiv</span>
+                    }
+                </td>
+                <td>
+                    @if (item.IsDeleted)
+                    {
+                        <span class="badge badge-pill text-white bg-red">Silinib</span>
+                    }
+                </td>
+                <td>
+                    @item.ModifyedDate.Value.ToString("dd.MM.yyyy - HH:mm")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifyUserName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="Düzəliş et">
+                        <lord-icon src="https://cdn.lordicon.com/bxxnzvfm.json"
+                               trigger="hover"
+                               style="width:40px;height:40px">
+                        </lord-icon>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəmiş statusuna keçiriləcəkdir. \n\n\nStatusa dəyişikliyi edilsinmi?')">
+                        <lord-icon src="https://cdn.lordicon.com/qjwkduhc.json"
+                               trigger="hover"
+                               style="width:40px;height:40px">
+                        </lord-icon>
+                    </a>
+                    <a asp-action="Remove" asp-route-id="@item.Id" title="Birdəfəlik Sil" onclick="return confirm('Silinən məlumatların geri qaytarılması mümkün deyil. \n\n\nSətiri yənədə silmək istəyirsinizmi?')">
+                        <lord-icon src="https://cdn.lordicon.com/inrunzby.json"
+                               trigger="hover"
+                               style="width:40px;height:40px">
+                        </lord-icon>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

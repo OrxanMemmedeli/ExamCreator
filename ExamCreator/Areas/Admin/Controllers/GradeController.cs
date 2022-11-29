@@ -111,7 +111,7 @@ namespace ExamCreator.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            _gradeService.Remove(data);
+            await _gradeService.Remove(data);
             return RedirectToAction(nameof(Index));
         }
     }

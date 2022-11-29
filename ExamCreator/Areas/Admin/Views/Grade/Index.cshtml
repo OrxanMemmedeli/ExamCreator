@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ExamCreator.Areas.Admin.Models.ViewModels.Grade.ListGrade>
 
 @{
-    ViewData["Title"] = "Siniflə";
+    ViewData["Title"] = "Siniflər";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -75,13 +75,13 @@
                                style="width:40px;height:40px">
                         </lord-icon>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəmiş statusuna keçiriləcəkdir. \nStatusa dəyişikliyi edilsinmi?')">
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəmiş statusuna keçiriləcəkdir. \n\n\nStatusa dəyişikliyi edilsinmi?')">
                         <lord-icon src="https://cdn.lordicon.com/qjwkduhc.json"
                                trigger="hover"
                                style="width:40px;height:40px">
                         </lord-icon>
                     </a>
-                    <a asp-action="Remove" asp-route-id="@item.Id" title="Birdəfəlik Sil" onclick="return confirm('Silinən məlumatların geri qaytarılması mümkün deyil. \nSətiri yənədə silmək istəyirsinizmi?')">
+                    <a asp-action="Remove" asp-route-id="@item.Id" title="Birdəfəlik Sil" onclick="return confirm('Silinən məlumatların geri qaytarılması mümkün deyil. \n\n\nSətiri yənədə silmək istəyirsinizmi?')">
                         <lord-icon src="https://cdn.lordicon.com/inrunzby.json"
                                trigger="hover"
                                style="width:40px;height:40px">

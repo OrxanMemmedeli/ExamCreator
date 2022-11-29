@@ -1,0 +1,40 @@
+﻿@model ExamCreator.Areas.Admin.Models.ViewModels.UserType.EditUserType
+
+@{
+    ViewData["Title"] = "Tipi Yenilə";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h4>Tipi Yenilə</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" hidden value="@Model.Id" />
+            <input asp-for="CreatedDate" hidden value="@Model.CreatedDate" />
+            <input asp-for="ModifyedDate" hidden value="@Model.ModifyedDate" />
+
+            <div class="form-group">
+                <label asp-for="Type" class="control-label">TİP</label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Status" /> STATUS
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDeleted" /> SİLİNMİŞ
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Əlavə Et" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-dark">Geri</a>
+            </div>
+        </form>
+    </div>
+</div>
