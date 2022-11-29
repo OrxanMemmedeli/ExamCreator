@@ -2,12 +2,14 @@
 
 namespace ExamCreator.Areas.Admin.Models.ViewModels.UserType
 {
-    public class ListUserType : IBaseFiledsForList
+    public class ListUserType 
     {
-        public string? ModifyUserName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Status { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool IsDeleted { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime? ModifyedDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Guid Id { get; set; }
+        public bool Status { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? ModifyedDate { get; set; }
+
+        public string Type { get; set; }
+
     }
 }

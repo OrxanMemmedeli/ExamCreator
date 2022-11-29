@@ -1,12 +1,117 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Business.Abstract;
+using Business.Validations;
+using EntityLayer.Concrete;
+using ExamCreator.Areas.Admin.Models.ViewModels.QuestionLevel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
     public class QuestionLevelController : Controller
     {
-        public IActionResult Index()
+        private readonly IQuestionLevelService _questionLevelService;
+        private readonly IMapper _mapper;
+        private readonly QuestionLevelValidator _questionLevelValidator;
+
+        public QuestionLevelController(IQuestionLevelService QuestionLevelService, IMapper mapper, QuestionLevelValidator questionLevelValidator)
+        {
+            _questionLevelService = QuestionLevelService;
+            _mapper = mapper;
+            _questionLevelValidator = questionLevelValidator;
+        }
+
+        [HttpGet]
+        public virtual async Task<IActionResult> Index(int page = 1)
+        {
+            var QuestionLevels = await _questionLevelService.GetAllAsnyc().OrderBy(x => x.Level).ToListAsync();
+            var datas = _mapper.Map<List<QuestionLevel>, List<ListQuestionLevel>>(QuestionLevels);
+            return View(datas);
+        }
+
+        [HttpGet]
+        public virtual IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<IActionResult> Create(CreateQuestionLevel t)
+        {
+            var model = _mapper.Map<CreateQuestionLevel, QuestionLevel>(t);
+            var modelState = _questionLevelValidator.Validate(model);
+            if (!modelState.IsValid)
+            {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
+                return View(t);
+            }
+
+            await _questionLevelService.Insert(model);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public virtual async Task<IActionResult> Edit(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var data = await _questionLevelService.GetByIdAsnyc(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            var model = _mapper.Map<QuestionLevel, EditQuestionLevel>(data);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<IActionResult> Edit(EditQuestionLevel t)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(t);
+            }
+            var model = _mapper.Map<EditQuestionLevel, QuestionLevel>(t);
+
+            await _questionLevelService.Update(model, model.Id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public virtual async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var data = await _questionLevelService.GetByIdAsnyc(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            await _questionLevelService.Delete(data);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public virtual async Task<IActionResult> Remove(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var data = await _questionLevelService.GetByIdAsnyc(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            await _questionLevelService.Remove(data);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

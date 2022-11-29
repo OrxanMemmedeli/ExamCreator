@@ -12,18 +12,17 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Id" hidden />
-            <input asp-for="CreatedDate" hidden />
-            <input asp-for="ModifyedDate" hidden />
-            <input asp-for="CreatUserId" hidden />
-            <input asp-for="ModifyUserId" hidden />
+            <input asp-for="Id" hidden value="@Model.Id" />
+            <input asp-for="CreatedDate" hidden value="@Model.CreatedDate" />
+            <input asp-for="ModifyedDate" hidden value="@Model.ModifyedDate" />
+            <input asp-for="CreatUserId" hidden value="@Model.CreatUserId" />
+            <input asp-for="ModifyUserId" hidden value="@Model.ModifyUserId" />
 
             <div class="form-group">
                 <label asp-for="Name" class="control-label">SİNİF</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Status" /> STATUS
