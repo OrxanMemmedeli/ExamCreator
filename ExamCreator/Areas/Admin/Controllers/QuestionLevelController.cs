@@ -74,11 +74,15 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(EditQuestionLevel t)
         {
-            if (!ModelState.IsValid)
+            var model = _mapper.Map<EditQuestionLevel, QuestionLevel>(t);
+            var modelState = _questionLevelValidator.Validate(model);
+            if (!modelState.IsValid)
             {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
-            var model = _mapper.Map<EditQuestionLevel, QuestionLevel>(t);
+
 
             await _questionLevelService.Update(model, model.Id);
             return RedirectToAction(nameof(Index));

@@ -74,11 +74,14 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(EditUserType t)
         {
-            if (!ModelState.IsValid)
+            var model = _mapper.Map<EditUserType, UserType>(t);
+            var modelState = _userTypeValidator.Validate(model);
+            if (!modelState.IsValid)
             {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
-            var model = _mapper.Map<EditUserType, UserType>(t);
 
             await _userTypeService.Update(model, model.Id);
             return RedirectToAction(nameof(Index));

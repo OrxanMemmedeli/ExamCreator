@@ -74,11 +74,15 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(EditAcademicYear t)
         {
-            if (!ModelState.IsValid)
+            var model = _mapper.Map<EditAcademicYear, AcademicYear>(t);
+
+            var modelState = _academicYearValidator.Validate(model);
+            if (!modelState.IsValid)
             {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
-            var model = _mapper.Map<EditAcademicYear, AcademicYear>(t);
 
             await _academicYearService.Update(model, model.Id);
             return RedirectToAction(nameof(Index));
