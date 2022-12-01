@@ -24,6 +24,16 @@ namespace DataAccess.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
+        private IQueryable<T> IncludeMultiple<T>(IQueryable<T> query, params Expression<Func<T, object>>[] includes) where T : class
+        {
+            if (includes != null)
+            {
+                query = includes.Aggregate(query,
+                          (current, include) => current.Include(include));
+            }
+
+            return query;
+        }
         private async Task<int> SaveAsync() => await _context.SaveChangesAsync();
 
         public async Task Delete(T t)
@@ -45,19 +55,29 @@ namespace DataAccess.Repositories
             await SaveAsync();
         }
 
-        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> include = null)
+        public IQueryable<T> GetAllAsnyc(params Expression<Func<T, object>>[] includes)
         {
-            return include != null ? Table.AsQueryable().Include(include) : Table.AsQueryable();
+            if (includes.Any())
+                return IncludeMultiple<T>(Table.AsQueryable(), includes);
+            return Table.AsQueryable();
         }
 
-        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null)
+        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
         {
-            return include != null ? Table.Where(filter).AsQueryable().Include(include) : Table.Where(filter).AsQueryable();
+            if (includes.Any())
+                return IncludeMultiple<T>(Table.Where(filter).AsQueryable(), includes);
+            return Table.Where(filter).AsQueryable();
         }
 
-        public async Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null)
+        public async Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
         {
-            return include != null ? await Table.Include(include).FirstOrDefaultAsync(filter) : await Table.FirstOrDefaultAsync(filter);
+            if (includes.Any())
+            {
+                var query = IncludeMultiple<T>(Table.Where(filter).AsQueryable(), includes);
+                return query.FirstOrDefault();
+
+            }
+            return await Table.FirstOrDefaultAsync(filter);
         }
 
         public async Task<T> GetByIdAsnyc(Guid id)
@@ -120,5 +140,7 @@ namespace DataAccess.Repositories
             propModifyedDate.SetValue(t, DateTime.Now, null);
             //propModifyUserId.SetValue(t, , null);
         }
+
+
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class QuestionLevelController : Controller
     {
         private readonly IQuestionLevelService _questionLevelService;

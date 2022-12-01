@@ -24,19 +24,19 @@ namespace Business.Concrete
             await _dal.Delete(t);
         }
 
-        public IQueryable<Section> GetAllAsnyc(Expression<Func<Section, bool>> include = null)
+        public IQueryable<Section> GetAllAsnyc(params Expression<Func<Section, object>>[] includes)
         {
-            return _dal.GetAllAsnyc(include);
+            return _dal.GetAllAsnyc(includes);
         }
 
-        public IQueryable<Section> GetAllAsnyc(Expression<Func<Section, bool>> filter, Expression<Func<Section, bool>> include = null)
+        public IQueryable<Section> GetAllAsnyc(Expression<Func<Section, bool>> filter, params Expression<Func<Section, object>>[] includes)
         {
-            return _dal.GetAllAsnyc(filter, include);
+            return _dal.GetAllAsnyc(filter, includes);
         }
 
-        public Task<Section> GetByAsnyc(Expression<Func<Section, bool>> filter, Expression<Func<Section, bool>> include = null)
+        public Task<Section> GetByAsnyc(Expression<Func<Section, bool>> filter, params Expression<Func<Section, object>>[] includes)
         {
-            return _dal.GetByAsnyc(filter, include);
+            return _dal.GetByAsnyc(filter, includes);
         }
 
         public Task<Section> GetByIdAsnyc(Guid id)

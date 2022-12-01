@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class UserTypeController : Controller
     {
         private readonly IUserTypeService _userTypeService;

@@ -1,0 +1,30 @@
+﻿@model ExamCreator.Areas.Admin.Models.ViewModels.Section.CreateSection
+
+@{
+    ViewData["Title"] = "Yeni BÖLMƏ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4>Yeni BÖLMƏ</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">SİNİF</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fənn seçin</label>
+                <select id="SubjectId" name="SubjectId" class="form-control" asp-items="ViewBag.SubjectId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Əlavə Et" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-dark">Geri</a>
+            </div>
+        </form>
+    </div>
+</div>

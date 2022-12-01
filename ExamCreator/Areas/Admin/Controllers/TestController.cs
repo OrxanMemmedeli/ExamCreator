@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Concrete.Context;
 using EntityLayer.Concrete;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
@@ -14,10 +16,12 @@ namespace ExamCreator.Areas.Admin.Controllers
     public class TestController : Controller
     {
         private readonly ECContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public TestController(ECContext context)
+        public TestController(ECContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Admin/Test
@@ -199,14 +203,57 @@ namespace ExamCreator.Areas.Admin.Controllers
             {
                 _context.Questions.Remove(question);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool QuestionExists(Guid id)
         {
-          return _context.Questions.Any(e => e.Id == id);
+            return _context.Questions.Any(e => e.Id == id);
+        }
+
+
+
+        public IActionResult PDF()
+        {
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+
+            string path = Path.Combine(wwwRootPath, "ExamPdfFiles", "test.pdf");
+
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                Document document = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                PdfWriter.GetInstance(document, stream);
+
+                document.Open();
+
+                Paragraph paragraph = new Paragraph("new paragraf");
+
+                document.Add(paragraph);
+
+                PdfPTable table = new PdfPTable(2);
+
+                table.AddCell("test1");
+                table.AddCell("test2");
+                table.AddCell("test3");
+                table.AddCell("test4");
+                table.AddCell("test5");
+                table.AddCell("test6");
+
+                document.Add(table);
+
+                document.Close();
+            }
+
+            
+            return File(path,"application/pdf");
         }
     }
 }

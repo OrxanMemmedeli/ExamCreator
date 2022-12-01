@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
