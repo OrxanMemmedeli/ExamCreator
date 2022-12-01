@@ -13,10 +13,10 @@ namespace DataAccess.Abstract
         Task Update(T t, Guid id);
         Task Delete(T t);
         Task Remove(T t);
-        IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> include = null);
+        IQueryable<T> GetAllAsnyc(params Expression<Func<T, object>>[] includes);
         Task<T> GetByIdAsnyc(Guid id);
-        IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null);
-        Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, Expression<Func<T, bool>> include = null);
+        IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes);
+        Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes);
 
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ResponseController : Controller
     {
         private readonly IResponseService _responseService;
@@ -21,19 +22,19 @@ namespace ExamCreator.Areas.Admin.Controllers
             _responseValidator = responseValidator;
         }
 
-        [HttpGet]
-        public virtual async Task<IActionResult> Index(int page = 1)
-        {
-            var Responses = await _responseService.GetAllAsnyc().ToListAsync();
-            var datas = _mapper.Map<List<Response>, List<ListResponse>>(Responses);
-            return View(datas);
-        }
+        //[HttpGet]
+        //public virtual async Task<IActionResult> Index(int page = 1)
+        //{
+        //    var Responses = await _responseService.GetAllAsnyc().ToListAsync();
+        //    var datas = _mapper.Map<List<Response>, List<ListResponse>>(Responses);
+        //    return View(datas);
+        //}
 
-        [HttpGet]
-        public virtual IActionResult Create()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public virtual IActionResult Create()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -52,33 +53,36 @@ namespace ExamCreator.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public virtual async Task<IActionResult> Edit(Guid id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var data = await _responseService.GetByIdAsnyc(id);
-            if (data == null)
-            {
-                return NotFound();
-            }
+        //[HttpGet]
+        //public virtual async Task<IActionResult> Edit(Guid id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var data = await _responseService.GetByIdAsnyc(id);
+        //    if (data == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var model = _mapper.Map<Response, EditResponse>(data);
+        //    var model = _mapper.Map<Response, EditResponse>(data);
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(EditResponse t)
         {
-            if (!ModelState.IsValid)
+            var model = _mapper.Map<EditResponse, Response>(t);
+            var modelState = _responseValidator.Validate(model);
+            if (!modelState.IsValid)
             {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
-            var model = _mapper.Map<EditResponse, Response>(t);
 
             await _responseService.Update(model, model.Id);
             return RedirectToAction(nameof(Index));

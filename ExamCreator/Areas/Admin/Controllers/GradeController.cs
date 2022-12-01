@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
@@ -25,7 +26,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Index(int page = 1)
         {
-            var grades = await _gradeService.GetAllAsnyc().ToListAsync();
+            var grades = await _gradeService.GetAllAsnyc().OrderBy(x => x.Name).ToListAsync();
             var datas = _mapper.Map<List<Grade>, List<ListGrade>>(grades);
             return View(datas);
         }
@@ -75,11 +76,14 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(EditGrade t)
         {
-            if (!ModelState.IsValid)
+            var model = _mapper.Map<EditGrade, Grade>(t);
+            var modelState = _gradeValidator.Validate(model);
+            if (!modelState.IsValid)
             {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
-            var model = _mapper.Map<EditGrade, Grade>(t);
 
             await _gradeService.Update(model, model.Id);
             return RedirectToAction(nameof(Index));

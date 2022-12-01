@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SubjectController : Controller
     {
         private readonly ISubjectService _subjectService;
@@ -74,11 +75,15 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(EditSubject t)
         {
-            if (!ModelState.IsValid)
+            var model = _mapper.Map<EditSubject, Subject>(t);
+            var modelState = _subjectValidator.Validate(model);
+            if (!modelState.IsValid)
             {
+                if (modelState.Errors != null)
+                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
-            var model = _mapper.Map<EditSubject, Subject>(t);
+
 
             await _subjectService.Update(model, model.Id);
             return RedirectToAction(nameof(Index));
