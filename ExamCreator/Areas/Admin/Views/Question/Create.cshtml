@@ -58,61 +58,71 @@
     <script src="~/ckeditor/ckeditor.js"></script>
     <script src="~/ckeditor/adapters/jquery.js"></script>
     <script src="~/ckeditor/config.js"></script>
-    <script>
-        var mathElements = [
-            'math',
-            'maction',
-            'maligngroup',
-            'malignmark',
-            'menclose',
-            'merror',
-            'mfenced',
-            'mfrac',
-            'mglyph',
-            'mi',
-            'mlabeledtr',
-            'mlongdiv',
-            'mmultiscripts',
-            'mn',
-            'mo',
-            'mover',
-            'mpadded',
-            'mphantom',
-            'mroot',
-            'mrow',
-            'ms',
-            'mscarries',
-            'mscarry',
-            'msgroup',
-            'msline',
-            'mspace',
-            'msqrt',
-            'msrow',
-            'mstack',
-            'mstyle',
-            'msub',
-            'msup',
-            'msubsup',
-            'mtable',
-            'mtd',
-            'mtext',
-            'mtr',
-            'munder',
-            'munderover',
-            'semantics',
-            'annotation',
-            'annotation-xml',
-            'mprescripts',
-            'none'
-        ];
-        CKEDITOR.replace('editor1', {
-            toolbarStartupExpanded: true,
-            height: 300,
-            language: 'az',
-            removePlugins: 'filetools,uploadimage,uploadwidget,uploadfile,filebrowser,easyimage',
-            extraAllowedContent: mathElements.join(' ') + '(*)[*]{*};img[data-mathml,data-custom-editor,role](Wirisformula)'
+    <script src="https://www.wiris.net/demo/plugins/app/WIRISplugins.js?viewer=image"></script>
 
-        });
+    <script>
+        (function () {
+            var mathElements = [
+                'math',
+                'maction',
+                'maligngroup',
+                'malignmark',
+                'menclose',
+                'merror',
+                'mfenced',
+                'mfrac',
+                'mglyph',
+                'mi',
+                'mlabeledtr',
+                'mlongdiv',
+                'mmultiscripts',
+                'mn',
+                'mo',
+                'mover',
+                'mpadded',
+                'mphantom',
+                'mroot',
+                'mrow',
+                'ms',
+                'mscarries',
+                'mscarry',
+                'msgroup',
+                'msline',
+                'mspace',
+                'msqrt',
+                'msrow',
+                'mstack',
+                'mstyle',
+                'msub',
+                'msup',
+                'msubsup',
+                'mtable',
+                'mtd',
+                'mtext',
+                'mtr',
+                'munder',
+                'munderover',
+                'semantics',
+                'annotation',
+                'annotation-xml'
+            ];
+
+            CKEDITOR.plugins.addExternal('ckeditor_wiris', 'https://ckeditor.com/docs/ckeditor4/4.20.0/examples/assets/plugins/ckeditor_wiris/', 'plugin.js');
+
+            CKEDITOR.replace('editor1', {
+                extraPlugins: 'ckeditor_wiris',
+
+                // For now, MathType is incompatible with CKEditor file upload plugins.
+                removePlugins: 'uploadimage,uploadwidget,uploadfile,filetools,filebrowser',
+                height: 320,
+                language: 'az',
+                // Update the ACF configuration with MathML syntax.
+                extraAllowedContent: mathElements.join(' ') + '(*)[*]{*};img[data-mathml,data-custom-editor,role](Wirisformula)',
+                removeButtons: 'PasteFromWord',
+
+            });
+        }());
     </script>
+
 
     }
