@@ -13,6 +13,7 @@ namespace EntityLayer.Concrete
         {
             this.Questions = new HashSet<Question>();
             this.Responses = new HashSet<Response>();
+            this.QuestionParameters = new HashSet<QuestionParameter>();
         }
         public string ResponseType { get; set; }
         public double? ResponseCount { get; set; } = 0;
@@ -21,6 +22,7 @@ namespace EntityLayer.Concrete
 
         public ICollection<Question> Questions { get; set; }
         public ICollection<Response> Responses { get; set; }
+        public ICollection<QuestionParameter> QuestionParameters { get; set; }
 
 
         #region IEntity

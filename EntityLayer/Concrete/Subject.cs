@@ -14,6 +14,7 @@ namespace EntityLayer.Concrete
             this.Sections = new HashSet<Section>();
             this.Responses = new HashSet<Response>();
             this.Questions = new HashSet<Question>();
+            this.SubjectParameters = new HashSet<SubjectParameter>();
         }
         public string Name { get; set; }
         public decimal? AmountForQuestion{ get; set; }
@@ -21,6 +22,7 @@ namespace EntityLayer.Concrete
         public ICollection<Section> Sections { get; set; }
         public ICollection<Response> Responses { get; set; }
         public ICollection<Question> Questions { get; set; }
+        public ICollection<SubjectParameter> SubjectParameters { get; set; }
 
         #region IEntity
         public Guid Id { get; set; } = Guid.NewGuid();
