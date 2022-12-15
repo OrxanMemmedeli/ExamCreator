@@ -9,6 +9,11 @@ namespace EntityLayer.Concrete
 {
     public class Exam : IEntity
     {
+        public Exam()
+        {
+            this.Booklets = new HashSet<Booklet>();
+
+        }
         public Guid? CreatUserId { get; set; }
         public Guid? ModifyUserId { get; set; }
         public Guid Id { get; set; }
@@ -24,5 +29,10 @@ namespace EntityLayer.Concrete
 
         public Grade Grade { get; set; }
         public ExamParameter ExamParameter { get; set; }
+        public AppUser? CreatUser { get; set; }
+        public AppUser? ModifyUser { get; set; }
+
+        public ICollection<Booklet> Booklets { get; set; }
+
     }
 }

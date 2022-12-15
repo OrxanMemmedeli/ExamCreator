@@ -12,6 +12,7 @@ namespace EntityLayer.Concrete
         public ExamParameter()
         {
             this.SubjectParameters = new HashSet<SubjectParameter>();
+            this.Exams = new HashSet<Exam>();
         }
 
         public Guid? CreatUserId { get; set; }
@@ -26,6 +27,10 @@ namespace EntityLayer.Concrete
         public int SubjectCount { get; set; }
         public string Description { get; set; }
 
+        public AppUser? CreatUser { get; set; }
+        public AppUser? ModifyUser { get; set; }
+
         public ICollection<SubjectParameter> SubjectParameters { get; set; }
+        public ICollection<Exam> Exams { get; set; }
     }
 }

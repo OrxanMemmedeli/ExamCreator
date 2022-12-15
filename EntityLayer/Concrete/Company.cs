@@ -9,6 +9,11 @@ namespace EntityLayer.Concrete
 {
     public class Company : IEntity
     {
+        public Company()
+        {
+            this.Booklets = new HashSet<Booklet>();
+
+        }
         public Guid? CreatUserId { get; set; }
         public Guid? ModifyUserId { get; set; }
         public Guid Id { get; set; }
@@ -17,7 +22,12 @@ namespace EntityLayer.Concrete
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifyedDate { get; set; }
 
+        public AppUser? CreatUser { get; set; }
+        public AppUser? ModifyUser { get; set; }
         public string Name { get; set; }
         public string LogoUrl { get; set; }
+
+        public ICollection<Booklet> Booklets { get; set; }
+
     }
 }

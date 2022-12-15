@@ -13,10 +13,14 @@ namespace EntityLayer.Concrete
         {
             this.Questions = new HashSet<Question>();
             this.Responses = new HashSet<Response>();
+            this.Booklets = new HashSet<Booklet>();
+
         }
         public string Name { get; set; }
         public ICollection<Question> Questions { get; set; }
         public ICollection<Response> Responses { get; set; }
+        public ICollection<Booklet> Booklets { get; set; }
+
 
         #region IEntity
         public Guid Id { get; set; } = Guid.NewGuid();

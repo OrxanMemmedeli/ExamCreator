@@ -12,11 +12,15 @@ namespace EntityLayer.Concrete
         public Grade()
         {
             this.Questions = new HashSet<Question>();
+            this.Exams = new HashSet<Exam>();
+            this.Booklets = new HashSet<Booklet>();
         }
 
         public string Name { get; set; }
 
         public ICollection<Question> Questions { get; set; }
+        public ICollection<Exam> Exams { get; set; }
+        public ICollection<Booklet> Booklets { get; set; }
 
         #region IEntity
         public Guid Id { get; set; } = Guid.NewGuid();  
