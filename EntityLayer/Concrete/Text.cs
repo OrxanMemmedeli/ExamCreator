@@ -21,6 +21,9 @@ namespace EntityLayer.Concrete
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifyedDate { get; set; }
 
+        public AppUser? CreatUser { get; set; }
+        public AppUser? ModifyUser { get; set; }
+
         public string Name { get; set; }
         public string Title { get; set; } = "Mətni oxuyun və {0} – {1} nömrəli tapşırıqları mətnə uyğun cavablayın.";
         public string Content { get; set; }

@@ -25,5 +25,7 @@ namespace EntityLayer.Concrete
 
         public QuestionType QuestionType { get; set; }
         public SubjectParameter SubjectParameter { get; set; }
+        public AppUser? CreatUser { get; set; }
+        public AppUser? ModifyUser { get; set; }
     }
 }

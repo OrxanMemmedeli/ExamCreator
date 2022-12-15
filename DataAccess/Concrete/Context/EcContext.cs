@@ -24,26 +24,47 @@ namespace DataAccess.Concrete.Context
 
         }
 
+        public DbSet<AcademicYear> AcademicYears { get; set; }
+        public DbSet<Booklet> Booklets { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<ExamParameter> ExamParameters { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionLevel> QuestionLevels { get; set; }
+        public DbSet<QuestionParameter> QuestionParameters { get; set; }
         public DbSet<QuestionType> QuestionTypes { get; set; }
         public DbSet<Response> Responses { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<SubjectParameter> SubjectParameters { get; set; }
+        public DbSet<Text> Texts { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
-        public DbSet<AcademicYear> AcademicYears { get; set; }
+        public DbSet<Variant> Variants { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder.ApplyConfiguration(new AcademicYearConfig());
+            builder.ApplyConfiguration(new AppUserConfig());
+            builder.ApplyConfiguration(new BookletConfig());
+            builder.ApplyConfiguration(new CompanyConfig());
+            builder.ApplyConfiguration(new ExamConfig());
+            builder.ApplyConfiguration(new ExamParameterConfig());
+            builder.ApplyConfiguration(new GradeConfig());
+            builder.ApplyConfiguration(new GroupConfig());
             builder.ApplyConfiguration(new QuestionConfig());
+            builder.ApplyConfiguration(new QuestionLevelConfig());
+            builder.ApplyConfiguration(new QuestionParameterConfig());
+            builder.ApplyConfiguration(new QuestionTypeConfig());
             builder.ApplyConfiguration(new ResponseConig());
             builder.ApplyConfiguration(new SectionConfig());
-            builder.ApplyConfiguration(new AcademicYearConfig());
-            builder.ApplyConfiguration(new GradeConfig());
-            builder.ApplyConfiguration(new QuestionLevelConfig());
-            builder.ApplyConfiguration(new QuestionTypeConfig());
             builder.ApplyConfiguration(new SubjectConfig());
+            builder.ApplyConfiguration(new SubjectParameterConfig());
+            builder.ApplyConfiguration(new TextConfig());
+            builder.ApplyConfiguration(new VariantConfig());
 
             // For Table Per Type
             //builder.Entity<Grade>().ToTable("Grades");

@@ -21,6 +21,15 @@ namespace EntityLayer.Concrete
             this.Responses = new HashSet<Response>();
             this.Subjects = new HashSet<Subject>();
             this.Sections = new HashSet<Section>();
+            this.Companies = new HashSet<Company>();
+            this.Exams = new HashSet<Exam>();
+            this.SubjectParameters = new HashSet<SubjectParameter>();
+            this.ExamParameters = new HashSet<ExamParameter>();
+            this.Texts = new HashSet<Text>();
+            this.Variants = new HashSet<Variant>();
+            this.QuestionParameters = new HashSet<QuestionParameter>();
+            this.Booklets = new HashSet<Booklet>();
+            this.Groups = new HashSet<Group>();
 
             this.GradesM = new HashSet<Grade>();
             this.AcademicYearsM = new HashSet<AcademicYear>();
@@ -30,6 +39,15 @@ namespace EntityLayer.Concrete
             this.ResponsesM = new HashSet<Response>();
             this.SubjectsM = new HashSet<Subject>();
             this.SectionsM = new HashSet<Section>();
+            this.CompaniesM = new HashSet<Company>();
+            this.ExamsM = new HashSet<Exam>();
+            this.SubjectParametersM = new HashSet<SubjectParameter>();
+            this.ExamParametersM = new HashSet<ExamParameter>();
+            this.TextsM = new HashSet<Text>();
+            this.VariantsM = new HashSet<Variant>();
+            this.QuestionParametersM = new HashSet<QuestionParameter>();
+            this.BookletsM = new HashSet<Booklet>();
+            this.GroupsM = new HashSet<Group>();
         }
 
         public string FullName { get; set; }
@@ -52,6 +70,17 @@ namespace EntityLayer.Concrete
         public ICollection<Response> Responses { get; set; }
         public ICollection<Subject> Subjects { get; set; }
         public ICollection<Section> Sections { get; set; }
+        public ICollection<Company> Companies { get; set; }
+        public ICollection<Exam> Exams { get; set; }
+        public ICollection<SubjectParameter> SubjectParameters { get; set; }
+        public ICollection<ExamParameter> ExamParameters { get; set; }
+        public ICollection<Text> Texts { get; set; }
+        public ICollection<Variant> Variants { get; set; }
+        public ICollection<QuestionParameter> QuestionParameters { get; set; }
+        public ICollection<Booklet> Booklets { get; set; }
+        public ICollection<Group> Groups { get; set; }
+
+
 
         public ICollection<Grade> GradesM { get; set; }
         public ICollection<AcademicYear> AcademicYearsM { get; set; }
@@ -61,5 +90,15 @@ namespace EntityLayer.Concrete
         public ICollection<Response> ResponsesM { get; set; }
         public ICollection<Subject> SubjectsM { get; set; }
         public ICollection<Section> SectionsM { get; set; }
+        public ICollection<Company> CompaniesM { get; set; }
+        public ICollection<Exam> ExamsM { get; set; }
+        public ICollection<SubjectParameter> SubjectParametersM { get; set; }
+        public ICollection<ExamParameter> ExamParametersM { get; set; }
+        public ICollection<Text> TextsM { get; set; }
+        public ICollection<Variant> VariantsM { get; set; }
+        public ICollection<QuestionParameter> QuestionParametersM { get; set; }
+        public ICollection<Booklet> BookletsM { get; set; }
+        public ICollection<Group> GroupsM { get; set; }
+
     }
 }

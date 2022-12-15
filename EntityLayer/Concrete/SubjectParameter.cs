@@ -28,6 +28,8 @@ namespace EntityLayer.Concrete
 
         public Subject Subject { get; set; }
         public ExamParameter ExamParameter { get; set; }
+        public AppUser? CreatUser { get; set; }
+        public AppUser? ModifyUser { get; set; }
 
         public ICollection<QuestionParameter> QuestionParameters { get; set; }
 
