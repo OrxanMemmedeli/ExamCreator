@@ -1,8 +1,9 @@
-using Business.Validations;
+﻿using Business.Validations;
 using DataAccess.Concrete.Context;
 using ExamCreator;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,15 @@ builder.Services.AddControllersWithViews().AddFluentValidation(config => {
     config.ImplicitlyValidateRootCollectionElements = true;
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
+//{
+//    o.ExpireTimeSpan = TimeSpan.FromMinutes(120);
+//    o.LoginPath = "/Account/Login";
+//    o.LogoutPath = "/Account/LogOut";
+//    o.AccessDeniedPath = "/Account/Denied"; //Role uyğun olmadıqda yonelmeni temin edecekdir.
+//    o.SlidingExpiration = true;
+//}); //Routing Login
 
 builder.Services.Register(); //dependence ucun
 builder.Services.Validators(); // validation ucun
@@ -39,6 +49,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>

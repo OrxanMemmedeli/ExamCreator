@@ -1,15 +1,21 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using CoreLayer.Helpers.Tools;
 using EntityLayer.Concrete;
 using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
+using ExamCreator.Attributes;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[CompanyAccess(typeof(IHttpContextAccessor))]
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
