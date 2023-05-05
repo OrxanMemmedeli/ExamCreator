@@ -1,0 +1,16 @@
+﻿Exam Creator
+
+	* Loglama
+	* Question/response/section Custom Views
+	* Response controllerde index, create ve edit pencereleri olmayacaq. Evezinde Suallar hissesinde cavablarin editlenmesi olacaq.
+	* Sual hissesinde simple upload picture hissesi elave et
+	* Companye gore bolunme
+		* Muellim ve userler arasinda multi company elaqesi
+		* Sual company muellimden ve ya adminden gelecek
+		* Companilere expired sütunu qoy son 10 gün qalsa bildiriş ver. Free account hissəsidə Əlavə et. Compaynyə bagli butun user ve muellimler blok
+			* tarix hissesi haslanmis formatda saxlanilsin
+		*
+	*
+
+
+hazir olanlar
