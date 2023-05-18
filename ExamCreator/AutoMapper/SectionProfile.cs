@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using DTOLayer.DTOs.Section;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Section;
 
 namespace ExamCreator.AutoMapper
 {
@@ -8,12 +8,12 @@ namespace ExamCreator.AutoMapper
     {
         public SectionProfile()
         {
-            CreateMap<Section, ListSection>()
+            CreateMap<Section, SectionIndexDTO>()
                 .ForMember(dest => dest.SubjectName, opt => opt.MapFrom(src => src.Subject.Name))
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
 
-            CreateMap<Section, CreateSection>().ReverseMap();
-            CreateMap<Section, EditSection>().ReverseMap();
+            CreateMap<Section, SectionCreateDTO>().ReverseMap();
+            CreateMap<Section, SectionEditDTO>().ReverseMap();
         }
     }
 }

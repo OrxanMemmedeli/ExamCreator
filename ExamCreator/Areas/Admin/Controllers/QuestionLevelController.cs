@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using DTOLayer.DTOs.QuestionLevel;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.QuestionLevel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var QuestionLevels = await _questionLevelService.GetAllAsnyc().OrderBy(x => x.Level).ToListAsync();
-            var datas = _mapper.Map<List<QuestionLevel>, List<ListQuestionLevel>>(QuestionLevels);
+            var datas = _mapper.Map<List<QuestionLevel>, List<QuestionLevelIndexDTO>>(QuestionLevels);
             return View(datas);
         }
 
@@ -38,9 +38,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateQuestionLevel t)
+        public virtual async Task<IActionResult> Create(QuestionLevelCreateDTO t)
         {
-            var model = _mapper.Map<CreateQuestionLevel, QuestionLevel>(t);
+            var model = _mapper.Map<QuestionLevelCreateDTO, QuestionLevel>(t);
             var modelState = _questionLevelValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -66,16 +66,16 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<QuestionLevel, EditQuestionLevel>(data);
+            var model = _mapper.Map<QuestionLevel, QuestionLevelEditDTO>(data);
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditQuestionLevel t)
+        public virtual async Task<IActionResult> Edit(QuestionLevelEditDTO t)
         {
-            var model = _mapper.Map<EditQuestionLevel, QuestionLevel>(t);
+            var model = _mapper.Map<QuestionLevelEditDTO, QuestionLevel>(t);
             var modelState = _questionLevelValidator.Validate(model);
             if (!modelState.IsValid)
             {

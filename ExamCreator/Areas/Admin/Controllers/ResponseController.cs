@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using DTOLayer.DTOs.Response;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         //public virtual async Task<IActionResult> Index(int page = 1)
         //{
         //    var Responses = await _responseService.GetAllAsnyc().ToListAsync();
-        //    var datas = _mapper.Map<List<Response>, List<ListResponse>>(Responses);
+        //    var datas = _mapper.Map<List<Response>, List<ResponseIndexDTO>>(Responses);
         //    return View(datas);
         //}
 
@@ -38,9 +38,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateResponse t)
+        public virtual async Task<IActionResult> Create(ResponseCreateDTO t)
         {
-            var model = _mapper.Map<CreateResponse, Response>(t);
+            var model = _mapper.Map<ResponseCreateDTO, Response>(t);
             var modelState = _responseValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -73,9 +73,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditResponse t)
+        public virtual async Task<IActionResult> Edit(ResponseEditDTO t)
         {
-            var model = _mapper.Map<EditResponse, Response>(t);
+            var model = _mapper.Map<ResponseEditDTO, Response>(t);
             var modelState = _responseValidator.Validate(model);
             if (!modelState.IsValid)
             {

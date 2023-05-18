@@ -2,8 +2,8 @@
 using Business.Abstract;
 using Business.Validations;
 using CoreLayer.Helpers.Tools;
+using DTOLayer.DTOs.Grade;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
 using ExamCreator.Attributes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +33,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var grades = await _gradeService.GetAllAsnyc().OrderBy(x => x.Name).ToListAsync();
-            var datas = _mapper.Map<List<Grade>, List<ListGrade>>(grades);
+            var datas = _mapper.Map<List<Grade>, List<GradeIndexDTO>>(grades);
             return View(datas);
         }
 
@@ -45,9 +45,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateGrade t)
+        public virtual async Task<IActionResult> Create(GradeCreateDTO t)
         {
-            var model = _mapper.Map<CreateGrade, Grade>(t);
+            var model = _mapper.Map<GradeCreateDTO, Grade>(t);
             var modelState = _gradeValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -73,16 +73,16 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<Grade, EditGrade>(data);
+            var model = _mapper.Map<Grade, GradeEditDTO>(data);
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditGrade t)
+        public virtual async Task<IActionResult> Edit(GradeEditDTO t)
         {
-            var model = _mapper.Map<EditGrade, Grade>(t);
+            var model = _mapper.Map<GradeEditDTO, Grade>(t);
             var modelState = _gradeValidator.Validate(model);
             if (!modelState.IsValid)
             {

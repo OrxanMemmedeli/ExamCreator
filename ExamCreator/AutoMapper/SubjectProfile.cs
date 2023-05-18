@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using DTOLayer.DTOs.Subject;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Subject;
 
 namespace ExamCreator.AutoMapper
 {
@@ -8,11 +8,11 @@ namespace ExamCreator.AutoMapper
     {
         public SubjectProfile()
         {
-            CreateMap<Subject, ListSubject>()
+            CreateMap<Subject, SubjectIndexDTO>()
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
 
-            CreateMap<Subject, CreateSubject>().ReverseMap();
-            CreateMap<Subject, EditSubject>().ReverseMap();
+            CreateMap<Subject, SubjectCreateDTO>().ReverseMap();
+            CreateMap<Subject, SubjectEditDTO>().ReverseMap();
         }
     }
 }

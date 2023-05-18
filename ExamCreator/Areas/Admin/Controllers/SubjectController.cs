@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using DTOLayer.DTOs.Subject;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Subject;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var Subjects = await _subjectService.GetAllAsnyc().ToListAsync();
-            var datas = _mapper.Map<List<Subject>, List<ListSubject>>(Subjects);
+            var datas = _mapper.Map<List<Subject>, List<SubjectIndexDTO>>(Subjects);
             return View(datas);
         }
 
@@ -38,9 +38,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateSubject t)
+        public virtual async Task<IActionResult> Create(SubjectCreateDTO t)
         {
-            var model = _mapper.Map<CreateSubject, Subject>(t);
+            var model = _mapper.Map<SubjectCreateDTO, Subject>(t);
             var modelState = _subjectValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -66,16 +66,16 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<Subject, EditSubject>(data);
+            var model = _mapper.Map<Subject, SubjectEditDTO>(data);
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditSubject t)
+        public virtual async Task<IActionResult> Edit(SubjectEditDTO t)
         {
-            var model = _mapper.Map<EditSubject, Subject>(t);
+            var model = _mapper.Map<SubjectEditDTO, Subject>(t);
             var modelState = _subjectValidator.Validate(model);
             if (!modelState.IsValid)
             {

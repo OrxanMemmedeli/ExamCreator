@@ -6,7 +6,6 @@ using DataAccess.Concrete.Context;
 using DataAccess.EntityFramework;
 using DataAccess.Repositories;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using System.Configuration;

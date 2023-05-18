@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using DTOLayer.DTOs.Section;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Section;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +35,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var Sections = await _sectionService.GetAllAsnyc(x => x.Subject).OrderBy(x => x.Subject.Name).ToListAsync();
-            var datas = _mapper.Map<List<Section>, List<ListSection>>(Sections);
+            var datas = _mapper.Map<List<Section>, List<SectionIndexDTO>>(Sections);
             return View(datas);
         }
 
@@ -48,9 +48,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateSection t)
+        public virtual async Task<IActionResult> Create(SectionCreateDTO t)
         {
-            var model = _mapper.Map<CreateSection, Section>(t);
+            var model = _mapper.Map<SectionCreateDTO, Section>(t);
             var modelState = _sectionValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<Section, EditSection>(data);
+            var model = _mapper.Map<Section, SectionEditDTO>(data);
 
             GetFields();
             return View(model);
@@ -85,9 +85,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditSection t)
+        public virtual async Task<IActionResult> Edit(SectionEditDTO t)
         {
-            var model = _mapper.Map<EditSection, Section>(t);
+            var model = _mapper.Map<SectionEditDTO, Section>(t);
             var modelState = _sectionValidator.Validate(model);
             if (!modelState.IsValid)
             {

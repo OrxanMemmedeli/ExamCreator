@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using DTOLayer.DTOs.Grade;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
 
 namespace ExamCreator.AutoMapper
 {
@@ -8,11 +8,11 @@ namespace ExamCreator.AutoMapper
     {
         public GradeProfile()
         {
-            CreateMap<Grade, ListGrade>()
+            CreateMap<Grade, GradeIndexDTO>()
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
 
-            CreateMap<Grade, CreateGrade>().ReverseMap();
-            CreateMap<Grade, EditGrade>().ReverseMap();
+            CreateMap<Grade, GradeCreateDTO>().ReverseMap();
+            CreateMap<Grade, GradeEditDTO>().ReverseMap();
         }
     }
 }

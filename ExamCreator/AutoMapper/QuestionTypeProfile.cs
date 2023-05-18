@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using DTOLayer.DTOs.QuestionType;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.QuestionType;
 
 namespace ExamCreator.AutoMapper
 {
@@ -8,11 +8,11 @@ namespace ExamCreator.AutoMapper
     {
         public QuestionTypeProfile()
         {
-            CreateMap<QuestionType, ListQuestionType>()
+            CreateMap<QuestionType, QuestionTypeIndexDTO>()
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
 
-            CreateMap<QuestionType, CreateQuestionType>().ReverseMap();
-            CreateMap<QuestionType, EditQuestionType>().ReverseMap();
+            CreateMap<QuestionType, QuestionTypeCreateDTO>().ReverseMap();
+            CreateMap<QuestionType, QuestionTypeEditDTO>().ReverseMap();
         }
     }
 }

@@ -2,8 +2,8 @@
 using Business.Abstract;
 using Business.Validations;
 using DataAccess.Concrete.Context;
+using DTOLayer.DTOs.Question;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.Question;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +52,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var Questions = await _questionService.GetAllAsnyc().ToListAsync();
-            var datas = _mapper.Map<List<Question>, List<ListQuestion>>(Questions);
+            var datas = _mapper.Map<List<Question>, List<QuestionIndexDTO>>(Questions);
             return View(datas);
         }
 
@@ -67,9 +67,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateQuestion t)
+        public virtual async Task<IActionResult> Create(QuestionCreateDTO t)
         {
-            var model = _mapper.Map<CreateQuestion, Question>(t);
+            var model = _mapper.Map<QuestionCreateDTO, Question>(t);
             var modelState = _questionValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<Question, EditQuestion>(data);
+            var model = _mapper.Map<Question, QuestionEditDTO>(data);
 
             GetFields();
             return View(model);
@@ -106,9 +106,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditQuestion t)
+        public virtual async Task<IActionResult> Edit(QuestionEditDTO t)
         {           
-            var model = _mapper.Map<EditQuestion, Question>(t);
+            var model = _mapper.Map<QuestionEditDTO, Question>(t);
             var modelState = _questionValidator.Validate(model);
 
             if (!modelState.IsValid)

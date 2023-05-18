@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCreator", "ExamCreator\ExamCreator.csproj", "{E41A05FE-5E85-4C56-B06F-248931D27379}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamCreator", "ExamCreator\ExamCreator.csproj", "{E41A05FE-5E85-4C56-B06F-248931D27379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLayer", "Core\CoreLayer.csproj", "{02900D5F-42F1-4896-9E1D-FF9E1D27377D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLayer", "Core\CoreLayer.csproj", "{02900D5F-42F1-4896-9E1D-FF9E1D27377D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityLayer", "EntityLayer\EntityLayer.csproj", "{110FCF56-E200-4414-A0FE-C47EB0EC9F5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityLayer", "EntityLayer\EntityLayer.csproj", "{110FCF56-E200-4414-A0FE-C47EB0EC9F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{22D42629-8687-44C6-91EA-A11097037703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{22D42629-8687-44C6-91EA-A11097037703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{33095A53-E05F-4046-BA36-BF00621106A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{33095A53-E05F-4046-BA36-BF00621106A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOLayer", "DTOLayer\DTOLayer.csproj", "{6AD4B673-6DE1-4B62-9A37-C617416FE4F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{33095A53-E05F-4046-BA36-BF00621106A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33095A53-E05F-4046-BA36-BF00621106A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33095A53-E05F-4046-BA36-BF00621106A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD4B673-6DE1-4B62-9A37-C617416FE4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD4B673-6DE1-4B62-9A37-C617416FE4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD4B673-6DE1-4B62-9A37-C617416FE4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD4B673-6DE1-4B62-9A37-C617416FE4F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

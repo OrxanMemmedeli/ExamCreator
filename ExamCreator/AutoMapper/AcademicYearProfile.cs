@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DTOLayer.DTOs.AcademicYear;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.AcademicYear;
-using ExamCreator.Areas.Admin.Models.ViewModels.Grade;
+
 
 namespace ExamCreator.AutoMapper
 {
@@ -9,11 +9,11 @@ namespace ExamCreator.AutoMapper
     {
         public AcademicYearProfile()
         {
-            CreateMap<AcademicYear, ListAcademicYear>()
+            CreateMap<AcademicYear, AcademicYearIndexDTO>()
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
 
-            CreateMap<AcademicYear, CreateAcademicYear>().ReverseMap();
-            CreateMap<AcademicYear, EditAcademicYear>().ReverseMap();
+            CreateMap<AcademicYear, AcademicYearCreateDTO>().ReverseMap();
+            CreateMap<AcademicYear, AcademicYearEditDTO>().ReverseMap();
         }
     }
 }

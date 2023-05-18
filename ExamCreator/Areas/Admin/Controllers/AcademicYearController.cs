@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using DTOLayer.DTOs.AcademicYear;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.AcademicYear;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var AcademicYears = await _academicYearService.GetAllAsnyc().ToListAsync();
-            var datas = _mapper.Map<List<AcademicYear>, List<ListAcademicYear>>(AcademicYears);
+            var datas = _mapper.Map<List<AcademicYear>, List<AcademicYearIndexDTO>>(AcademicYears);
             return View(datas);
         }
 
@@ -38,9 +38,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateAcademicYear t)
+        public virtual async Task<IActionResult> Create(AcademicYearCreateDTO t)
         {
-            var model = _mapper.Map<CreateAcademicYear, AcademicYear>(t);
+            var model = _mapper.Map<AcademicYearCreateDTO, AcademicYear>(t);
             var modelState = _academicYearValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -66,16 +66,16 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<AcademicYear, EditAcademicYear>(data);
+            var model = _mapper.Map<AcademicYear, AcademicYearEditDTO>(data);
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditAcademicYear t)
+        public virtual async Task<IActionResult> Edit(AcademicYearEditDTO t)
         {
-            var model = _mapper.Map<EditAcademicYear, AcademicYear>(t);
+            var model = _mapper.Map<AcademicYearEditDTO, AcademicYear>(t);
 
             var modelState = _academicYearValidator.Validate(model);
             if (!modelState.IsValid)

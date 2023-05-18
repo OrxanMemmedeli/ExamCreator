@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using DTOLayer.DTOs.QuestionType;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.QuestionType;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var QuestionTypes = await _questionTypeService.GetAllAsnyc().ToListAsync();
-            var datas = _mapper.Map<List<QuestionType>, List<ListQuestionType>>(QuestionTypes);
+            var datas = _mapper.Map<List<QuestionType>, List<QuestionTypeIndexDTO>>(QuestionTypes);
             return View(datas);
         }
 
@@ -38,9 +38,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateQuestionType t)
+        public virtual async Task<IActionResult> Create(QuestionTypeCreateDTO t)
         {
-            var model = _mapper.Map<CreateQuestionType, QuestionType>(t);
+            var model = _mapper.Map<QuestionTypeCreateDTO, QuestionType>(t);
             var modelState = _questionTypeValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -66,16 +66,16 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<QuestionType, EditQuestionType>(data);
+            var model = _mapper.Map<QuestionType, QuestionTypeEditDTO>(data);
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditQuestionType t)
+        public virtual async Task<IActionResult> Edit(QuestionTypeEditDTO t)
         {
-            var model = _mapper.Map<EditQuestionType, QuestionType>(t);
+            var model = _mapper.Map<QuestionTypeEditDTO, QuestionType>(t);
             var modelState = _questionTypeValidator.Validate(model);
             if (!modelState.IsValid)
             {

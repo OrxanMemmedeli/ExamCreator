@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using DTOLayer.DTOs.UserType;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.UserType;
 
 namespace ExamCreator.AutoMapper
 {
@@ -8,10 +8,10 @@ namespace ExamCreator.AutoMapper
     {
         public UserTypeProfile()
         {
-            CreateMap<UserType, ListUserType>();
+            CreateMap<UserType, UserTypeIndexDTO>();
 
-            CreateMap<UserType, CreateUserType>().ReverseMap();
-            CreateMap<UserType, EditUserType>().ReverseMap();
+            CreateMap<UserType, UserTypeCreateDTO>().ReverseMap();
+            CreateMap<UserType, UserTypeEditDTO>().ReverseMap();
         }
     }
 }

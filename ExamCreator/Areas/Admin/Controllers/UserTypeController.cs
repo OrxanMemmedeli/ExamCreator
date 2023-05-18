@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using DTOLayer.DTOs.UserType;
 using EntityLayer.Concrete;
-using ExamCreator.Areas.Admin.Models.ViewModels.UserType;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Index(int page = 1)
         {
             var UserTypes = await _userTypeService.GetAllAsnyc().ToListAsync();
-            var datas = _mapper.Map<List<UserType>, List<ListUserType>>(UserTypes);
+            var datas = _mapper.Map<List<UserType>, List<UserTypeIndexDTO>>(UserTypes);
             return View(datas);
         }
 
@@ -38,9 +38,9 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(CreateUserType t)
+        public virtual async Task<IActionResult> Create(UserTypeCreateDTO t)
         {
-            var model = _mapper.Map<CreateUserType, UserType>(t);
+            var model = _mapper.Map<UserTypeCreateDTO, UserType>(t);
             var modelState = _userTypeValidator.Validate(model);
             if (!modelState.IsValid)
             {
@@ -66,16 +66,16 @@ namespace ExamCreator.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = _mapper.Map<UserType, EditUserType>(data);
+            var model = _mapper.Map<UserType, UserTypeEditDTO>(data);
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(EditUserType t)
+        public virtual async Task<IActionResult> Edit(UserTypeEditDTO t)
         {
-            var model = _mapper.Map<EditUserType, UserType>(t);
+            var model = _mapper.Map<UserTypeEditDTO, UserType>(t);
             var modelState = _userTypeValidator.Validate(model);
             if (!modelState.IsValid)
             {
