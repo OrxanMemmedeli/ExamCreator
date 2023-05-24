@@ -13,13 +13,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IQuestionTypeService _questionTypeService;
         private readonly IMapper _mapper;
-        private readonly QuestionTypeValidator _questionTypeValidator;
 
         public QuestionTypeController(IQuestionTypeService QuestionTypeService, IMapper mapper, QuestionTypeValidator questionTypeValidator)
         {
             _questionTypeService = QuestionTypeService;
             _mapper = mapper;
-            _questionTypeValidator = questionTypeValidator;
         }
 
         [HttpGet]
@@ -41,11 +39,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(QuestionTypeCreateDTO t)
         {
             var model = _mapper.Map<QuestionTypeCreateDTO, QuestionType>(t);
-            var modelState = _questionTypeValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 
@@ -76,11 +71,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(QuestionTypeEditDTO t)
         {
             var model = _mapper.Map<QuestionTypeEditDTO, QuestionType>(t);
-            var modelState = _questionTypeValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 

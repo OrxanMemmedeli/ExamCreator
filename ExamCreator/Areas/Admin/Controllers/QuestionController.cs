@@ -15,7 +15,6 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IQuestionService _questionService;
         private readonly IMapper _mapper;
-        private readonly QuestionValidator _questionValidator;
 
         private readonly IAcademicYearService _academicYearService;
         private readonly IGradeService _gradeService;
@@ -29,7 +28,6 @@ namespace ExamCreator.Areas.Admin.Controllers
         {
             _questionService = QuestionService;
             _mapper = mapper;
-            _questionValidator = questionValidator;
             _academicYearService = academicYearService;
             _gradeService = gradeService;
             _questionLevelService = questionLevelService;
@@ -70,12 +68,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(QuestionCreateDTO t)
         {
             var model = _mapper.Map<QuestionCreateDTO, Question>(t);
-            var modelState = _questionValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
-              
                 GetFields();
                 return View(t);
             }
@@ -109,13 +103,9 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(QuestionEditDTO t)
         {           
             var model = _mapper.Map<QuestionEditDTO, Question>(t);
-            var modelState = _questionValidator.Validate(model);
 
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
-
                 GetFields();
                 return View(t);
             }

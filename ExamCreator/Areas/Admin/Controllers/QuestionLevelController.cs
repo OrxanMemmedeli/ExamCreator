@@ -13,13 +13,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IQuestionLevelService _questionLevelService;
         private readonly IMapper _mapper;
-        private readonly QuestionLevelValidator _questionLevelValidator;
 
         public QuestionLevelController(IQuestionLevelService QuestionLevelService, IMapper mapper, QuestionLevelValidator questionLevelValidator)
         {
             _questionLevelService = QuestionLevelService;
             _mapper = mapper;
-            _questionLevelValidator = questionLevelValidator;
         }
 
         [HttpGet]
@@ -41,11 +39,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(QuestionLevelCreateDTO t)
         {
             var model = _mapper.Map<QuestionLevelCreateDTO, QuestionLevel>(t);
-            var modelState = _questionLevelValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 
@@ -76,11 +71,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(QuestionLevelEditDTO t)
         {
             var model = _mapper.Map<QuestionLevelEditDTO, QuestionLevel>(t);
-            var modelState = _questionLevelValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 

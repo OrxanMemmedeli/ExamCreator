@@ -32,11 +32,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\CoreLayer.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\DTOLayer\DTOLayer.csproj" />
     <ProjectReference Include="..\EntityLayer\EntityLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validations\DTOs\" />
   </ItemGroup>
 
 </Project>

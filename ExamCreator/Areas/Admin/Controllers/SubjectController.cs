@@ -13,13 +13,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly ISubjectService _subjectService;
         private readonly IMapper _mapper;
-        private readonly SubjectValidator _subjectValidator;
 
         public SubjectController(ISubjectService SubjectService, IMapper mapper, SubjectValidator subjectValidator)
         {
             _subjectService = SubjectService;
             _mapper = mapper;
-            _subjectValidator = subjectValidator;
         }
 
         [HttpGet]
@@ -41,11 +39,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(SubjectCreateDTO t)
         {
             var model = _mapper.Map<SubjectCreateDTO, Subject>(t);
-            var modelState = _subjectValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 
@@ -76,11 +71,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(SubjectEditDTO t)
         {
             var model = _mapper.Map<SubjectEditDTO, Subject>(t);
-            var modelState = _subjectValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 

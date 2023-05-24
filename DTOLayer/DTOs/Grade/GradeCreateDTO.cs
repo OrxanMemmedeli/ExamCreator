@@ -9,6 +9,5 @@ namespace DTOLayer.DTOs.Grade
     public class GradeCreateDTO
     {
         public string Name { get; set; }
-
     }
 }

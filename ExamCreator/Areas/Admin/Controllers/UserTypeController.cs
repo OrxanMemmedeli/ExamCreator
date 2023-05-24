@@ -13,13 +13,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IUserTypeService _userTypeService;
         private readonly IMapper _mapper;
-        private readonly UserTypeValidator _userTypeValidator;
 
         public UserTypeController(IUserTypeService UserTypeService, IMapper mapper, UserTypeValidator userTypeValidator)
         {
             _userTypeService = UserTypeService;
             _mapper = mapper;
-            _userTypeValidator = userTypeValidator;
         }
 
         [HttpGet]
@@ -41,11 +39,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(UserTypeCreateDTO t)
         {
             var model = _mapper.Map<UserTypeCreateDTO, UserType>(t);
-            var modelState = _userTypeValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 
@@ -76,11 +71,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(UserTypeEditDTO t)
         {
             var model = _mapper.Map<UserTypeEditDTO, UserType>(t);
-            var modelState = _userTypeValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 

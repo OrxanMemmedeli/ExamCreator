@@ -14,7 +14,6 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly ISectionService _sectionService;
         private readonly IMapper _mapper;
-        private readonly SectionValidator _sectionValidator;
 
         private readonly ISubjectService _subjectService;
 
@@ -22,7 +21,6 @@ namespace ExamCreator.Areas.Admin.Controllers
         {
             _sectionService = SectionService;
             _mapper = mapper;
-            _sectionValidator = sectionValidator;
             _subjectService = subjectService;
         }
 
@@ -51,11 +49,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(SectionCreateDTO t)
         {
             var model = _mapper.Map<SectionCreateDTO, Section>(t);
-            var modelState = _sectionValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 GetFields();
                 return View(t);
             }
@@ -88,11 +83,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(SectionEditDTO t)
         {
             var model = _mapper.Map<SectionEditDTO, Section>(t);
-            var modelState = _sectionValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 GetFields();
                 return View(t);
             }

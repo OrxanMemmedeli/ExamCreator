@@ -13,13 +13,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IResponseService _responseService;
         private readonly IMapper _mapper;
-        private readonly ResponseValidator _responseValidator;
 
         public ResponseController(IResponseService ResponseService, IMapper mapper, ResponseValidator responseValidator)
         {
             _responseService = ResponseService;
             _mapper = mapper;
-            _responseValidator = responseValidator;
         }
 
         //[HttpGet]
@@ -41,11 +39,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(ResponseCreateDTO t)
         {
             var model = _mapper.Map<ResponseCreateDTO, Response>(t);
-            var modelState = _responseValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 
@@ -76,11 +71,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(ResponseEditDTO t)
         {
             var model = _mapper.Map<ResponseEditDTO, Response>(t);
-            var modelState = _responseValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 

@@ -20,13 +20,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IGradeService _gradeService;
         private readonly IMapper _mapper;
-        private readonly GradeValidator _gradeValidator;
 
         public GradeController(IGradeService gradeService, IMapper mapper, GradeValidator gradeValidator)
         {
             _gradeService = gradeService;
             _mapper = mapper;
-            _gradeValidator = gradeValidator;
         }
 
         [HttpGet]
@@ -48,11 +46,10 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(GradeCreateDTO t)
         {
             var model = _mapper.Map<GradeCreateDTO, Grade>(t);
-            var modelState = _gradeValidator.Validate(model);
-            if (!modelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
+                var text = ModelState;
                 return View(t);
             }
 
@@ -83,11 +80,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(GradeEditDTO t)
         {
             var model = _mapper.Map<GradeEditDTO, Grade>(t);
-            var modelState = _gradeValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 

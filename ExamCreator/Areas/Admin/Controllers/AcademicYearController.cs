@@ -13,13 +13,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IAcademicYearService _academicYearService;
         private readonly IMapper _mapper;
-        private readonly AcademicYearValidator _academicYearValidator;
 
         public AcademicYearController(IAcademicYearService academicYearService, IMapper mapper, AcademicYearValidator academicYearValidator)
         {
             _academicYearService = academicYearService;
             _mapper = mapper;
-            _academicYearValidator = academicYearValidator;
         }
 
         [HttpGet]
@@ -41,11 +39,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Create(AcademicYearCreateDTO t)
         {
             var model = _mapper.Map<AcademicYearCreateDTO, AcademicYear>(t);
-            var modelState = _academicYearValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 
@@ -77,11 +72,8 @@ namespace ExamCreator.Areas.Admin.Controllers
         {
             var model = _mapper.Map<AcademicYearEditDTO, AcademicYear>(t);
 
-            var modelState = _academicYearValidator.Validate(model);
-            if (!modelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (modelState.Errors != null)
-                    modelState.Errors.ForEach(item => ModelState.AddModelError(item.PropertyName, item.ErrorMessage));
                 return View(t);
             }
 
