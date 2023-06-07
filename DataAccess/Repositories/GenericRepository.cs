@@ -1,5 +1,4 @@
-﻿using CoreLayer.Entities;
-using DataAccess.Abstract;
+﻿using DataAccess.Abstract;
 using DataAccess.Concrete.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;

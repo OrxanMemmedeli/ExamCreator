@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Validations;
+using CoreLayer.Helpers.E_mail.Mailkit;
 using CoreLayer.Helpers.Tools;
 using DTOLayer.DTOs.Grade;
 using EntityLayer.Concrete;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using System.Security.Claims;
 
 namespace ExamCreator.Areas.Admin.Controllers
@@ -20,16 +22,19 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IGradeService _gradeService;
         private readonly IMapper _mapper;
+        private readonly SendEMail _sendEmail;
 
-        public GradeController(IGradeService gradeService, IMapper mapper, GradeValidator gradeValidator)
+        public GradeController(IGradeService gradeService, IMapper mapper, GradeValidator gradeValidator, IConfiguration configuration)
         {
             _gradeService = gradeService;
             _mapper = mapper;
+            _sendEmail = new SendEMail(configuration);
         }
 
         [HttpGet]
         public virtual async Task<IActionResult> Index(int page = 1)
         {
+            _sendEmail.Send("mahmut","xalid");
             var grades = await _gradeService.GetAllAsnyc().OrderBy(x => x.Name).ToListAsync();
             var datas = _mapper.Map<List<Grade>, List<GradeIndexDTO>>(grades);
             return View(datas);

@@ -18,10 +18,10 @@ namespace Business.Validations.DTOs.AcademicYear
                 .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Tədris ili"))
                 .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, "Tədris ili", 50));
 
-            RuleFor(x => x.)
-                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Tədris ili"))
-                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Tədris ili"))
-                .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, "Tədris ili", 50));
+            //RuleFor(x => x.)
+            //    .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Tədris ili"))
+            //    .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Tədris ili"))
+            //    .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, "Tədris ili", 50));
         }
     }
 }

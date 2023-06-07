@@ -24,5 +24,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  "MailKit": {
+    "fromName": "System",
+    "toName": "User",
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "fromAddress": "test",
+    "password": "terst"
   }
 }
