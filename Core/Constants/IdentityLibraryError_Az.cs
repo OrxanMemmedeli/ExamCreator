@@ -33,3 +33,4 @@ namespace CoreLayer.Constants
         public override IdentityError RecoveryCodeRedemptionFailed() => new IdentityError { Code = nameof(RecoveryCodeRedemptionFailed), Description = "Recovery code redemption failed. (Bərpa kodunun istifadəsi uğursuz oldu.)" };
     }
 }
+ 
