@@ -21,24 +21,13 @@ namespace CoreLayer.Helpers.E_mail.Mailkit
 
         public SendEMail(IConfiguration configuration)
         {
-            var launchSettingsConfig = configuration.GetSection("profiles")
-                .GetChildren()
-                .FirstOrDefault(c => c["commandName"] == "Project" && c["env"] == "Development")
-                ?.GetSection("environmentVariables");
-
-            if (launchSettingsConfig != null)
-            {
-                fromName = launchSettingsConfig["MailKit:fromName"];
-                toName = launchSettingsConfig["MailKit:toName"];
-                host = launchSettingsConfig["MailKit:host"];
-                port = Convert.ToInt32(launchSettingsConfig["MailKit:port"]);
-                fromAddress = launchSettingsConfig["MailKit:fromAddress"];
-                password = launchSettingsConfig["MailKit:password"];
-            }
-            else
-            {
-                throw new InvalidOperationException("Could not find launchSettings configuration for MailKit.");
-            }
+            //fromName = Environment.GetEnvironmentVariable("fromName");
+            fromName = configuration["fromName"];
+            toName = configuration["toName"];
+            host = configuration["host"];
+            port = Convert.ToInt32(configuration["port"]);
+            fromAddress = configuration["fromAddress"];
+            password = configuration["password"];
         }
         public async Task<IResult> Send(string toAdress, string textBody)
         {
