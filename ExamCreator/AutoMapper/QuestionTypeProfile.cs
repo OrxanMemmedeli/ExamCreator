@@ -8,8 +8,7 @@ namespace ExamCreator.AutoMapper
     {
         public QuestionTypeProfile()
         {
-            CreateMap<QuestionType, QuestionTypeIndexDTO>()
-                .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
+            CreateMap<QuestionType, QuestionTypeIndexDTO>().ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName)).ReverseMap();
 
             CreateMap<QuestionType, QuestionTypeCreateDTO>().ReverseMap();
             CreateMap<QuestionType, QuestionTypeEditDTO>().ReverseMap();

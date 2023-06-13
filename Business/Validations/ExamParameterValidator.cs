@@ -1,5 +1,6 @@
 ﻿using CoreLayer.Constants;
 using EntityLayer.Concrete;
+using EntityLayer.Constants;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,14 @@ namespace Business.Validations
         public ExamParameterValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "İmtahan Parametri"))
-                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "İmtahan Parametri"))
-                .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, "İmtahan Parametri", 50));
+                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.ExamParameter))
+                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.ExamParameter))
+                .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, EntityAndPropertyNames_Az.ExamParameter, 50));
 
             RuleFor(x => x.Description)
-                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Açıqlama"))
-                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Açıqlama"))
-                .MaximumLength(70).WithMessage(String.Format(ValidationMessage.MaximumLength, "Açıqlama", 500));
+                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Description))
+                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Description))
+                .MaximumLength(70).WithMessage(String.Format(ValidationMessage.MaximumLength, EntityAndPropertyNames_Az.Description, 500));
         }
     }
 }

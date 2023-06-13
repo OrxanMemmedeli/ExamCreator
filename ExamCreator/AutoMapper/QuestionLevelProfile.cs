@@ -8,8 +8,7 @@ namespace ExamCreator.AutoMapper
     {
         public QuestionLevelProfile()
         {
-            CreateMap<QuestionLevel, QuestionLevelIndexDTO>()
-                .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
+            CreateMap<QuestionLevel, QuestionLevelIndexDTO>().ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName)).ReverseMap();
 
             CreateMap<QuestionLevel, QuestionLevelCreateDTO>().ReverseMap();
             CreateMap<QuestionLevel, QuestionLevelEditDTO>().ReverseMap();

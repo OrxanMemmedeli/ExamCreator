@@ -18,17 +18,17 @@ namespace ExamCreator
     {
         public static void Register(this IServiceCollection services)
         {
-            services.AddTransient<ECContext, ECContext>();
+            services.AddScoped<ECContext, ECContext>();
 
-            services.AddTransient<IGradeService, GradeManager>().AddTransient<IGradeDal, EFGradeRepository>();
-            services.AddTransient<IAcademicYearService, AcademicYearManager>().AddTransient<IAcademicYearDal, EFAcademicYearRepository>();
-            services.AddTransient<IQuestionService, QuestionManager>().AddTransient<IQuestionDal, EFQuestionRepository>();
-            services.AddTransient<IQuestionLevelService, QuestionLevelManager>().AddTransient<IQuestionLevelDal, EFQuestionLevelRepository>();
-            services.AddTransient<IQuestionTypeService, QuestionTypeManager>().AddTransient<IQuestionTypeDal, EFQuestionTypeRepository>();
-            services.AddTransient<IResponseService, ResponseManager>().AddTransient<IResponseDal, EFResponseRepository>();
-            services.AddTransient<ISectionService, SectionManager>().AddTransient<ISectionDal, EFSectionRepository>();
-            services.AddTransient<ISubjectService, SubjectManager>().AddTransient<ISubjectDal, EFSubjectRepository>();
-            services.AddTransient<IUserTypeService, UserTypeManager>().AddTransient<IUserTypeDal, EFUserTypeRepository>();
+            services.AddScoped<IGradeService, GradeManager>().AddScoped<IGradeDal, EFGradeRepository>();
+            services.AddScoped<IAcademicYearService, AcademicYearManager>().AddScoped<IAcademicYearDal, EFAcademicYearRepository>();
+            services.AddScoped<IQuestionService, QuestionManager>().AddScoped<IQuestionDal, EFQuestionRepository>();
+            services.AddScoped<IQuestionLevelService, QuestionLevelManager>().AddScoped<IQuestionLevelDal, EFQuestionLevelRepository>();
+            services.AddScoped<IQuestionTypeService, QuestionTypeManager>().AddScoped<IQuestionTypeDal, EFQuestionTypeRepository>();
+            services.AddScoped<IResponseService, ResponseManager>().AddScoped<IResponseDal, EFResponseRepository>();
+            services.AddScoped<ISectionService, SectionManager>().AddScoped<ISectionDal, EFSectionRepository>();
+            services.AddScoped<ISubjectService, SubjectManager>().AddScoped<ISubjectDal, EFSubjectRepository>();
+            services.AddScoped<IUserTypeService, UserTypeManager>().AddScoped<IUserTypeDal, EFUserTypeRepository>();
 
         }
 

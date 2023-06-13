@@ -10,7 +10,7 @@ namespace ExamCreator.AutoMapper
         {
             CreateMap<Section, SectionIndexDTO>()
                 .ForMember(dest => dest.SubjectName, opt => opt.MapFrom(src => src.Subject.Name))
-                .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
+                .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName)).ReverseMap();
 
             CreateMap<Section, SectionCreateDTO>().ReverseMap();
             CreateMap<Section, SectionEditDTO>().ReverseMap();

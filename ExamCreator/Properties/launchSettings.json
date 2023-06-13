@@ -5,12 +5,12 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "fromName": "System",
+        "fromName": "Exam Creator System",
         "toName": "User",
         "host": "smtp.gmail.com",
         "port": "587",
-        "fromAddress": "test",
-        "password": "terst"
+        "fromAddress": "khansoftdevelopment@gmail.com",
+        "password": "tfxfptxqhqawnogr"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7282;http://localhost:5282"
@@ -22,12 +22,6 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-  },
-  "MailKit": {
-    "host": "smtp.gmail.com",
-    "port": 587,
-    "fromAddress": "test",
-    "password": "terst"
   },
   "iisSettings": {
     "windowsAuthentication": false,

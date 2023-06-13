@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class Subject:IEntity
+    public class Subject : IEntity
     {
         public Subject()
         {
@@ -17,7 +17,7 @@ namespace EntityLayer.Concrete
             this.SubjectParameters = new HashSet<SubjectParameter>();
         }
         public string Name { get; set; }
-        public decimal? AmountForQuestion{ get; set; }
+        public decimal? AmountForQuestion { get; set; }
 
         public ICollection<Section> Sections { get; set; }
         public ICollection<Response> Responses { get; set; }

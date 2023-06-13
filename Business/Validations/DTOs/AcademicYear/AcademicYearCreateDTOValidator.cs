@@ -1,5 +1,6 @@
 ﻿using CoreLayer.Constants;
 using DTOLayer.DTOs.AcademicYear;
+using EntityLayer.Constants;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Business.Validations.DTOs.AcademicYear
         public AcademicYearCreateDTOValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Tədris ili"))
-                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Tədris ili"))
-                .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, "Tədris ili", 50));
+                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.AcademicYear))
+                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.AcademicYear))
+                .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, EntityAndPropertyNames_Az.AcademicYear, 50));
         }
     }
 }

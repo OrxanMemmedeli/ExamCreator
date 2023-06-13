@@ -1,5 +1,6 @@
 ﻿using CoreLayer.Constants;
 using EntityLayer.Concrete;
+using EntityLayer.Constants;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Business.Validations
         public ExamValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "İmtahan"))
-                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "İmtahan"))
-                .MaximumLength(70).WithMessage(String.Format(ValidationMessage.MaximumLength, "İmtahan", 70));
+                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Exam))
+                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Exam))
+                .MaximumLength(70).WithMessage(String.Format(ValidationMessage.MaximumLength, EntityAndPropertyNames_Az.Exam, 70));
         }
     }
 }

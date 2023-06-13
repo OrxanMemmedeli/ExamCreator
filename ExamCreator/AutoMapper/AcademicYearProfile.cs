@@ -10,7 +10,7 @@ namespace ExamCreator.AutoMapper
         public AcademicYearProfile()
         {
             CreateMap<AcademicYear, AcademicYearIndexDTO>()
-                .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName));
+                .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName)).ReverseMap();
 
             CreateMap<AcademicYear, AcademicYearCreateDTO>().ReverseMap();
             CreateMap<AcademicYear, AcademicYearEditDTO>().ReverseMap();

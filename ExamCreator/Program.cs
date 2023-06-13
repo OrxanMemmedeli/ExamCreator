@@ -1,4 +1,5 @@
 ﻿using Business.Validations;
+using CoreLayer;
 using DataAccess.Concrete.Context;
 using ExamCreator;
 using FluentValidation;
@@ -39,6 +40,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //}); //Routing Login
 
 builder.Services.Register(); //dependence ucun
+builder.Services.CoreRegister(); //core layer dependence
+
 builder.Services.Validators(); // validation ucun
 //builder.Services.AddFluentValidationClientsideAdapters(); // Clinet teref ucun auto mehdudiyyet
 builder.Services.AddFluentValidationAutoValidation();

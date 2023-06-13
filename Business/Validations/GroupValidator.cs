@@ -1,5 +1,6 @@
 ﻿using CoreLayer.Constants;
 using EntityLayer.Concrete;
+using EntityLayer.Constants;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Business.Validations
         public GroupValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Qrup"))
-                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, "Qrup"))
-                .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, "Qrup", 50));
+                .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Group))
+                .NotNull().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Group))
+                .MaximumLength(50).WithMessage(String.Format(ValidationMessage.MaximumLength, EntityAndPropertyNames_Az.Group, 50));
         }
     }
 }

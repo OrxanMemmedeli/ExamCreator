@@ -22,19 +22,18 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IGradeService _gradeService;
         private readonly IMapper _mapper;
-        private readonly SendEMail _sendEmail;
+        private readonly SendEMailByGmail _sendEmail;
 
         public GradeController(IGradeService gradeService, IMapper mapper, GradeValidator gradeValidator, IConfiguration configuration)
         {
             _gradeService = gradeService;
             _mapper = mapper;
-            _sendEmail = new SendEMail(configuration);
+            _sendEmail = new SendEMailByGmail(configuration);
         }
 
         [HttpGet]
         public virtual async Task<IActionResult> Index(int page = 1)
         {
-            _sendEmail.Send("mahmut","xalid");
             var grades = await _gradeService.GetAllAsnyc().OrderBy(x => x.Name).ToListAsync();
             var datas = _mapper.Map<List<Grade>, List<GradeIndexDTO>>(grades);
             return View(datas);
