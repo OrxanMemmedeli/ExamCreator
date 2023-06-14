@@ -14,7 +14,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly IUserTypeService _userTypeService;
         private readonly IMapper _mapper;
 
-        public UserTypeController(IUserTypeService UserTypeService, IMapper mapper, UserTypeValidator userTypeValidator)
+        public UserTypeController(IUserTypeService UserTypeService, IMapper mapper)
         {
             _userTypeService = UserTypeService;
             _mapper = mapper;

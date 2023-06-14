@@ -3,6 +3,7 @@ using Business.Abstract;
 using Business.Validations;
 using CoreLayer.Helpers.E_mail.Mailkit;
 using CoreLayer.Helpers.Tools;
+using CoreLayer.Utilities.GuidFormatControl;
 using DTOLayer.DTOs.Grade;
 using EntityLayer.Concrete;
 using ExamCreator.Attributes;
@@ -24,7 +25,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly IMapper _mapper;
         private readonly SendEMailByGmail _sendEmail;
 
-        public GradeController(IGradeService gradeService, IMapper mapper, GradeValidator gradeValidator, IConfiguration configuration)
+        public GradeController(IGradeService gradeService, IMapper mapper, IConfiguration configuration)
         {
             _gradeService = gradeService;
             _mapper = mapper;
@@ -84,6 +85,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(GradeEditDTO t)
         {
             var model = _mapper.Map<GradeEditDTO, Grade>(t);
+
             if (!ModelState.IsValid)
             {
                 return View(t);

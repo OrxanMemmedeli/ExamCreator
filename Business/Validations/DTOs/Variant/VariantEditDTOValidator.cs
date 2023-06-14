@@ -1,5 +1,5 @@
 ﻿using CoreLayer.Constants;
-using EntityLayer.Concrete;
+using DTOLayer.DTOs.Variant;
 using EntityLayer.Constants;
 using FluentValidation;
 using System;
@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Validations
+namespace Business.Validations.DTOs.Variant
 {
-    public class VariantValidator : AbstractValidator<Variant>
+    public class VariantEditDTOValidator : AbstractValidator<VariantEditDTO>
     {
-        public VariantValidator()
+        public VariantEditDTOValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Variant))

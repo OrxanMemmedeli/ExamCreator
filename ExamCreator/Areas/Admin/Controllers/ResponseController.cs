@@ -14,7 +14,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly IResponseService _responseService;
         private readonly IMapper _mapper;
 
-        public ResponseController(IResponseService ResponseService, IMapper mapper, ResponseValidator responseValidator)
+        public ResponseController(IResponseService ResponseService, IMapper mapper)
         {
             _responseService = ResponseService;
             _mapper = mapper;

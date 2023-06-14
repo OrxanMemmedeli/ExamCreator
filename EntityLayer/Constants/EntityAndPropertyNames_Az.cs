@@ -8,6 +8,10 @@ namespace EntityLayer.Constants
 {
     public static class EntityAndPropertyNames_Az
     {
+
+        /// <summary>
+        /// entity adlari
+        /// </summary>
         static string academicYear = "Tədris ili";
         static string appRole = "Rol";
         static string appUser = "İstifadəçi";
@@ -51,7 +55,9 @@ namespace EntityLayer.Constants
         static public ref readonly string Variant => ref variant;
 
 
-        
+        /// <summary>
+        /// secilme sahe adlari
+        /// </summary>
         static string sectionId = "Seçilmiş bölmə";
         static string subjectId = "Seçilmiş fənn";
         static string questionId = "Seçilmiş sual";
@@ -59,7 +65,10 @@ namespace EntityLayer.Constants
         static string questionLevelId = "Seçilmiş sual səviyyəsi";
         static string gradeId = "Seçilmiş sinif";
         static string academicYearId = "Seçilmiş tədris ili";
-
+        static string variantId = "Seçilmiş variant";
+        static string examId = "Seçilmiş imtahan";
+        static string examParameterId = "Seçilmiş imtahan parametri";
+        static string subjectParameterId = "Seçilmiş fənn parametri";
 
         static public ref readonly string SectionId => ref sectionId;
         static public ref readonly string SubjectId => ref subjectId;
@@ -68,9 +77,15 @@ namespace EntityLayer.Constants
         static public ref readonly string QuestionLevelId => ref questionLevelId;
         static public ref readonly string GradeId => ref gradeId;
         static public ref readonly string AcademicYearId => ref academicYearId;
+        static public ref readonly string VariantId => ref variantId;
+        static public ref readonly string ExamId => ref examId;
+        static public ref readonly string ExamParameterId => ref examParameterId;
+        static public ref readonly string SubjectParameterId => ref subjectParameterId;
 
 
-
+        /// <summary>
+        /// umumi sozler
+        /// </summary>
         static string questionLevelName = "Sual səviyyəsi";
         static string responseType = "Cavab tipi";
         static string description = "Açıqlama";
@@ -82,6 +97,11 @@ namespace EntityLayer.Constants
         static string title = "Başlıq";
         static string content = "Məzmun";
         static string textName = "Mətn adı";
+        static string subjectCount = "Fənn sayı";
+        static string startQuestionNumber = "Sualın başlama nömrəsi";
+        static string endQuestionNumber = "Sualın bitmə nömrəsi";
+        static string questionCount = "Sual sayı";
+        static string order = "Sıra";
 
         static public ref readonly string QuestionLevelName => ref questionLevelName;
         static public ref readonly string ResponseType => ref responseType;
@@ -94,6 +114,11 @@ namespace EntityLayer.Constants
         static public ref readonly string TextName => ref textName;
         static public ref readonly string Title => ref title;
         static public ref readonly string Content => ref content;
+        static public ref readonly string SubjectCount => ref subjectCount;
+        static public ref readonly string StartQuestionNumber => ref startQuestionNumber;
+        static public ref readonly string EndQuestionNumber => ref endQuestionNumber;
+        static public ref readonly string QuestionCount => ref questionCount;
+        static public ref readonly string Order => ref order;
 
 
     }

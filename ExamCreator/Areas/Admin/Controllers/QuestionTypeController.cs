@@ -14,7 +14,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly IQuestionTypeService _questionTypeService;
         private readonly IMapper _mapper;
 
-        public QuestionTypeController(IQuestionTypeService QuestionTypeService, IMapper mapper, QuestionTypeValidator questionTypeValidator)
+        public QuestionTypeController(IQuestionTypeService QuestionTypeService, IMapper mapper)
         {
             _questionTypeService = QuestionTypeService;
             _mapper = mapper;

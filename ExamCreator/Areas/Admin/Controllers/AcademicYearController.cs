@@ -14,7 +14,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly IAcademicYearService _academicYearService;
         private readonly IMapper _mapper;
 
-        public AcademicYearController(IAcademicYearService academicYearService, IMapper mapper, AcademicYearValidator academicYearValidator)
+        public AcademicYearController(IAcademicYearService academicYearService, IMapper mapper)
         {
             _academicYearService = academicYearService;
             _mapper = mapper;

@@ -24,7 +24,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly ISubjectService _subjectService;
 
 
-        public QuestionController(IQuestionService QuestionService, IMapper mapper, QuestionValidator questionValidator, IAcademicYearService academicYearService, IGradeService gradeService, IQuestionLevelService questionLevelService, IQuestionTypeService questionTypeService, ISectionService sectionService, ISubjectService subjectService)
+        public QuestionController(IQuestionService QuestionService, IMapper mapper, IAcademicYearService academicYearService, IGradeService gradeService, IQuestionLevelService questionLevelService, IQuestionTypeService questionTypeService, ISectionService sectionService, ISubjectService subjectService)
         {
             _questionService = QuestionService;
             _mapper = mapper;
@@ -35,7 +35,7 @@ namespace ExamCreator.Areas.Admin.Controllers
             _sectionService = sectionService;
             _subjectService = subjectService;
         }
-       private void GetFields()
+        private void GetFields()
         {
             ViewData["AcademicYearId"] = new SelectList(_academicYearService.GetAllAsnyc(), "Id", "Name");
             ViewData["GradeId"] = new SelectList(_gradeService.GetAllAsnyc(), "Id", "Name");
@@ -61,7 +61,7 @@ namespace ExamCreator.Areas.Admin.Controllers
             return View();
         }
 
- 
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -101,7 +101,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(QuestionEditDTO t)
-        {           
+        {
             var model = _mapper.Map<QuestionEditDTO, Question>(t);
 
             if (!ModelState.IsValid)

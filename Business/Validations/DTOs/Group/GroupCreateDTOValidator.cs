@@ -1,5 +1,5 @@
 ﻿using CoreLayer.Constants;
-using EntityLayer.Concrete;
+using DTOLayer.DTOs.Group;
 using EntityLayer.Constants;
 using FluentValidation;
 using System;
@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Validations
+namespace Business.Validations.DTOs.Group
 {
-    public class GroupValidator : AbstractValidator<Group>
+    public class GroupCreateDTOValidator : AbstractValidator<GroupCreateDTO>
     {
-        public GroupValidator()
+        public GroupCreateDTOValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Group))

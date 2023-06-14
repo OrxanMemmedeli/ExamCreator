@@ -14,7 +14,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly IQuestionLevelService _questionLevelService;
         private readonly IMapper _mapper;
 
-        public QuestionLevelController(IQuestionLevelService QuestionLevelService, IMapper mapper, QuestionLevelValidator questionLevelValidator)
+        public QuestionLevelController(IQuestionLevelService QuestionLevelService, IMapper mapper)
         {
             _questionLevelService = QuestionLevelService;
             _mapper = mapper;

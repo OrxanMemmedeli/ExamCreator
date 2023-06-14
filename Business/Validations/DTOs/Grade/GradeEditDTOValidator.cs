@@ -1,4 +1,6 @@
-﻿using CoreLayer.Constants;
+﻿using Business.Validations.DTOs.BaseFields;
+using CoreLayer.Constants;
+using CoreLayer.Utilities.GuidFormatControl;
 using DTOLayer.DTOs.Grade;
 using EntityLayer.Constants;
 using FluentValidation;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.Grade
 {
-    public class GradeEditDTOValidator : AbstractValidator<GradeEditDTO>
+    public class GradeEditDTOValidator : BaseFieldsForEditValidator<GradeEditDTO>
     {
         public GradeEditDTOValidator()
         {

@@ -15,7 +15,7 @@ namespace Business.Validations.DTOs.BaseFields
         public BaseFieldsValidator()
         {
             RuleFor(x => x.Id).Must(GuidControl.BeValidGuidPattern).WithMessage(ValidationMessage.WrongGuidFormat);
-            RuleFor(x => x.ModifyedDate).Must(date => date >= DateTime.Now).WithMessage(ValidationMessage.DateTimeMinValue);
+            RuleFor(x => x.ModifyedDate).Must(date => date >= DateTime.Now.AddMinutes(-2)).WithMessage(ValidationMessage.DateTimeMinValue);
         }
     }
 }

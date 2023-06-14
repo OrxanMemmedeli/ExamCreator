@@ -1,5 +1,5 @@
 ﻿using CoreLayer.Constants;
-using EntityLayer.Concrete;
+using DTOLayer.DTOs.Company;
 using EntityLayer.Constants;
 using FluentValidation;
 using System;
@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Validations
+namespace Business.Validations.DTOs.Company
 {
-    public class CompanyValidator : AbstractValidator<Company>
+    public class CompanyCreateDTOValidator : AbstractValidator<CompanyCreateDTO>
     {
-        public CompanyValidator()
+        public CompanyCreateDTOValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(String.Format(ValidationMessage.NotEmptyAndNotNull, EntityAndPropertyNames_Az.Company))

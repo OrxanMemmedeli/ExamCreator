@@ -14,7 +14,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly ISubjectService _subjectService;
         private readonly IMapper _mapper;
 
-        public SubjectController(ISubjectService SubjectService, IMapper mapper, SubjectValidator subjectValidator)
+        public SubjectController(ISubjectService SubjectService, IMapper mapper)
         {
             _subjectService = SubjectService;
             _mapper = mapper;

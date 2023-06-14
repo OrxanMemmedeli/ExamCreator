@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.BaseFields
 {
-    public class BaseFieldsForEditValidator : AbstractValidator<BaseFieldsForEdit>
+    public class BaseFieldsForEditValidator<T> : AbstractValidator<T> where T: BaseFieldsForEdit
     {
         public BaseFieldsForEditValidator()
         {
-            RuleFor(x => x.CreatedDate).Must(date => date >= DateTime.Now && date != null).WithMessage(ValidationMessage.DateTimeMinValue);
+            Include(new BaseFieldsValidator());
+            RuleFor(x => x.CreatedDate).Must(date => date >= DateTime.Now.AddMinutes(-2) && date != null).WithMessage(ValidationMessage.DateTimeMinValue);
 
             //RuleFor(x => x.CreatUserId).Must(guid => GuidControl.BeValidGuidPattern(guid)).WithMessage(ValidationMessage.WrongGuidFormat);
         }
