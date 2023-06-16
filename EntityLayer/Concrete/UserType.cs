@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CoreLayer.Entities;
+using EntityLayer.Concrete.Base;
 
 namespace EntityLayer.Concrete
 {
-    public class UserType : IEntityBase
+    public class UserType : BaseEntity
     {
         public UserType()
         {
@@ -20,13 +21,13 @@ namespace EntityLayer.Concrete
 
         public ICollection<AppUser> AppUsers { get; set; }
 
-        #region IEntity
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public bool Status { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifyedDate { get; set; }
-        #endregion
+        //#region IEntity
+        //public Guid Id { get; set; } = Guid.NewGuid();
+        //public bool Status { get; set; }
+        //public bool IsDeleted { get; set; }
+        //public DateTime? CreatedDate { get; set; }
+        //public DateTime? ModifyedDate { get; set; }
+        //#endregion
 
     }
 }

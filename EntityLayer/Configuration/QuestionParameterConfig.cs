@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class QuestionParameterConfig : IEntityTypeConfiguration<QuestionParameter>
+    public class QuestionParameterConfig : BaseEntityWithUserConfiguration<QuestionParameter>
     {
-        public void Configure(EntityTypeBuilder<QuestionParameter> builder)
+        public override void Configure(EntityTypeBuilder<QuestionParameter> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.QuestionType)
                 .WithMany(x => x.QuestionParameters)
                 .HasForeignKey(x => x.QuestionTypeId)

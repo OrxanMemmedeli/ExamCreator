@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class VariantConfig : IEntityTypeConfiguration<Variant>
+    public class VariantConfig : BaseEntityWithUserConfiguration<Variant>
     {
-        public void Configure(EntityTypeBuilder<Variant> builder)
+        public override void Configure(EntityTypeBuilder<Variant> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.CreatUser)
                 .WithMany(x => x.Variants)
                 .HasForeignKey(x => x.CreatUserId)

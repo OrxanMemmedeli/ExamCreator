@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace DataAccess.Concrete.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
-            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Test; Integrated Security = true; MultipleActiveResultSets = True");
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
 
         }
@@ -45,25 +46,8 @@ namespace DataAccess.Concrete.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
-            builder.ApplyConfiguration(new AcademicYearConfig());
-            builder.ApplyConfiguration(new AppUserConfig());
-            builder.ApplyConfiguration(new BookletConfig());
-            builder.ApplyConfiguration(new CompanyConfig());
-            builder.ApplyConfiguration(new ExamConfig());
-            builder.ApplyConfiguration(new ExamParameterConfig());
-            builder.ApplyConfiguration(new GradeConfig());
-            builder.ApplyConfiguration(new GroupConfig());
-            builder.ApplyConfiguration(new QuestionConfig());
-            builder.ApplyConfiguration(new QuestionLevelConfig());
-            builder.ApplyConfiguration(new QuestionParameterConfig());
-            builder.ApplyConfiguration(new QuestionTypeConfig());
-            builder.ApplyConfiguration(new ResponseConig());
-            builder.ApplyConfiguration(new SectionConfig());
-            builder.ApplyConfiguration(new SubjectConfig());
-            builder.ApplyConfiguration(new SubjectParameterConfig());
-            builder.ApplyConfiguration(new TextConfig());
-            builder.ApplyConfiguration(new VariantConfig());
+            //builder.Ignore<AppUser>();
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             // For Table Per Type
             //builder.Entity<Grade>().ToTable("Grades");

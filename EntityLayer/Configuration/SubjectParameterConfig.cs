@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class SubjectParameterConfig : IEntityTypeConfiguration<SubjectParameter>
+    public class SubjectParameterConfig : BaseEntityWithUserConfiguration<SubjectParameter>
     {
-        public void Configure(EntityTypeBuilder<SubjectParameter> builder)
+        public override void Configure(EntityTypeBuilder<SubjectParameter> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.SubjectParameters)
                 .HasForeignKey(x => x.SubjectId)

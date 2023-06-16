@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class GroupConfig : IEntityTypeConfiguration<Group>
+    public class GroupConfig : BaseEntityWithUserConfiguration<Group>
     {
-        public void Configure(EntityTypeBuilder<Group> builder)
+        public override void Configure(EntityTypeBuilder<Group> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.CreatUser)
                 .WithMany(x => x.Groups)
                 .HasForeignKey(x => x.CreatUserId)
