@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration.Base
 {
-    public class BaseEntityConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEntity
+    public class BaseEntityConfig<T> : IEntityTypeConfiguration<T> where T : BaseEntity
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {

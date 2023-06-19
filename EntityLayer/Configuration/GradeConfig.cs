@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class GradeConfig : BaseEntityWithUserConfiguration<Grade>
+    public class GradeConfig : BaseEntityWithUserConfig<Grade>
     {
         public override void Configure(EntityTypeBuilder<Grade> builder)
         {

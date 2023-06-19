@@ -46,8 +46,31 @@ namespace DataAccess.Concrete.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Ignore<AppUser>();
+            base.OnModelCreating(builder);
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            // Manually configure 
+            builder.ApplyConfiguration(new AcademicYearConfig());
+            builder.ApplyConfiguration(new AppUserConfig());
+            builder.ApplyConfiguration(new BookletConfig());
+            builder.ApplyConfiguration(new CompanyConfig());
+            builder.ApplyConfiguration(new ExamConfig());
+            builder.ApplyConfiguration(new ExamParameterConfig());
+            builder.ApplyConfiguration(new GradeConfig());
+            builder.ApplyConfiguration(new GroupConfig());
+            builder.ApplyConfiguration(new QuestionConfig());
+            builder.ApplyConfiguration(new QuestionLevelConfig());
+            builder.ApplyConfiguration(new QuestionParameterConfig());
+            builder.ApplyConfiguration(new QuestionTypeConfig());
+            builder.ApplyConfiguration(new ResponseConig());
+            builder.ApplyConfiguration(new SectionConfig());
+            builder.ApplyConfiguration(new SubjectConfig());
+            builder.ApplyConfiguration(new SubjectParameterConfig());
+            builder.ApplyConfiguration(new TextConfig());
+            builder.ApplyConfiguration(new UserTypeConfig());
+            builder.ApplyConfiguration(new VariantConfig());
+
 
             // For Table Per Type
             //builder.Entity<Grade>().ToTable("Grades");
@@ -59,9 +82,6 @@ namespace DataAccess.Concrete.Context
             //builder.Entity<Subject>().ToTable("Subjects");
             //builder.Entity<UserType>().ToTable("UserTypes");
             //builder.Entity<AcademicYear>().ToTable("AcademicYears");
-
-            base.OnModelCreating(builder);
-
         }
 
         //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

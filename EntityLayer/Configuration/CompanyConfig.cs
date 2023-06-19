@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class CompanyConfig : BaseEntityWithUserConfiguration<Company>
+    public class CompanyConfig : BaseEntityWithUserConfig<Company>
     {
         public override void Configure(EntityTypeBuilder<Company> builder)
         {

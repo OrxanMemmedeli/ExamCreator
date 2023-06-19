@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class TextConfig : BaseEntityWithUserConfiguration<Text>
+    public class TextConfig : BaseEntityWithUserConfig<Text>
     {
         public override void Configure(EntityTypeBuilder<Text> builder)
         {

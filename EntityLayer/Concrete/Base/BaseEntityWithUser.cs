@@ -9,10 +9,12 @@ namespace EntityLayer.Concrete.Base
 {
     public abstract class BaseEntityWithUser : BaseEntity
     {
+        [ForeignKey("CreatUserId")]
         public Guid? CreatUserId { get; set; }
+        [ForeignKey("ModifyUserId")]
         public Guid? ModifyUserId { get; set; }
 
-        public virtual AppUser CreatUser { get; set; }
-        public virtual AppUser ModifyUser { get; set; }
+        public virtual AppUser? CreatUser { get; set; }
+        public virtual AppUser? ModifyUser { get; set; }
     }
 }

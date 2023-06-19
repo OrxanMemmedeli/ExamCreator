@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class BookletConfig : BaseEntityWithUserConfiguration<Booklet>
+    public class BookletConfig : BaseEntityWithUserConfig<Booklet>
     {
         public override void Configure(EntityTypeBuilder<Booklet> builder)
         {

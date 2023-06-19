@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class QuestionTypeConfig : BaseEntityWithUserConfiguration<QuestionType>
+    public class QuestionTypeConfig : BaseEntityWithUserConfig<QuestionType>
     {
         public override void Configure(EntityTypeBuilder<QuestionType> builder)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration.Base
 {
-    public class BaseEntityWithUserConfiguration<T> : BaseEntityConfiguration<T> where T : BaseEntityWithUser
+    public class BaseEntityWithUserConfig<T> : BaseEntityConfig<T> where T : BaseEntityWithUser
     {
         public override void Configure(EntityTypeBuilder<T> builder)
         {

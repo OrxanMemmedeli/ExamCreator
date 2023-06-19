@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class ResponseConig : BaseEntityWithUserConfiguration<Response>
+    public class ResponseConig : BaseEntityWithUserConfig<Response>
     {
         public override void Configure(EntityTypeBuilder<Response> builder)
         {

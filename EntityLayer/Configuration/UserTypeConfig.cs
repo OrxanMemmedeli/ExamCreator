@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class UserTypeConfiguration : BaseEntityConfiguration<UserType>
+    public class UserTypeConfig : BaseEntityConfig<UserType>
     {
         public override void Configure(EntityTypeBuilder<UserType> builder)
         {

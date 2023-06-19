@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class ExamParameterConfig : BaseEntityWithUserConfiguration<ExamParameter>
+    public class ExamParameterConfig : BaseEntityWithUserConfig<ExamParameter>
     {
         public override void Configure(EntityTypeBuilder<ExamParameter> builder)
         {

@@ -10,7 +10,7 @@ using EntityLayer.Configuration.Base;
 
 namespace EntityLayer.Configuration
 {
-    public class SubjectConfig : BaseEntityWithUserConfiguration<Subject>
+    public class SubjectConfig : BaseEntityWithUserConfig<Subject>
     {
         public override void Configure(EntityTypeBuilder<Subject> builder)
         {
