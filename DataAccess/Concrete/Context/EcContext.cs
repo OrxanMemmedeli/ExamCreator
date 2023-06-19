@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace DataAccess.Concrete.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
-            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Test; Integrated Security = true; MultipleActiveResultSets = True");
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
 
         }
@@ -45,7 +46,11 @@ namespace DataAccess.Concrete.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
 
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            // Manually configure 
             builder.ApplyConfiguration(new AcademicYearConfig());
             builder.ApplyConfiguration(new AppUserConfig());
             builder.ApplyConfiguration(new BookletConfig());
@@ -63,7 +68,9 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new SubjectConfig());
             builder.ApplyConfiguration(new SubjectParameterConfig());
             builder.ApplyConfiguration(new TextConfig());
+            builder.ApplyConfiguration(new UserTypeConfig());
             builder.ApplyConfiguration(new VariantConfig());
+
 
             // For Table Per Type
             //builder.Entity<Grade>().ToTable("Grades");
@@ -75,9 +82,6 @@ namespace DataAccess.Concrete.Context
             //builder.Entity<Subject>().ToTable("Subjects");
             //builder.Entity<UserType>().ToTable("UserTypes");
             //builder.Entity<AcademicYear>().ToTable("AcademicYears");
-
-            base.OnModelCreating(builder);
-
         }
 
         //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

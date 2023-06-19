@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class CompanyConfig : IEntityTypeConfiguration<Company>
+    public class CompanyConfig : BaseEntityWithUserConfig<Company>
     {
-        public void Configure(EntityTypeBuilder<Company> builder)
+        public override void Configure(EntityTypeBuilder<Company> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.CreatUser)
                 .WithMany(x => x.Companies)
                 .HasForeignKey(x => x.CreatUserId)

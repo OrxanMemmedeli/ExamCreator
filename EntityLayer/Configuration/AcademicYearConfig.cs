@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class AcademicYearConfig : IEntityTypeConfiguration<AcademicYear>
+    public class AcademicYearConfig : BaseEntityWithUserConfig<AcademicYear>
     {
-        public void Configure(EntityTypeBuilder<AcademicYear> builder)
+        public override void Configure(EntityTypeBuilder<AcademicYear> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.CreatUser)
                 .WithMany(x => x.AcademicYears)
                 .HasForeignKey(x => x.CreatUserId)

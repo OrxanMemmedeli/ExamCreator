@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class TextConfig : IEntityTypeConfiguration<Text>
+    public class TextConfig : BaseEntityWithUserConfig<Text>
     {
-        public void Configure(EntityTypeBuilder<Text> builder)
+        public override void Configure(EntityTypeBuilder<Text> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.CreatUser)
                 .WithMany(x => x.Texts)
                 .HasForeignKey(x => x.CreatUserId)

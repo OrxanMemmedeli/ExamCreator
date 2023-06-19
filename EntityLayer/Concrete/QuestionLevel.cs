@@ -1,4 +1,5 @@
 ﻿using CoreLayer.Entities;
+using EntityLayer.Concrete.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class QuestionLevel : IEntity
+    public class QuestionLevel : BaseEntityWithUser
     {
         public QuestionLevel()
         {
@@ -19,18 +20,18 @@ namespace EntityLayer.Concrete
         public short Level { get; set; }
         public ICollection<Question> Questions { get; set; }
 
-        #region IEntity
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public bool Status { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifyedDate { get; set; }
-        public Guid? CreatUserId { get; set; }
-        public Guid? ModifyUserId { get; set; }
+        //#region IEntity
+        //public Guid Id { get; set; } = Guid.NewGuid();
+        //public bool Status { get; set; }
+        //public bool IsDeleted { get; set; }
+        //public DateTime? CreatedDate { get; set; }
+        //public DateTime? ModifyedDate { get; set; }
+        //public Guid? CreatUserId { get; set; }
+        //public Guid? ModifyUserId { get; set; }
 
-        public AppUser? CreatUser { get; set; }
-        public AppUser? ModifyUser { get; set; }
-        #endregion
+        //public AppUser? CreatUser { get; set; }
+        //public AppUser? ModifyUser { get; set; }
+        //#endregion
 
 
     }

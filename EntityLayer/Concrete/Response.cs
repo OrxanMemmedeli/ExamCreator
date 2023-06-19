@@ -1,4 +1,5 @@
 ﻿using CoreLayer.Entities;
+using EntityLayer.Concrete.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class Response : IEntity
+    public class Response : BaseEntityWithUser
     {
         public string? Title { get; set; }
         public string? Content { get; set; }
@@ -18,23 +19,23 @@ namespace EntityLayer.Concrete
         public Guid QuestionTypeId { get; set; }
         public Guid AcademicYearId { get; set; }
 
-        public AcademicYear AcademicYear { get; set; }
-        public Subject Subject { get; set; }
-        public Question Question { get; set; }
-        public QuestionType QuestionType { get; set; }
+        public virtual AcademicYear AcademicYear { get; set; }
+        public virtual Subject Subject { get; set; }
+        public virtual Question Question { get; set; }
+        public virtual QuestionType QuestionType { get; set; }
 
-        #region IEntity
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public bool Status { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifyedDate { get; set; }
-        public Guid? CreatUserId { get; set; }
-        public Guid? ModifyUserId { get; set; }
+        //#region IEntity
+        //public Guid Id { get; set; } = Guid.NewGuid();
+        //public bool Status { get; set; }
+        //public bool IsDeleted { get; set; }
+        //public DateTime? CreatedDate { get; set; }
+        //public DateTime? ModifyedDate { get; set; }
+        //public Guid? CreatUserId { get; set; }
+        //public Guid? ModifyUserId { get; set; }
 
-        public AppUser? CreatUser { get; set; }
-        public AppUser? ModifyUser { get; set; }
-        #endregion
+        //public AppUser? CreatUser { get; set; }
+        //public AppUser? ModifyUser { get; set; }
+        //#endregion
 
     }
 }

@@ -6,13 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 
 namespace EntityLayer.Configuration
 {
-    public class SubjectConfig : IEntityTypeConfiguration<Subject>
+    public class SubjectConfig : BaseEntityWithUserConfig<Subject>
     {
-        public void Configure(EntityTypeBuilder<Subject> builder)
+        public override void Configure(EntityTypeBuilder<Subject> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.CreatUser)
                 .WithMany(x => x.Subjects)
                 .HasForeignKey(x => x.CreatUserId)

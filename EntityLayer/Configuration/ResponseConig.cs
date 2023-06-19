@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class ResponseConig : IEntityTypeConfiguration<Response>
+    public class ResponseConig : BaseEntityWithUserConfig<Response>
     {
-        public void Configure(EntityTypeBuilder<Response> builder)
+        public override void Configure(EntityTypeBuilder<Response> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.Responses)
                 .HasForeignKey(x => x.SubjectId)

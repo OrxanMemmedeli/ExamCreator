@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class BookletConfig : IEntityTypeConfiguration<Booklet>
+    public class BookletConfig : BaseEntityWithUserConfig<Booklet>
     {
-        public void Configure(EntityTypeBuilder<Booklet> builder)
+        public override void Configure(EntityTypeBuilder<Booklet> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.Grade)
                 .WithMany(x => x.Booklets)
                 .HasForeignKey(x => x.GradeId)

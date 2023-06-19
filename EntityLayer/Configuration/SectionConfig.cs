@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Configuration
 {
-    public class SectionConfig : IEntityTypeConfiguration<Section>
+    public class SectionConfig : BaseEntityWithUserConfig<Section>
     {
-        public void Configure(EntityTypeBuilder<Section> builder)
+        public override void Configure(EntityTypeBuilder<Section> builder)
         {
+            base.Configure(builder);
+
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.Sections)
                 .HasForeignKey(x => x.SubjectId)
