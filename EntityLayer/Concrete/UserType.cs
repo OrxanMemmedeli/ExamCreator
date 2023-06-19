@@ -21,13 +21,5 @@ namespace EntityLayer.Concrete
 
         public ICollection<AppUser> AppUsers { get; set; }
 
-        //#region IEntity
-        //public Guid Id { get; set; } = Guid.NewGuid();
-        //public bool Status { get; set; }
-        //public bool IsDeleted { get; set; }
-        //public DateTime? CreatedDate { get; set; }
-        //public DateTime? ModifyedDate { get; set; }
-        //#endregion
-
     }
 }

@@ -102,6 +102,10 @@ namespace EntityLayer.Constants
         static string endQuestionNumber = "Sualın bitmə nömrəsi";
         static string questionCount = "Sual sayı";
         static string order = "Sıra";
+        static string startDate = "Başlanğıc tarixi";
+        static string expiredDate = "Bitmə tarixi";
+        static string key = "açar";
+        static string isFree = "ödənişsiz";
 
         static public ref readonly string QuestionLevelName => ref questionLevelName;
         static public ref readonly string ResponseType => ref responseType;
@@ -119,6 +123,10 @@ namespace EntityLayer.Constants
         static public ref readonly string EndQuestionNumber => ref endQuestionNumber;
         static public ref readonly string QuestionCount => ref questionCount;
         static public ref readonly string Order => ref order;
+        static public ref readonly string StartDate => ref startDate;
+        static public ref readonly string ExpiredDate => ref expiredDate;
+        static public ref readonly string Key => ref key;
+        static public ref readonly string IsFree => ref isFree;
 
 
     }

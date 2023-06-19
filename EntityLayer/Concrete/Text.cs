@@ -14,16 +14,6 @@ namespace EntityLayer.Concrete
         {
             this.Questions = new HashSet<Question>();
         }
-        //public Guid? CreatUserId { get; set; }
-        //public Guid? ModifyUserId { get; set; }
-        //public Guid Id { get; set; }
-        //public bool Status { get; set; }
-        //public bool IsDeleted { get; set; }
-        //public DateTime? CreatedDate { get; set; }
-        //public DateTime? ModifyedDate { get; set; }
-
-        //public AppUser? CreatUser { get; set; }
-        //public AppUser? ModifyUser { get; set; }
 
         public string Name { get; set; }
         public string Title { get; set; } = "Mətni oxuyun və {0} – {1} nömrəli tapşırıqları mətnə uyğun cavablayın.";

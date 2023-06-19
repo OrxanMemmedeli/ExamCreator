@@ -10,13 +10,6 @@ namespace EntityLayer.Concrete
 {
     public class QuestionParameter : BaseEntityWithUser
     {
-        //public Guid? CreatUserId { get; set; }
-        //public Guid? ModifyUserId { get; set; }
-        //public Guid Id { get; set; }
-        //public bool Status { get; set; }
-        //public bool IsDeleted { get; set; }
-        //public DateTime? CreatedDate { get; set; }
-        //public DateTime? ModifyedDate { get; set; }
 
         public Guid QuestionTypeId { get; set; }
         public Guid SubjectParameterId { get; set; }
@@ -26,7 +19,6 @@ namespace EntityLayer.Concrete
 
         public virtual QuestionType QuestionType { get; set; }
         public virtual SubjectParameter SubjectParameter { get; set; }
-        //public AppUser? CreatUser { get; set; }
-        //public AppUser? ModifyUser { get; set; }
+
     }
 }

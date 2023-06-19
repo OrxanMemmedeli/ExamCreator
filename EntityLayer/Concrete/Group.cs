@@ -15,23 +15,8 @@ namespace EntityLayer.Concrete
         {
             this.Booklets = new HashSet<Booklet>();
         }
-        //public Guid? CreatUserId { get; set; }
-        //public Guid? ModifyUserId { get; set; }
-        //public Guid Id { get; set; }
-        //public bool Status { get; set; }
-        //public bool IsDeleted { get; set; }
-        //public DateTime? CreatedDate { get; set; }
-        //public DateTime? ModifyedDate { get; set; }
 
         public string Name { get; set; }
-
-
-        //public AppUser? CreatUser { get; set; }
-        //public AppUser? ModifyUser { get; set; }
-
-
-        //public Guid GroupId { get; set; }
-        //public Grade Group { get; set; }
 
         public ICollection<Booklet> Booklets { get; set; }
 

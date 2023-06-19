@@ -10,14 +10,6 @@ namespace EntityLayer.Concrete
 {
     public class Booklet : BaseEntityWithUser
     {
-        //public Guid? CreatUserId { get; set; }
-        //public Guid? ModifyUserId { get; set; }
-        //public Guid Id { get; set; }
-        //public bool Status { get; set; }
-        //public bool IsDeleted { get; set; }
-        //public DateTime? CreatedDate { get; set; }
-        //public DateTime? ModifyedDate { get; set; }
-
         public Guid GradeId { get; set; }
         public Guid? GroupId { get; set; }
         public Guid VariantId { get; set; }
@@ -32,8 +24,6 @@ namespace EntityLayer.Concrete
         public virtual Exam Exam { get; set; }
         public virtual Company Company { get; set; }
         public virtual AcademicYear AcademicYear { get; set; }
-        //public AppUser? CreatUser { get; set; }
-        //public AppUser? ModifyUser { get; set; }
 
     }
 }

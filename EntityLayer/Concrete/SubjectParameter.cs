@@ -14,13 +14,6 @@ namespace EntityLayer.Concrete
         {
             this.QuestionParameters = new HashSet<QuestionParameter>();
         }
-        //public Guid? CreatUserId { get; set; }
-        //public Guid? ModifyUserId { get; set; }
-        //public Guid Id { get; set; }
-        //public bool Status { get; set; }
-        //public bool IsDeleted { get; set; }
-        //public DateTime? CreatedDate { get; set; }
-        //public DateTime? ModifyedDate { get; set; }
 
         public int QuestionCount { get; set; }
         public int Order { get; set; }
@@ -29,8 +22,6 @@ namespace EntityLayer.Concrete
 
         public virtual Subject Subject { get; set; }
         public virtual ExamParameter ExamParameter { get; set; }
-        //public AppUser? CreatUser { get; set; }
-        //public AppUser? ModifyUser { get; set; }
 
         public ICollection<QuestionParameter> QuestionParameters { get; set; }
 

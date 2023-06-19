@@ -7,12 +7,12 @@
 	* Companye gore bolunme
 		* Muellim ve userler arasinda multi company elaqesi
 		* Sual company muellimden ve ya adminden gelecek
-		* Companilere expired sütunu qoy son 10 gün qalsa bildiriş ver. Free account hissəsidə Əlavə et. Compaynyə bagli butun user ve muellimler blok
-			* tarix hissesi haslanmis formatda saxlanilsin
+		* Companilere expired qoy son 10 gün qalsa bildiriş ver. Free account hissəsidə Əlavə et. Compaynyə bagli butun user ve muellimler blok
+			* Sutunlar startDate(sifrelenmis acarla), EndDate(sifrelenmis acarla), sifreleme mentni(sifrelenmis Xusisi metnle), Free account hissesi(1,0) (haslanmis??)
 		*
 
-	* BaseFieldsForEdit hissesinde Creat/ModifyUserId nullable hisselerini legv et
 
+	* BaseFieldsForEdit hissesinde Creat/ModifyUserId nullable hisselerini legv et
 	* AppUSER DTO hissesine xususi baxis edilmelidir.  (AppUserProfile) 
 
 
