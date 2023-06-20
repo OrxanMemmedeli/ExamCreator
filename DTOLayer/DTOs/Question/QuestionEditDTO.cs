@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.Question
 {
-    public class QuestionEditDTO : BaseFieldsForEdit
+    public class QuestionEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public string Content { get; set; }
 

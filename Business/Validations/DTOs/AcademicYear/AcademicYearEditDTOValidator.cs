@@ -1,4 +1,5 @@
-﻿using CoreLayer.Constants;
+﻿using Business.Validations.DTOs.BaseFields;
+using CoreLayer.Constants;
 using DTOLayer.DTOs.AcademicYear;
 using EntityLayer.Constants;
 using FluentValidation;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.AcademicYear
 {
-    public class AcademicYearEditDTOValidator : AbstractValidator<AcademicYearEditDTO>
+    public class AcademicYearEditDTOValidator : BaseFieldsValidator<AcademicYearEditDTO>
     {
         public AcademicYearEditDTOValidator()
         {

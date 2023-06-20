@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.SubjectParameter
 {
-    public class SubjectParameterEditDTO : BaseFieldsForEdit
+    public class SubjectParameterEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public int QuestionCount { get; set; }
         public int Order { get; set; }

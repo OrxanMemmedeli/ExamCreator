@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.Grade
 {
-    public class GradeEditDTOValidator : BaseFieldsForEditValidator<GradeEditDTO>
+    public class GradeEditDTOValidator : BaseFieldsValidator<GradeEditDTO>
     {
         public GradeEditDTOValidator()
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.Subject
 {
-    public class SubjectEditDTO : BaseFieldsForEdit
+    public class SubjectEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public string Name { get; set; }
         public decimal? AmountForQuestion { get; set; }

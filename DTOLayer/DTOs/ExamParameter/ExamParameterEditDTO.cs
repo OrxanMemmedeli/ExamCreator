@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.ExamParameter
 {
-    public class ExamParameterEditDTO : BaseFieldsForEdit
+    public class ExamParameterEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public string Name { get; set; }
         public int SubjectCount { get; set; }

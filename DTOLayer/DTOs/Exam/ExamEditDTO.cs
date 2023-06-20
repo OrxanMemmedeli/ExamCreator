@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.Exam
 {
-    public class ExamEditDTO : BaseFieldsForEdit
+    public class ExamEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public string Name { get; set; }
         public Guid GradeId { get; set; }

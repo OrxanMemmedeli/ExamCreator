@@ -117,13 +117,13 @@ namespace DataAccess.Repositories
 
             EntityEntry entityEntry = Table.Update(t);
 
-            var local = await Table.FindAsync(id);
-            if (local != null)
-            {
-                _context.Entry(local).State = EntityState.Detached;
-            }
+            //var local = await Table.FindAsync(id);
+            //if (local != null)
+            //{
+            //    _context.Entry(local).State = EntityState.Detached;
+            //}
 
-            entityEntry.State = EntityState.Modified;
+            //entityEntry.State = EntityState.Modified;
 
 
 

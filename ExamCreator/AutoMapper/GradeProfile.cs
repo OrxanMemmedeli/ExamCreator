@@ -12,7 +12,9 @@ namespace ExamCreator.AutoMapper
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName)).ReverseMap();
 
             CreateMap<Grade, GradeCreateDTO>().ReverseMap();
-            CreateMap<Grade, GradeEditDTO>().ReverseMap();
+            CreateMap<GradeEditDTO, Grade>()
+                .ForMember(dest => dest.Name, opt => opt.Condition((src, dest, srcMember) => srcMember != null))
+                .ReverseMap();
         }
     }
 }

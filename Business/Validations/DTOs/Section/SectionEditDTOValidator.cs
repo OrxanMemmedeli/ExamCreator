@@ -1,4 +1,5 @@
-﻿using CoreLayer.Constants;
+﻿using Business.Validations.DTOs.BaseFields;
+using CoreLayer.Constants;
 using DTOLayer.DTOs.Section;
 using EntityLayer.Constants;
 using FluentValidation;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.Section
 {
-    public class SectionEditDTOValidator : AbstractValidator<SectionEditDTO>
+    public class SectionEditDTOValidator : BaseFieldsValidator<SectionEditDTO>
     {
         public SectionEditDTOValidator()
         {

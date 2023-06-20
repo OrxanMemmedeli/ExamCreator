@@ -82,7 +82,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -116,7 +116,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -131,7 +131,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Remove(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }

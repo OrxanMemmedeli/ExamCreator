@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.Group
 {
-    public class GroupEditDTO : BaseFieldsForEdit
+    public class GroupEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public string Name { get; set; }
     }

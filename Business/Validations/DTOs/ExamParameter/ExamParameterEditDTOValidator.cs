@@ -1,4 +1,5 @@
-﻿using CoreLayer.Constants;
+﻿using Business.Validations.DTOs.BaseFields;
+using CoreLayer.Constants;
 using DTOLayer.DTOs.ExamParameter;
 using EntityLayer.Constants;
 using FluentValidation;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.ExamParameter
 {
-    public class ExamParameterEditDTOValidator : AbstractValidator<ExamParameterEditDTO>
+    public class ExamParameterEditDTOValidator : BaseFieldsValidator<ExamParameterEditDTO>
     {
         public ExamParameterEditDTOValidator()
         {

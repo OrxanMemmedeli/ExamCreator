@@ -1,4 +1,5 @@
-﻿using CoreLayer.Constants;
+﻿using Business.Validations.DTOs.BaseFields;
+using CoreLayer.Constants;
 using DTOLayer.DTOs.UserType;
 using EntityLayer.Constants;
 using FluentValidation;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.UserType
 {
-    public class UserTypeEditDTOValidator : AbstractValidator<UserTypeEditDTO>
+    public class UserTypeEditDTOValidator : BaseFieldsValidator<UserTypeEditDTO>
     {
         public UserTypeEditDTOValidator()
         {

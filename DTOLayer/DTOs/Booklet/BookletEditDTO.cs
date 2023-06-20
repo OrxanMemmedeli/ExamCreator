@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.Booklet
 {
-    public class BookletEditDTO : BaseFieldsForEdit
+    public class BookletEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public Guid GradeId { get; set; }
         public Guid? GroupId { get; set; }

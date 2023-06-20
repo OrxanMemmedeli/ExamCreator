@@ -11,7 +11,7 @@ namespace CoreLayer.Utilities.GuidFormatControl
     {
         public static bool BeValidGuidPattern(Guid guid)
         {
-            var pattern = new Regex(@"^A-Fa-f0-9]{8}-(?:[A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}$");
+            var pattern = new Regex(@"^[A-Fa-f0-9]{8}-(?:[A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}$");
             return pattern.IsMatch(guid.ToString()) && !guid.Equals(Guid.Empty);
         }
     }

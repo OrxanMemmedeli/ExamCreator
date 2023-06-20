@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using DataAccess.Abstract;
 using EntityLayer.Concrete;
 using System;
@@ -13,10 +14,11 @@ namespace Business.Concrete
     public class GradeManager : IGradeService
     {
         private readonly IGradeDal _dal;
-
-        public GradeManager(IGradeDal dal)
+        private readonly IMapper _mapper;
+        public GradeManager(IGradeDal dal, IMapper mapper)
         {
             _dal = dal;
+            _mapper = mapper;
         }
 
         public async Task Delete(Grade t)

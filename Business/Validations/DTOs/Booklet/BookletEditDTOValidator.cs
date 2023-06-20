@@ -1,4 +1,5 @@
-﻿using CoreLayer.Constants;
+﻿using Business.Validations.DTOs.BaseFields;
+using CoreLayer.Constants;
 using DTOLayer.DTOs.Booklet;
 using EntityLayer.Constants;
 using FluentValidation;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Validations.DTOs.Booklet
 {
-    public class BookletEditDTOValidator : AbstractValidator<BookletEditDTO>
+    public class BookletEditDTOValidator : BaseFieldsValidator<BookletEditDTO>
     {
         public BookletEditDTOValidator()
         {

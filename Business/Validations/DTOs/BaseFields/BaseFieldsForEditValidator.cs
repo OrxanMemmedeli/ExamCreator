@@ -14,7 +14,7 @@ namespace Business.Validations.DTOs.BaseFields
     {
         public BaseFieldsForEditValidator()
         {
-            Include(new BaseFieldsValidator());
+            Include(new BaseFieldsValidator<T>());
             RuleFor(x => x.CreatedDate).Must(date => date >= DateTime.Now.AddMinutes(-2) && date != null).WithMessage(ValidationMessage.DateTimeMinValue);
 
             //RuleFor(x => x.CreatUserId).Must(guid => GuidControl.BeValidGuidPattern(guid)).WithMessage(ValidationMessage.WrongGuidFormat);

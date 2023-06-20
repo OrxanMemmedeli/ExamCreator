@@ -34,7 +34,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         // GET: Admin/Test/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Questions == null)
+            if (id == Guid.Empty || _context.Questions == null)
             {
                 return NotFound();
             }
@@ -99,7 +99,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         // GET: Admin/Test/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Questions == null)
+            if (id == Guid.Empty || _context.Questions == null)
             {
                 return NotFound();
             }
@@ -166,7 +166,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         // GET: Admin/Test/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Questions == null)
+            if (id == Guid.Empty || _context.Questions == null)
             {
                 return NotFound();
             }

@@ -23,13 +23,11 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly IGradeService _gradeService;
         private readonly IMapper _mapper;
-        private readonly SendEMailByGmail _sendEmail;
 
-        public GradeController(IGradeService gradeService, IMapper mapper, IConfiguration configuration)
+        public GradeController(IGradeService gradeService, IMapper mapper)
         {
             _gradeService = gradeService;
             _mapper = mapper;
-            _sendEmail = new SendEMailByGmail(configuration);
         }
 
         [HttpGet]
@@ -65,7 +63,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -84,20 +82,24 @@ namespace ExamCreator.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(GradeEditDTO t)
         {
-            var model = _mapper.Map<GradeEditDTO, Grade>(t);
-
             if (!ModelState.IsValid)
             {
                 return View(t);
             }
+            var entity = await _gradeService.GetByIdAsnyc(t.Id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(t, entity);
 
-            await _gradeService.Update(model, model.Id);
+            await _gradeService.Update(entity, entity.Id);
             return RedirectToAction(nameof(Index));
         }
 
         public virtual async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -112,7 +114,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Remove(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }

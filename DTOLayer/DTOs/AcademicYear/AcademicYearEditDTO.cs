@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.DTOs.AcademicYear
 {
-    public class AcademicYearEditDTO : BaseFieldsForEdit
+    public class AcademicYearEditDTO : DTOLayer.DTOs.BaseFields.BaseFields
     {
         public string Name { get; set; }
     }
