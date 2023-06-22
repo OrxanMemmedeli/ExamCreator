@@ -104,8 +104,8 @@ namespace EntityLayer.Constants
         static string order = "Sıra";
         static string startDate = "Başlanğıc tarixi";
         static string expiredDate = "Bitmə tarixi";
-        static string key = "açar";
-        static string isFree = "ödənişsiz";
+        static string key = "Açar";
+        static string isFree = "Ödənişsiz";
 
         static public ref readonly string QuestionLevelName => ref questionLevelName;
         static public ref readonly string ResponseType => ref responseType;

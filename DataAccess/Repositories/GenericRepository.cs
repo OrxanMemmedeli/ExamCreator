@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using DataAccess.Concrete.Context;
+using EntityLayer.Concrete.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class GenericRepository<T> : IGenericDal<T> where T : class
+    public partial class GenericRepository<T> : IGenericDal<T> where T : BaseEntity
     {
         private readonly ECContext _context;
 
@@ -73,7 +74,7 @@ namespace DataAccess.Repositories
             if (includes.Any())
             {
                 var query = IncludeMultiple<T>(Table.Where(filter).AsQueryable(), includes);
-                return query.FirstOrDefault();
+                return await query.FirstOrDefaultAsync();
 
             }
             return await Table.FirstOrDefaultAsync(filter);
@@ -87,35 +88,34 @@ namespace DataAccess.Repositories
 
         public async Task Insert(T t)
         {
-            addBaseFields(t);
-
+            addBaseFields(ref t);
             await Table.AddAsync(t);
             await SaveAsync();
         }
 
-        private static void addBaseFields(T t)
+        private static void addBaseFields(ref T t)
         {
-            Type type = t.GetType();
-            PropertyInfo? propId = type.GetProperty("Id");
-            PropertyInfo? propStatus = type.GetProperty("Status");
-            PropertyInfo? propIsDeleted = type.GetProperty("IsDeleted");
-            PropertyInfo? propCreatedDate = type.GetProperty("CreatedDate");
-            PropertyInfo? propModifyedDate = type.GetProperty("ModifyedDate");
-            //PropertyInfo? propCreatUserId = type.GetProperty("CreatUserId");
+            t.Id = Guid.NewGuid();
+            t.IsDeleted = false;
+            t.Status = true;
+            t.CreatedDate = DateTime.Now;
+            t.ModifyedDate = default(DateTime);
 
-            propId.SetValue(t, Guid.NewGuid(), null);
-            propStatus.SetValue(t, true, null);
-            propIsDeleted.SetValue(t, false, null);
-            propCreatedDate.SetValue(t, DateTime.Now, null);
-            propModifyedDate.SetValue(t, default(DateTime), null);
-            //propCreatUserId.SetValue(t, , null);
+            //if (typeof(T) == typeof(BaseEntityWithUser))
+            //{
+            //    Type type = t.GetType();
+            //    PropertyInfo? propCreatUserId = type.GetProperty("CreatUserId");
+            //    propCreatUserId.SetValue(t, , null);
+            //}
         }
 
         public async Task Update(T t, Guid id)
         {
-            updateBaseField(t);
+            updateBaseField(ref t);
 
-            EntityEntry entityEntry = Table.Update(t);
+
+            EntityEntry entityEntry = _context.Entry(t);
+            entityEntry.State = EntityState.Modified;
 
             //var local = await Table.FindAsync(id);
             //if (local != null)
@@ -130,14 +130,16 @@ namespace DataAccess.Repositories
             await SaveAsync();
         }
 
-        private static void updateBaseField(T t)
+        private static void updateBaseField(ref T t)
         {
-            Type type = t.GetType();
-            PropertyInfo? propModifyedDate = type.GetProperty("ModifyedDate");
-            //PropertyInfo? propModifyUserId = type.GetProperty("ModifyUserId");
+            t.ModifyedDate = DateTime.Now;
 
-            propModifyedDate.SetValue(t, DateTime.Now, null);
-            //propModifyUserId.SetValue(t, , null);
+            //if (typeof(T) == typeof(BaseEntityWithUser))
+            //{
+            //    Type type = t.GetType();
+            //    PropertyInfo? propModifyUserId = type.GetProperty("ModifyUserId");
+            //    propModifyUserId.SetValue(t, , null);
+            //}
         }
 
 

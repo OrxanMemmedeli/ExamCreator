@@ -1,9 +1,9 @@
 ﻿Exam Creator
 
 	* Loglama
-	* Question/response/section Custom Views
+	* Question/response/section Custom Views	* Sual hissesinde simple upload picture hissesi elave et (Attahment)
+
 	* Response controllerde index, create ve edit pencereleri olmayacaq. Evezinde Suallar hissesinde cavablarin editlenmesi olacaq.
-	* Sual hissesinde simple upload picture hissesi elave et
 	* Companye gore bolunme
 		* Muellim ve userler arasinda multi company elaqesi
 		* Sual company muellimden ve ya adminden gelecek
@@ -19,3 +19,4 @@
 hazir olanlar
 	* Mail ucun yeni mail adresi yarad ve elave et (12-06-23)
 	* Mapper hissesinde yeni DTO -larin map funksiyalarini yaz
+	* Edit, Delete duymeleri partial olaraq cixar ve url kenardan gonder

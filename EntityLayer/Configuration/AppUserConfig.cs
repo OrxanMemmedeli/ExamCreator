@@ -204,6 +204,17 @@ namespace EntityLayer.Configuration
             builder.HasMany(x => x.GroupsM)
                 .WithOne(x => x.ModifyUser)
                 .HasForeignKey(x => x.ModifyUserId)
+                .OnDelete(DeleteBehavior.ClientCascade);      
+            
+            
+            builder.HasMany(x => x.Attachments)
+                .WithOne(x => x.CreatUser)
+                .HasForeignKey(x => x.CreatUserId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.HasMany(x => x.AttachmentsM)
+                .WithOne(x => x.ModifyUser)
+                .HasForeignKey(x => x.ModifyUserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
         }
     }

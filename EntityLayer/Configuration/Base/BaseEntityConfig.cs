@@ -17,7 +17,7 @@ namespace EntityLayer.Configuration.Base
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             builder.Property(x => x.CreatedDate).ValueGeneratedOnAdd();
-            builder.Property(x => x.ModifyedDate).ValueGeneratedOnUpdate();
+            //builder.Property(x => x.ModifyedDate).ValueGeneratedOnAddOrUpdate();
         }
     }
 }

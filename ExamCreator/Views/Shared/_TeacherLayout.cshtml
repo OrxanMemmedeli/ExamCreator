@@ -30,7 +30,15 @@
         :root {
             --tblr-font-sans-serif: Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
         }
+
+        .input-validation-error {
+            border-color: red;
+        }
+
     </style>
+
+    @RenderSection(ScriptSections.TeacherStyles, false)
+
 </head>
 <body>
     <script src="./dist/js/demo-theme.min.js?1666304673"></script>

@@ -37,7 +37,15 @@
         .control-label {
             font-weight: bold;
         }
+
+        .input-validation-error {
+            border: double;
+            border-color: red;
+        }
+
     </style>
+
+    @RenderSection(ScriptSections.AdminStyles, false)
     <script>
         window.addEventListener("pageshow", function (event) {
             var historyTraversal = event.persisted ||

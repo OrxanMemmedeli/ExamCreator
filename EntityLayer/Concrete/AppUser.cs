@@ -30,6 +30,7 @@ namespace EntityLayer.Concrete
             this.QuestionParameters = new HashSet<QuestionParameter>();
             this.Booklets = new HashSet<Booklet>();
             this.Groups = new HashSet<Group>();
+            this.Attachments = new HashSet<Attachment>();
 
             this.GradesM = new HashSet<Grade>();
             this.AcademicYearsM = new HashSet<AcademicYear>();
@@ -48,6 +49,7 @@ namespace EntityLayer.Concrete
             this.QuestionParametersM = new HashSet<QuestionParameter>();
             this.BookletsM = new HashSet<Booklet>();
             this.GroupsM = new HashSet<Group>();
+            this.AttachmentsM = new HashSet<Attachment>();
         }
 
         public string FullName { get; set; }
@@ -79,6 +81,7 @@ namespace EntityLayer.Concrete
         public ICollection<QuestionParameter> QuestionParameters { get; set; }
         public ICollection<Booklet> Booklets { get; set; }
         public ICollection<Group> Groups { get; set; }
+        public ICollection<Attachment> Attachments { get; set; }
 
 
 
@@ -99,6 +102,7 @@ namespace EntityLayer.Concrete
         public ICollection<QuestionParameter> QuestionParametersM { get; set; }
         public ICollection<Booklet> BookletsM { get; set; }
         public ICollection<Group> GroupsM { get; set; }
+        public ICollection<Attachment> AttachmentsM { get; set; }
 
     }
 }

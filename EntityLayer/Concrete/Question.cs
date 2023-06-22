@@ -13,6 +13,7 @@ namespace EntityLayer.Concrete
         public Question()
         {
             this.Responses = new HashSet<Response>();
+            this.QuestionAttahments = new HashSet<QuestionAttahment>();
         }
 
         public string Content { get; set; }
@@ -39,6 +40,7 @@ namespace EntityLayer.Concrete
         public virtual AcademicYear AcademicYear { get; set; }
             
         public ICollection<Response> Responses { get; set; }
+        public ICollection<QuestionAttahment> QuestionAttahments { get; set; }
 
     }
 }

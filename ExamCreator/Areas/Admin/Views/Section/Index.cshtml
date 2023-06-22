@@ -74,24 +74,8 @@
                     @Html.DisplayFor(modelItem => item.ModifyUserName)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" title="Düzəliş et">
-                        <lord-icon src="https://cdn.lordicon.com/bxxnzvfm.json"
-                               trigger="hover"
-                               style="width:40px;height:40px">
-                        </lord-icon>
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəmiş statusuna keçiriləcəkdir. \n\n\nStatusa dəyişikliyi edilsinmi?')">
-                        <lord-icon src="https://cdn.lordicon.com/qjwkduhc.json"
-                               trigger="hover"
-                               style="width:40px;height:40px">
-                        </lord-icon>
-                    </a>
-                    <a asp-action="Remove" asp-route-id="@item.Id" title="Birdəfəlik Sil" onclick="return confirm('Silinən məlumatların geri qaytarılması mümkün deyil. \n\n\nSətiri yənədə silmək istəyirsinizmi?')">
-                        <lord-icon src="https://cdn.lordicon.com/inrunzby.json"
-                               trigger="hover"
-                               style="width:40px;height:40px">
-                        </lord-icon>
-                    </a>
+                    @await Html.PartialAsync("~/Views/Shared/_ToolsButtonPartial.cshtml", new ToolsButtonViewModel{ Area="admin", Controller="Section", RouteId = item.Id.ToString()})
+
                 </td>
             </tr>
         }

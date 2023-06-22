@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function (config) {
         '/',
         { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
         { name: 'links', groups: ['links'] },
-        { name: 'insert', groups: ['insert'] },
+        { name: 'insert', groups: ['insert'] }, // Include the 'image2' group for inserting images.
         '/',
         { name: 'styles', groups: ['styles'] },
         { name: 'colors', groups: ['colors'] },

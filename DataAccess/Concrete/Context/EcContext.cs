@@ -42,6 +42,7 @@ namespace DataAccess.Concrete.Context
         public DbSet<Text> Texts { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Variant> Variants { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -70,6 +71,8 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new TextConfig());
             builder.ApplyConfiguration(new UserTypeConfig());
             builder.ApplyConfiguration(new VariantConfig());
+            builder.ApplyConfiguration(new AttachmentConfig());
+            builder.ApplyConfiguration(new QuestionAttahmentConfig());
 
 
             // For Table Per Type
