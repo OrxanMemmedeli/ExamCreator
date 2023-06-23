@@ -1,5 +1,7 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Concrete.ForRoles;
 using EntityLayer.Configuration;
+using EntityLayer.Configuration.ForRoles;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -19,7 +21,7 @@ namespace DataAccess.Concrete.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
-            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Test; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Demo; Integrated Security = true; MultipleActiveResultSets = True");
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
 
         }
@@ -43,6 +45,8 @@ namespace DataAccess.Concrete.Context
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Variant> Variants { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<RoleUrl> RoleUrls { get; set; }
+        public DbSet<CombineRoleUrl> CombineRoleUrls { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -72,7 +76,9 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new UserTypeConfig());
             builder.ApplyConfiguration(new VariantConfig());
             builder.ApplyConfiguration(new AttachmentConfig());
+
             builder.ApplyConfiguration(new QuestionAttahmentConfig());
+            builder.ApplyConfiguration(new CombineRoleUrlConfig());
 
 
             // For Table Per Type

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EntityLayer.Concrete.ForRoles;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,11 @@ namespace EntityLayer.Concrete
 {
     public class AppRole : IdentityRole<Guid>
     {
+        public AppRole()
+        {
+            this.CombineRoleUrls = new HashSet<CombineRoleUrl>();
+        }
+
+        public ICollection<CombineRoleUrl> CombineRoleUrls { get; set; }
     }
 }

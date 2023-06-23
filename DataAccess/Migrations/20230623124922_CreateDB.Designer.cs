@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ECContext))]
-    [Migration("20230622111309_QuestionAttacmentRelation")]
-    partial class QuestionAttacmentRelation
+    [Migration("20230623124922_CreateDB")]
+    partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -441,6 +441,36 @@ namespace DataAccess.Migrations
                     b.HasIndex("ModifyUserId");
 
                     b.ToTable("ExamParameters");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.ForRoles.CombineRoleUrl", b =>
+                {
+                    b.Property<Guid>("AppRoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleUrlId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AppRoleId", "RoleUrlId");
+
+                    b.HasIndex("RoleUrlId");
+
+                    b.ToTable("CombineRoleUrls");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.ForRoles.RoleUrl", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleUrls");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Grade", b =>
@@ -1336,6 +1366,25 @@ namespace DataAccess.Migrations
                     b.Navigation("ModifyUser");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.ForRoles.CombineRoleUrl", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.AppRole", "AppRole")
+                        .WithMany("CombineRoleUrls")
+                        .HasForeignKey("AppRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrete.ForRoles.RoleUrl", "RoleUrl")
+                        .WithMany("CombineRoleUrls")
+                        .HasForeignKey("RoleUrlId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppRole");
+
+                    b.Navigation("RoleUrl");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Grade", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.AppUser", "CreatUser")
@@ -1747,6 +1796,11 @@ namespace DataAccess.Migrations
                     b.Navigation("Responses");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.AppRole", b =>
+                {
+                    b.Navigation("CombineRoleUrls");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.AppUser", b =>
                 {
                     b.Navigation("AcademicYears");
@@ -1842,6 +1896,11 @@ namespace DataAccess.Migrations
                     b.Navigation("Exams");
 
                     b.Navigation("SubjectParameters");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.ForRoles.RoleUrl", b =>
+                {
+                    b.Navigation("CombineRoleUrls");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Grade", b =>

@@ -60,6 +60,7 @@ namespace EntityLayer.Configuration
                 .WithMany(x => x.QuestionsM)
                 .HasForeignKey(x => x.ModifyUserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
+
         }
     }
 }

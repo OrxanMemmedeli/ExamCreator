@@ -4,13 +4,16 @@ using Business.Validations;
 using DataAccess.Concrete.Context;
 using DTOLayer.DTOs.Question;
 using EntityLayer.Concrete;
+using ExamCreator.Attributes;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [RouteDataFilter]
     public class QuestionController : Controller
     {
         private readonly IQuestionService _questionService;
@@ -22,7 +25,6 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly IQuestionTypeService _questionTypeService;
         private readonly ISectionService _sectionService;
         private readonly ISubjectService _subjectService;
-
 
         public QuestionController(IQuestionService QuestionService, IMapper mapper, IAcademicYearService academicYearService, IGradeService gradeService, IQuestionLevelService questionLevelService, IQuestionTypeService questionTypeService, ISectionService sectionService, ISubjectService subjectService)
         {
