@@ -17,7 +17,7 @@ namespace ExamCreator.Attributes
             var url = areaName != null ? $"/{areaName}/{controllerName}/{actionName}" : $"/{controllerName}/{actionName}";
 
 
-            var urls = ctx.RoleUrls.FirstOrDefault(x => x.Url == url);
+            var urls = ctx.RoleUrls.FirstOrDefault(x => x.Url == url); //burani kes ya sessiondan oxu (user login zamani yoxla)
 
             if (urls == null)
             {

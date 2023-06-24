@@ -43,6 +43,8 @@ namespace DataAccess.Repositories
             //object obj = prop.GetValue(t, null);
             prop.SetValue(t, true, null);
 
+            updateBaseField(ref t);
+
             await SaveAsync();
         }
 
