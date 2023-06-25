@@ -2,6 +2,7 @@
 using Business.Abstract;
 using Business.Validations;
 using DataAccess.Concrete.Context;
+using DTOLayer.DTOs.Grade;
 using DTOLayer.DTOs.Question;
 using EntityLayer.Concrete;
 using ExamCreator.Attributes;
@@ -14,7 +15,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [RouteDataFilter]
-    public class QuestionController : Controller
+    public class QuestionController : BaseController<IQuestionService, QuestionCreateDTO, QuestionEditDTO, Question>
     {
         private readonly IQuestionService _questionService;
         private readonly IMapper _mapper;
@@ -26,7 +27,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         private readonly ISectionService _sectionService;
         private readonly ISubjectService _subjectService;
 
-        public QuestionController(IQuestionService QuestionService, IMapper mapper, IAcademicYearService academicYearService, IGradeService gradeService, IQuestionLevelService questionLevelService, IQuestionTypeService questionTypeService, ISectionService sectionService, ISubjectService subjectService)
+        public QuestionController(IQuestionService QuestionService, IMapper mapper, IAcademicYearService academicYearService, IGradeService gradeService, IQuestionLevelService questionLevelService, IQuestionTypeService questionTypeService, ISectionService sectionService, ISubjectService subjectService) : base(QuestionService, mapper)
         {
             _questionService = QuestionService;
             _mapper = mapper;
@@ -37,14 +38,15 @@ namespace ExamCreator.Areas.Admin.Controllers
             _sectionService = sectionService;
             _subjectService = subjectService;
         }
-        private void GetFields()
+
+        protected override async Task GetFields()
         {
-            ViewData["AcademicYearId"] = new SelectList(_academicYearService.GetAllAsnyc(), "Id", "Name");
-            ViewData["GradeId"] = new SelectList(_gradeService.GetAllAsnyc(), "Id", "Name");
-            ViewData["QuestionLevelId"] = new SelectList(_questionLevelService.GetAllAsnyc(), "Id", "Name");
-            ViewData["QuestionTypeId"] = new SelectList(_questionTypeService.GetAllAsnyc(), "Id", "Description");
-            ViewData["SectionId"] = new SelectList(_sectionService.GetAllAsnyc(), "Id", "Name");
-            ViewData["SubjectId"] = new SelectList(_subjectService.GetAllAsnyc(), "Id", "Name");
+            ViewData["AcademicYearId"] = new SelectList(await _academicYearService.GetAllAsnyc().ToListAsync(), "Id", "Name");
+            ViewData["GradeId"] = new SelectList(await _gradeService.GetAllAsnyc().ToListAsync(), "Id", "Name");
+            ViewData["QuestionLevelId"] = new SelectList(await _questionLevelService.GetAllAsnyc().ToListAsync(), "Id", "Name");
+            ViewData["QuestionTypeId"] = new SelectList(await _questionTypeService.GetAllAsnyc().ToListAsync(), "Id", "Description");
+            ViewData["SectionId"] = new SelectList(await _sectionService.GetAllAsnyc().ToListAsync(), "Id", "Name");
+            ViewData["SubjectId"] = new SelectList(await _subjectService.GetAllAsnyc().ToListAsync(), "Id", "Name");
         }
 
 
@@ -56,94 +58,5 @@ namespace ExamCreator.Areas.Admin.Controllers
             return View(datas);
         }
 
-        [HttpGet]
-        public virtual IActionResult Create()
-        {
-            GetFields();
-            return View();
-        }
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Create(QuestionCreateDTO t)
-        {
-            var model = _mapper.Map<QuestionCreateDTO, Question>(t);
-            if (!ModelState.IsValid)
-            {
-                GetFields();
-                return View(t);
-            }
-
-            await _questionService.Insert(model);
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet]
-        public virtual async Task<IActionResult> Edit(Guid id)
-        {
-            if (id == Guid.Empty)
-            {
-                return NotFound();
-            }
-            var data = await _questionService.GetByIdAsnyc(id);
-            if (data == null)
-            {
-                return NotFound();
-            }
-
-            var model = _mapper.Map<Question, QuestionEditDTO>(data);
-
-            GetFields();
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual async Task<IActionResult> Edit(QuestionEditDTO t)
-        {
-            var model = _mapper.Map<QuestionEditDTO, Question>(t);
-
-            if (!ModelState.IsValid)
-            {
-                GetFields();
-                return View(t);
-            }
-
-            await _questionService.Update(model, model.Id);
-            return RedirectToAction(nameof(Index));
-        }
-
-        public virtual async Task<IActionResult> Delete(Guid id)
-        {
-            if (id == Guid.Empty)
-            {
-                return NotFound();
-            }
-            var data = await _questionService.GetByIdAsnyc(id);
-            if (data == null)
-            {
-                return NotFound();
-            }
-            await _questionService.Delete(data);
-            return RedirectToAction(nameof(Index));
-        }
-
-        public virtual async Task<IActionResult> Remove(Guid id)
-        {
-            if (id == Guid.Empty)
-            {
-                return NotFound();
-            }
-            var data = await _questionService.GetByIdAsnyc(id);
-            if (data == null)
-            {
-                return NotFound();
-            }
-            await _questionService.Remove(data);
-            return RedirectToAction(nameof(Index));
-        }
     }
 }

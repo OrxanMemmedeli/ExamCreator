@@ -18,7 +18,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         private readonly ISubjectService _subjectService;
 
-        public SectionController(ISectionService SectionService, IMapper mapper, ISubjectService subjectService) 
+        public SectionController(ISectionService SectionService, IMapper mapper, ISubjectService subjectService)
             : base(SectionService, mapper)
         {
             _sectionService = SectionService;
@@ -26,10 +26,11 @@ namespace ExamCreator.Areas.Admin.Controllers
             _subjectService = subjectService;
         }
 
-        public override void GetFields()
+        protected override async Task GetFields()
         {
-            ViewData["SubjectId"] = new SelectList(_subjectService.GetAllAsnyc(), "Id", "Name");
+            ViewData["SubjectId"] = new SelectList(await _subjectService.GetAllAsnyc().ToListAsync(), "Id", "Name");
         }
+
 
         [HttpGet]
         public virtual async Task<IActionResult> Index(int page = 1)

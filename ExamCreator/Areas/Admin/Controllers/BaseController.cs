@@ -23,13 +23,16 @@ namespace ExamCreator.Areas.Admin.Controllers
         }
 
 
-        public virtual void GetFields() { }
+        protected virtual Task GetFields()
+        {
+            return Task.CompletedTask;
+        }
 
 
         [HttpGet]
         public virtual IActionResult Create()
         {
-            GetFields();
+            GetFields().Wait();
             return View();
         }
 
@@ -40,7 +43,7 @@ namespace ExamCreator.Areas.Admin.Controllers
             var model = _mapper.Map<TCreateDTO, TEntity>(t);
             if (!ModelState.IsValid)
             {
-                GetFields();
+                GetFields().Wait();
                 return View(t);
             }
 
@@ -66,7 +69,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
             var model = _mapper.Map<TEntity, TEditDto>(data);
 
-            GetFields();
+            GetFields().Wait();
             return View(model);
         }
 
@@ -78,7 +81,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                GetFields();
+                GetFields().Wait();
                 return View(t);
             }
 
