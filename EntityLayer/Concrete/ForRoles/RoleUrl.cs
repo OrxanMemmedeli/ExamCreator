@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntityLayer.Concrete.Base;
 
 namespace EntityLayer.Concrete.ForRoles
 {
-    public class RoleUrl
+    public class RoleUrl : IEntity
     {
         public RoleUrl()
         {

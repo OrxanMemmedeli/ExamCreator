@@ -13,7 +13,7 @@ namespace ExamCreator.Utilities.AreaControllerActionFinder
             var actionDescriptorCollectionProvider = serviceProvider.GetService<IActionDescriptorCollectionProvider>();
             var actionDescriptors = actionDescriptorCollectionProvider.ActionDescriptors.Items;
 
-            var dbContext = serviceProvider.GetRequiredService<ECContext>();
+
 
             var URLList = new List<string>();
             var createList = new List<RoleUrl>();
@@ -54,27 +54,31 @@ namespace ExamCreator.Utilities.AreaControllerActionFinder
 
             if (URLList.Count > 0)
             {
-                var oldList = dbContext.RoleUrls.ToList();
-
-                foreach (var url in URLList)
+                //var dbContext = serviceProvider.GetRequiredService<ECContext>();
+                using (ECContext dbContext = new())
                 {
-                    if (!oldList.Select(x => x.Url).Contains(url))
-                        createList.Add(new RoleUrl() { Url = url});
+                    var oldList = dbContext.RoleUrls.ToList();
+
+                    foreach (var url in URLList)
+                    {
+                        if (!oldList.Select(x => x.Url).Contains(url))
+                            createList.Add(new RoleUrl() { Url = url });
+                    }
+
+                    foreach (var old in oldList)
+                    {
+                        if (!URLList.Contains(old.Url))
+                            deleteList.Add(old);
+                    }
+
+                    if (createList.Count > 0)
+                        await dbContext.RoleUrls.AddRangeAsync(createList);
+
+                    if (deleteList.Count > 0)
+                        dbContext.RoleUrls.RemoveRange(deleteList);
+
+                    await dbContext.SaveChangesAsync();
                 }
-
-                foreach (var old in oldList)
-                {
-                    if (!URLList.Contains(old.Url))
-                        deleteList.Add(old);
-                }
-
-                if (createList.Count > 0)
-                    await dbContext.RoleUrls.AddRangeAsync(createList);
-
-                if (deleteList.Count > 0)
-                    dbContext.RoleUrls.RemoveRange(deleteList);
-
-                await dbContext.SaveChangesAsync();
             }
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete.Base
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity : IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

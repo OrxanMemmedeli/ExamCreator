@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public partial class GenericRepository<T> : IGenericDal<T> where T : BaseEntity
+    public partial class GenericRepository<T> : IGenericDal<T> where T : BaseEntity, IEntity
     {
         private readonly ECContext _context;
 

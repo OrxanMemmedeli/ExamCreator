@@ -4,14 +4,7 @@ using EntityLayer.Configuration;
 using EntityLayer.Configuration.ForRoles;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.Context
 {
@@ -21,11 +14,20 @@ namespace DataAccess.Concrete.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
-            optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Demo; Integrated Security = true; MultipleActiveResultSets = True");
-            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
+            //optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Demo; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
 
         }
 
+
+
+        #region Base Entities
+        public DbSet<UserType> UserTypes { get; set; }
+        #endregion
+
+
+
+        #region Base Entities With User
         public DbSet<AcademicYear> AcademicYears { get; set; }
         public DbSet<Booklet> Booklets { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -42,11 +44,24 @@ namespace DataAccess.Concrete.Context
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<SubjectParameter> SubjectParameters { get; set; }
         public DbSet<Text> Texts { get; set; }
-        public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Variant> Variants { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        #endregion
+
+
+
+        #region Simple Entities
         public DbSet<RoleUrl> RoleUrls { get; set; }
+        public DbSet<SysException> SysExceptions { get; set; }
+        #endregion
+
+
+
+        #region Combination Entities
+        public DbSet<QuestionAttahment> QuestionAttahments { get; set; }
         public DbSet<CombineRoleUrl> CombineRoleUrls { get; set; }
+        #endregion
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
