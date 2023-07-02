@@ -12,7 +12,7 @@ namespace CoreLayer
 {
     public static class CoreServiceInjector
     {
-        public static void CoreRegister(this IServiceCollection services)
+        public static void CoreServiceRegister(this IServiceCollection services)
         {
             services.AddTransient<IEmailSender, SendEMailByGmail>();
         }

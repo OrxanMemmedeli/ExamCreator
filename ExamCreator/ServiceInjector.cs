@@ -32,12 +32,17 @@ namespace ExamCreator
             services.AddScoped<ISubjectService, SubjectManager>().AddScoped<ISubjectDal, EFSubjectRepository>();
             services.AddScoped<IUserTypeService, UserTypeManager>().AddScoped<IUserTypeDal, EFUserTypeRepository>();
 
-            NameFinder.Find(services);
+
 
             //services.AddScoped<RouteDataFilter>(provider => new RouteDataFilter(services));
             //services.AddScoped<RouteDataFilter>(provider => new RouteDataFilter() { _services = services});
             services.AddScoped<RouteDataFilter>();
 
+        }
+
+        public static void UseApp(this IApplicationBuilder app)
+        {
+            NameFinder.Find(app);
         }
 
         public static void Validators(this IServiceCollection services)

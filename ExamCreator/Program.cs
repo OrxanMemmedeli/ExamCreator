@@ -1,11 +1,8 @@
-﻿using Business.Validations;
-using CoreLayer;
-using DataAccess.Concrete.Context;
+﻿using CoreLayer;
+using DataAccess;
 using ExamCreator;
 using ExamCreator.Middlewares;
-using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,7 +38,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //}); //Routing Login
 
 builder.Services.Register(); //dependence ucun
-builder.Services.CoreRegister(); //core layer dependence
+builder.Services.CoreServiceRegister(); //core layer dependence
 
 builder.Services.Validators(); // validation ucun
 //builder.Services.AddFluentValidationClientsideAdapters(); // Clinet teref ucun auto mehdudiyyet
@@ -54,9 +51,15 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    
+   
     app.AddGlobalErrorHandling(); // custom middleware for error and log saveing
+
     app.UseHsts();
 }
+
+app.DALAppRegister();
+app.UseApp();
 
 //app.AddGlobalErrorHandling(); //test
 
@@ -67,6 +70,7 @@ app.UseRouting();
 
 //app.UseAuthentication();
 app.UseAuthorization();
+
 
 
 app.UseEndpoints(endpoints =>

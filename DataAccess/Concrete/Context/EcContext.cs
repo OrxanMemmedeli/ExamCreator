@@ -15,7 +15,10 @@ namespace DataAccess.Concrete.Context
         {
             //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
             //optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Demo; Integrated Security = true; MultipleActiveResultSets = True");
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True", sqlServerOptions =>
+            {
+                sqlServerOptions.EnableRetryOnFailure();
+            });
 
         }
 
@@ -68,7 +71,7 @@ namespace DataAccess.Concrete.Context
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Manually configure 
             builder.ApplyConfiguration(new AcademicYearConfig());
@@ -95,17 +98,6 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new QuestionAttahmentConfig());
             builder.ApplyConfiguration(new CombineRoleUrlConfig());
 
-
-            // For Table Per Type
-            //builder.Entity<Grade>().ToTable("Grades");
-            //builder.Entity<Question>().ToTable("Questions");
-            //builder.Entity<QuestionLevel>().ToTable("QuestionLevels");
-            //builder.Entity<QuestionType>().ToTable("QuestionTypes");
-            //builder.Entity<Response>().ToTable("Responses");
-            //builder.Entity<Section>().ToTable("Sections");
-            //builder.Entity<Subject>().ToTable("Subjects");
-            //builder.Entity<UserType>().ToTable("UserTypes");
-            //builder.Entity<AcademicYear>().ToTable("AcademicYears");
         }
 
         //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
