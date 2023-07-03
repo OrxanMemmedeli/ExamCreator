@@ -2,7 +2,6 @@
 using DataAccess;
 using ExamCreator;
 using ExamCreator.Middlewares;
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,8 +40,6 @@ builder.Services.Register(); //dependence ucun
 builder.Services.CoreServiceRegister(); //core layer dependence
 
 builder.Services.Validators(); // validation ucun
-//builder.Services.AddFluentValidationClientsideAdapters(); // Clinet teref ucun auto mehdudiyyet
-builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 

@@ -13,13 +13,27 @@ namespace DataAccess.Concrete.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
-            //optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Demo; Integrated Security = true; MultipleActiveResultSets = True");
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True", sqlServerOptions =>
-            {
-                sqlServerOptions.EnableRetryOnFailure();
-            });
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security = true; MultipleActiveResultSets = True", sqlServerOptions =>
+            //{
+            //    sqlServerOptions.EnableRetryOnFailure();
+            //});
 
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                string computerName = Environment.MachineName;
+                if (computerName == "DESKTOP-TROAMS4")
+                {
+                    optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security=true; MultipleActiveResultSets=True");
+                }
+                else if (computerName == "ORXAN")
+                {
+                    optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Demo; Integrated Security = true; MultipleActiveResultSets = True");
+                }
+            }
+            else if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
+            }
         }
 
 

@@ -14,9 +14,11 @@
 
 	* BaseFieldsForEdit hissesinde Creat/ModifyUserId nullable hisselerini legv et
 	* AppUSER DTO hissesine xususi baxis edilmelidir.  (AppUserProfile) 
-	* RouteDataFilter hissesinde melumatlari kes uzerinden yoxla. 
 
 hazir olanlar
 	* Mail ucun yeni mail adresi yarad ve elave et (12-06-23)
 	* Mapper hissesinde yeni DTO -larin map funksiyalarini yaz
 	* Edit, Delete duymeleri partial olaraq cixar ve url kenardan gonder
+	* Connection String metumati dinamik olsun
+	* RouteDataFilter hissesinde melumatlari kes uzerinden yoxla. 
+	* Umumi try Catch yaradilsin

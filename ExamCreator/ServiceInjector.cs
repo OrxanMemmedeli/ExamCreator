@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using Business;
+using Business.Abstract;
 using Business.Concrete;
 using Business.Validations;
 using Business.Validations.DTOs.Grade;
@@ -10,6 +11,7 @@ using EntityLayer.Concrete;
 using ExamCreator.Attributes;
 using ExamCreator.Utilities.AreaControllerActionFinder;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using System.Configuration;
 using System.Reflection.Metadata;
@@ -47,7 +49,10 @@ namespace ExamCreator
 
         public static void Validators(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssemblyContaining<GradeCreateDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<IValidatorReferance>();
+            //services.AddFluentValidationClientsideAdapters(); // Clinet teref ucun auto mehdudiyyet
+
+            services.AddFluentValidationAutoValidation();
 
         }
     }
