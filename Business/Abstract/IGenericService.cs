@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,11 +12,13 @@ namespace Business.Abstract
     {
         Task Insert(T t);
         Task Update(T t, Guid id);
+        Task Update(T t, Action<EntityEntry<T>> rules = null);
         Task Delete(T t);
         Task Remove(T t);
         IQueryable<T> GetAllAsnyc(params Expression<Func<T, object>>[] includes);
         Task<T> GetByIdAsnyc(Guid id);
         IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes);
         Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes);
+
     }
 }

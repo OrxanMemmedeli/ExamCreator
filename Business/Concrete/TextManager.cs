@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using EntityLayer.Concrete;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,11 @@ namespace Business.Concrete
         public async Task Update(Text t, Guid id)
         {
             await _dal.Update(t, id);
+        }
+
+        public async Task Update(Text t, Action<EntityEntry<Text>> rules = null)
+        {
+            await _dal.Update(t, rules);
         }
     }
 }

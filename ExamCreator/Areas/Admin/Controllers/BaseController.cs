@@ -4,6 +4,9 @@ using DTOLayer.DTOs.AcademicYear;
 using EntityLayer.Concrete;
 using EntityLayer.Concrete.Base;
 using Microsoft.AspNetCore.Mvc;
+using CoreLayer.Helpers.Extensions;
+using CoreLayer.Helpers.FieldComparer;
+using static iTextSharp.text.pdf.events.IndexEvents;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
@@ -43,8 +46,7 @@ namespace ExamCreator.Areas.Admin.Controllers
             var model = _mapper.Map<TCreateDTO, TEntity>(t);
             if (!ModelState.IsValid)
             {
-                GetFields().Wait();
-                return View(t);
+                return HandleInvalidModel(t);
             }
 
             await _service.Insert(model);
@@ -70,22 +72,40 @@ namespace ExamCreator.Areas.Admin.Controllers
             var model = _mapper.Map<TEntity, TEditDto>(data);
 
             GetFields().Wait();
-            return View(model);
+
+            TempData["ExistingEntity"] = data;
+            return View("Edit", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(TEditDto t)
         {
-            var model = _mapper.Map<TEditDto, TEntity>(t);
-
             if (!ModelState.IsValid)
             {
-                GetFields().Wait();
-                return View(t);
+                return HandleInvalidModel(t);
             }
+            var existingEntity = TempData["ExistingEntity"] as TEntity;
+            if (existingEntity == null)
+                return HandleInvalidModel(t);
 
-            await _service.Update(model, model.Id);
+            var model = _mapper.Map<TEditDto, TEntity>(t);
+
+
+            //await _service.Update(model, model.Id);
+
+
+            //deyisecek fieldleri teyin edir. 
+            var changedFields = EntityFieldComparer<TEditDto, TEntity>.GetChangedFields(t, existingEntity);
+
+            await _service.Update(model, entry =>
+            {
+                foreach (var (propertyExpression, value) in changedFields)
+                {
+                    entry.SetValue(propertyExpression, value);
+                }
+            });
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -125,6 +145,13 @@ namespace ExamCreator.Areas.Admin.Controllers
 
             await _service.Remove(data);
             return RedirectToAction(nameof(Index));
+        }
+
+
+        private IActionResult HandleInvalidModel<TModel>(TModel t)
+        {
+            GetFields().Wait();
+            return View(t);
         }
     }
 
