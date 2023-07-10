@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CoreLayer.Entities;
 
 namespace EntityLayer.Concrete.Base
 {
-    public abstract class BaseEntity : IEntity
+    public abstract class BaseEntity : IEntityBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

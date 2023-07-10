@@ -12,7 +12,7 @@
 			* Sutunlar startDate(sifrelenmis acarla), EndDate(sifrelenmis acarla), sifreleme mentni(sifrelenmis Xusisi metnle), Free account hissesi(1,0) (haslanmis??)
 		* Company-lerde lizenziya isleri ucun gunluk olaraq mebleg teyin edilsin. Aktiv oldugu tarixdan cari tarixe qeder olan gun hesablanacaq ve buna uygun Odenis teyin edilecek. Borc cedvelinden olan ödenisler cemlenib cari gune qeder olan borcdan cixilacaq yekun balans olacaq. Hər bir müəssisə üçün isə kredit məbləğ limiti olacaq. Əgər kredit limiti keçilərsə, məbləğ daha artıq hesablanacaq. Günlük 15 faiz artımla ve ya benzeri
 			* UI hissede yekun meblegi ve borcu gosteren BALANS hissesi olacaq. Ajax ile muraciet edib Cedvelden getirecek ve borclar her yeni gunun tamaminda job ile hasablanib yazilacaq. Odenis edilmeyibse menfi mebleg gosterecek. Eger limit asilarsa bu zaman gunluk odenise faizde elave edilecek. 
-			* Yeni Table (AmountOfDay, AmountOfLimit, AmountOfLimitDate, DebtToLimit, DebtFromLimit  AmountOfFine(faiz ilə) - min 0 max 100) 
+			* Yeni Table (StartDate, AmountOfDay, AmountOfLimit, AmountOfFine(faiz ilə) = 0 - min 0 max 100, DebtToLimit?, ExpiredDate?, DebtFromLimit?   ) 
 			* Elave odenis cedveli olacaq. Her odenis edilen zaman companye uygun odenis melumatlari saxlanilacaq (CompanyID, Date, Amount(AZN)-decimal)
 
 

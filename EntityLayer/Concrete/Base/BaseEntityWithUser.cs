@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete.Base
 {
-    public abstract class BaseEntityWithUser : BaseEntity
+    public abstract class BaseEntityWithUser : BaseEntity, IEntity
     {
         [ForeignKey("CreatUserId")]
         public Guid? CreatUserId { get; set; }
