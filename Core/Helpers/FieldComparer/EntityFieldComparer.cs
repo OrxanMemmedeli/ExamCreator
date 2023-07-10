@@ -15,20 +15,50 @@ namespace CoreLayer.Helpers.FieldComparer
         {
             List<(Expression<Func<TEntity, object>> PropertyExpression, object Value)> changedFields = new List<(Expression<Func<TEntity, object>> PropertyExpression, object Value)>();
 
-            foreach (var property in typeof(TDto).GetProperties())
+            try
             {
-                var dtoValue = property.GetValue(dto);
-                var existingValue = property.GetValue(existingEntity);
-
-                if (!Equals(dtoValue, existingValue))
+                foreach (var property in typeof(TDto).GetProperties())
                 {
-                    Expression<Func<TEntity, object>> propertyExpression = GetPropertyExpression<TEntity>(property.Name);
-                    changedFields.Add((propertyExpression, dtoValue));
+                    var dtoValue = property.GetValue(dto);
+                    var existingProperty = typeof(TEntity).GetProperty(property.Name);
+
+                    if (existingProperty != null)
+                    {
+                        var existingValue = existingProperty.GetValue(existingEntity);
+
+                        if (!Equals(dtoValue, existingValue))
+                        {
+                            var propertyType = existingProperty.PropertyType;
+
+                            // Check if propertyType is Nullable<T> and dtoValue is null
+                            if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                            {
+                                if (dtoValue == null)
+                                {
+                                    changedFields.Add((GetPropertyExpression<TEntity>(property.Name), null));
+                                    continue;
+                                }
+
+                                // Get the underlying value type of the nullable property
+                                propertyType = Nullable.GetUnderlyingType(propertyType);
+                            }
+
+                            var convertedValue = Convert.ChangeType(dtoValue, propertyType);
+                            changedFields.Add((GetPropertyExpression<TEntity>(property.Name), convertedValue));
+                        }
+                    }
                 }
+
+                return changedFields;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
 
-            return changedFields;
         }
+
 
         private static Expression<Func<TEntity, object>> GetPropertyExpression<TEntity>(string propertyName)
         {

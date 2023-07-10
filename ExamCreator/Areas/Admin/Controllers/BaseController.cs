@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using CoreLayer.Helpers.Extensions;
 using CoreLayer.Helpers.FieldComparer;
 using static iTextSharp.text.pdf.events.IndexEvents;
+using Newtonsoft.Json;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
@@ -45,9 +46,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         {
             var model = _mapper.Map<TCreateDTO, TEntity>(t);
             if (!ModelState.IsValid)
-            {
                 return HandleInvalidModel(t);
-            }
 
             await _service.Insert(model);
             return RedirectToAction(nameof(Index));
@@ -60,20 +59,17 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(Guid id)
         {
             if (id == Guid.Empty)
-            {
                 return NotFound();
-            }
+
             var data = await _service.GetByIdAsnyc(id);
             if (data == null)
-            {
                 return NotFound();
-            }
 
             var model = _mapper.Map<TEntity, TEditDto>(data);
 
             GetFields().Wait();
 
-            TempData["ExistingEntity"] = data;
+            TempData["ExistingEntity"] = JsonConvert.SerializeObject(data);
             return View("Edit", model);
         }
 
@@ -82,10 +78,9 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(TEditDto t)
         {
             if (!ModelState.IsValid)
-            {
                 return HandleInvalidModel(t);
-            }
-            var existingEntity = TempData["ExistingEntity"] as TEntity;
+
+            var existingEntity = JsonConvert.DeserializeObject<TEntity>((string)TempData["ExistingEntity"]);
             if (existingEntity == null)
                 return HandleInvalidModel(t);
 
@@ -116,15 +111,11 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Delete(Guid id)
         {
             if (id == Guid.Empty)
-            {
                 return NotFound();
-            }
 
             var data = await _service.GetByIdAsnyc(id);
             if (data == null)
-            {
                 return NotFound();
-            }
 
             await _service.Delete(data);
             return RedirectToAction(nameof(Index));
@@ -133,15 +124,11 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Remove(Guid id)
         {
             if (id == Guid.Empty)
-            {
                 return NotFound();
-            }
 
             var data = await _service.GetByIdAsnyc(id);
             if (data == null)
-            {
                 return NotFound();
-            }
 
             await _service.Remove(data);
             return RedirectToAction(nameof(Index));
