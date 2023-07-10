@@ -4,6 +4,10 @@ using DTOLayer.DTOs.AcademicYear;
 using EntityLayer.Concrete;
 using EntityLayer.Concrete.Base;
 using Microsoft.AspNetCore.Mvc;
+using CoreLayer.Helpers.Extensions;
+using CoreLayer.Helpers.FieldComparer;
+using static iTextSharp.text.pdf.events.IndexEvents;
+using Newtonsoft.Json;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
@@ -42,10 +46,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         {
             var model = _mapper.Map<TCreateDTO, TEntity>(t);
             if (!ModelState.IsValid)
-            {
-                GetFields().Wait();
-                return View(t);
-            }
+                return HandleInvalidModel(t);
 
             await _service.Insert(model);
             return RedirectToAction(nameof(Index));
@@ -58,34 +59,48 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Edit(Guid id)
         {
             if (id == Guid.Empty)
-            {
                 return NotFound();
-            }
+
             var data = await _service.GetByIdAsnyc(id);
             if (data == null)
-            {
                 return NotFound();
-            }
 
             var model = _mapper.Map<TEntity, TEditDto>(data);
 
             GetFields().Wait();
-            return View(model);
+
+            TempData["ExistingEntity"] = JsonConvert.SerializeObject(data);
+            return View("Edit", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual async Task<IActionResult> Edit(TEditDto t)
         {
+            if (!ModelState.IsValid)
+                return HandleInvalidModel(t);
+
+            var existingEntity = JsonConvert.DeserializeObject<TEntity>((string)TempData["ExistingEntity"]);
+            if (existingEntity == null)
+                return HandleInvalidModel(t);
+
             var model = _mapper.Map<TEditDto, TEntity>(t);
 
-            if (!ModelState.IsValid)
-            {
-                GetFields().Wait();
-                return View(t);
-            }
 
-            await _service.Update(model, model.Id);
+            //await _service.Update(model, model.Id);
+
+
+            //deyisecek fieldleri teyin edir. 
+            var changedFields = EntityFieldComparer<TEditDto, TEntity>.GetChangedFields(t, existingEntity);
+
+            await _service.Update(model, entry =>
+            {
+                foreach (var (propertyExpression, value) in changedFields)
+                {
+                    entry.SetValue(propertyExpression, value);
+                }
+            });
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -96,15 +111,11 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Delete(Guid id)
         {
             if (id == Guid.Empty)
-            {
                 return NotFound();
-            }
 
             var data = await _service.GetByIdAsnyc(id);
             if (data == null)
-            {
                 return NotFound();
-            }
 
             await _service.Delete(data);
             return RedirectToAction(nameof(Index));
@@ -113,18 +124,21 @@ namespace ExamCreator.Areas.Admin.Controllers
         public virtual async Task<IActionResult> Remove(Guid id)
         {
             if (id == Guid.Empty)
-            {
                 return NotFound();
-            }
 
             var data = await _service.GetByIdAsnyc(id);
             if (data == null)
-            {
                 return NotFound();
-            }
 
             await _service.Remove(data);
             return RedirectToAction(nameof(Index));
+        }
+
+
+        private IActionResult HandleInvalidModel<TModel>(TModel t)
+        {
+            GetFields().Wait();
+            return View(t);
         }
     }
 

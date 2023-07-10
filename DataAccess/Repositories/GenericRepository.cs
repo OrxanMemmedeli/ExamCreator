@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using CoreLayer.Helpers.Extensions;
+using DataAccess.Abstract;
 using DataAccess.Concrete.Context;
 using EntityLayer.Concrete.Base;
 using Microsoft.EntityFrameworkCore;
@@ -144,6 +145,31 @@ namespace DataAccess.Repositories
             //}
         }
 
+        public async Task Update(T t, Action<EntityEntry<T>> rules = null)
+        {
+            var entry = _context.Entry(t);
 
+            if (rules == null)
+                goto summary;
+
+            foreach (var propertyInfo in typeof(T).GetProperties().Where(x => Extension.IsEditable(x)))
+            {
+                entry.Property(propertyInfo.Name).IsModified = false;
+            }
+
+
+            rules(entry);
+
+            summary:
+
+            entry.Property(nameof(t.ModifyedDate)).IsModified = true;
+            if (typeof(T).GetProperty("ModifiedUser") != null)
+                entry.Property("ModifiedUser").IsModified = true;
+            updateBaseField(ref t);
+
+            entry.State = EntityState.Modified;
+
+            await SaveAsync();
+        }
     }
 }

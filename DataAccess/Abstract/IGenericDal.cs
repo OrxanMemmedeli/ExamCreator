@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,6 +12,7 @@ namespace DataAccess.Abstract
     {
         Task Insert(T t);
         Task Update(T t, Guid id);
+        Task Update(T t, Action<EntityEntry<T>> rules = null);
         Task Delete(T t);
         Task Remove(T t);
         IQueryable<T> GetAllAsnyc(params Expression<Func<T, object>>[] includes);

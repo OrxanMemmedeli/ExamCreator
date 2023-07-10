@@ -7,13 +7,21 @@
 	* Companye gore bolunme
 		* Muellim ve userler arasinda multi company elaqesi
 		* Sual company muellimden ve ya adminden gelecek
+
 		* Companilere expired qoy son 10 gün qalsa bildiriş ver. Free account hissəsidə Əlavə et. Compaynyə bagli butun user ve muellimler blok
 			* Sutunlar startDate(sifrelenmis acarla), EndDate(sifrelenmis acarla), sifreleme mentni(sifrelenmis Xusisi metnle), Free account hissesi(1,0) (haslanmis??)
-		*
+		* Company-lerde lizenziya isleri ucun gunluk olaraq mebleg teyin edilsin. Aktiv oldugu tarixdan cari tarixe qeder olan gun hesablanacaq ve buna uygun Odenis teyin edilecek. Borc cedvelinden olan ödenisler cemlenib cari gune qeder olan borcdan cixilacaq yekun balans olacaq. Hər bir müəssisə üçün isə kredit məbləğ limiti olacaq. Əgər kredit limiti keçilərsə, məbləğ daha artıq hesablanacaq. Günlük 15 faiz artımla ve ya benzeri
+			* UI hissede yekun meblegi ve borcu gosteren BALANS hissesi olacaq. Ajax ile muraciet edib Cedvelden getirecek ve borclar her yeni gunun tamaminda job ile hasablanib yazilacaq. Odenis edilmeyibse menfi mebleg gosterecek. Eger limit asilarsa bu zaman gunluk odenise faizde elave edilecek. 
+			* Yeni Table (AmountOfDay, AmountOfLimit, AmountOfLimitDate, DebtToLimit, DebtFromLimit  AmountOfFine(faiz ilə) - min 0 max 100) 
+			* Elave odenis cedveli olacaq. Her odenis edilen zaman companye uygun odenis melumatlari saxlanilacaq (CompanyID, Date, Amount(AZN)-decimal)
 
 
 	* BaseFieldsForEdit hissesinde Creat/ModifyUserId nullable hisselerini legv et
 	* AppUSER DTO hissesine xususi baxis edilmelidir.  (AppUserProfile) 
+	
+	* BaseEntity olmayan Entityler ucun yeni Repository generate et
+		* Bir basa Context Sinifinden olan asililigi aradan qaldir (her iki repositoride)
+		* DBContext istenilen yerde - Teyin edilmis contextdi ver. 
 
 hazir olanlar
 	* Mail ucun yeni mail adresi yarad ve elave et (12-06-23)
