@@ -1,12 +1,7 @@
-﻿using EntityLayer.Configuration.Base;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using EntityLayer.Concrete;
+using EntityLayer.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityLayer.Concrete;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EntityLayer.Configuration
 {

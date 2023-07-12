@@ -1,5 +1,6 @@
 ﻿using CoreLayer.Entities;
 using EntityLayer.Concrete.Base;
+using EntityLayer.Concrete.CombineEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -32,10 +32,11 @@ namespace CoreLayer.Helpers.Filters
                 string propertyName = property.Name;
                 string propertyValue = property.GetValue(filterModel)?.ToString();
 
-                if (!string.IsNullOrEmpty(propertyValue))
-                {
-                    filterExpression = AddFilterExpressions(parameter, propertyName, propertyValue, filterExpression, filterModel);
-                }
+                if (string.IsNullOrWhiteSpace(propertyValue))
+                    continue;
+
+                filterExpression = AddFilterExpressions(parameter, propertyName, propertyValue, filterExpression, filterModel);
+
             }
 
             // Filtr ifadəsi null deyilsə lambda ifadəsinə çevreilir.
@@ -52,14 +53,9 @@ namespace CoreLayer.Helpers.Filters
         {
             //Property ilə eyni adla adlandırılmış və propertini xarakterizə edən porperty-ni təyin edir.
             PropertyInfo filterTypeProperty = typeof(TFilter).GetProperty($"{propertyName}FilterType");
-            if (filterTypeProperty != null)
-            {
-                var filterTypeValue = filterTypeProperty.GetValue(filterModel);
-                if (filterTypeValue != null && filterTypeValue is FilterType filterType)
-                {
-                    return filterType;
-                }
-            }
+            if (filterTypeProperty != null && filterTypeProperty.GetValue(filterModel) is FilterType filterType)
+                return filterType;
+
             // Default to FilterType.Equal if the property is not found or invalid
             return FilterType.Equal;
         }
@@ -92,139 +88,77 @@ namespace CoreLayer.Helpers.Filters
                         throw new NotSupportedException($"Filter type '{filterType}' is not supported for string properties.");
                 }
             }
-            else if (property.Type == typeof(DateTime))
+            else if (property.Type == typeof(DateTime) || property.Type == typeof(DateTime?))
             {
-                DateTime propertyDateTimeValue;
-                if (DateTime.TryParse(propertyValue, out propertyDateTimeValue))
+                DateTime? propertyDateTimeValue = DateTime.TryParse(propertyValue, out DateTime parsedValue)
+                    ? parsedValue.Date
+                    : (DateTime?)null;
+
+                if (propertyDateTimeValue != null)
                 {
-                    propertyDateTimeValue = propertyDateTimeValue.Date; // Extract the date part
+                    Expression propertyYear = Expression.Property(property, "Year");
+                    Expression propertyMonth = Expression.Property(property, "Month");
+                    Expression propertyDay = Expression.Property(property, "Day");
 
                     switch (filterType)
                     {
                         case FilterType.Equal:
-                            equality = Expression.Equal(
-                                Expression.Property(property, "Year"),
-                                Expression.Constant(propertyDateTimeValue.Year)
-                            );
                             equality = Expression.AndAlso(
-                                equality,
-                                Expression.Equal(
-                                    Expression.Property(property, "Month"),
-                                    Expression.Constant(propertyDateTimeValue.Month)
-                                )
-                            );
-                            equality = Expression.AndAlso(
-                                equality,
-                                Expression.Equal(
-                                    Expression.Property(property, "Day"),
-                                    Expression.Constant(propertyDateTimeValue.Day)
+                                Expression.Equal(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                Expression.AndAlso(
+                                    Expression.Equal(propertyMonth, Expression.Constant(propertyDateTimeValue.Value.Month)),
+                                    Expression.Equal(propertyDay, Expression.Constant(propertyDateTimeValue.Value.Day))
                                 )
                             );
                             break;
                         case FilterType.NotEqual:
-                            equality = Expression.NotEqual(
-                                Expression.Property(property, "Year"),
-                                Expression.Constant(propertyDateTimeValue.Year)
-                            );
                             equality = Expression.OrElse(
-                                equality,
-                                Expression.NotEqual(
-                                    Expression.Property(property, "Month"),
-                                    Expression.Constant(propertyDateTimeValue.Month)
-                                )
-                            );
-                            equality = Expression.OrElse(
-                                equality,
-                                Expression.NotEqual(
-                                    Expression.Property(property, "Day"),
-                                    Expression.Constant(propertyDateTimeValue.Day)
+                                Expression.NotEqual(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                Expression.OrElse(
+                                    Expression.NotEqual(propertyMonth, Expression.Constant(propertyDateTimeValue.Value.Month)),
+                                    Expression.NotEqual(propertyDay, Expression.Constant(propertyDateTimeValue.Value.Day))
                                 )
                             );
                             break;
                         case FilterType.GreaterThan:
-                            equality = Expression.GreaterThan(
-                                Expression.Property(property, "Value"),
-                                Expression.Constant(propertyDateTimeValue.Date)
+                            equality = Expression.OrElse(
+                                Expression.GreaterThan(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                Expression.OrElse(
+                                    Expression.AndAlso(
+                                        Expression.Equal(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                        Expression.GreaterThan(propertyMonth, Expression.Constant(propertyDateTimeValue.Value.Month))
+                                    ),
+                                    Expression.AndAlso(
+                                        Expression.Equal(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                        Expression.AndAlso(
+                                            Expression.Equal(propertyMonth, Expression.Constant(propertyDateTimeValue.Value.Month)),
+                                            Expression.GreaterThan(propertyDay, Expression.Constant(propertyDateTimeValue.Value.Day))
+                                        )
+                                    )
+                                )
                             );
                             break;
                         case FilterType.LessThan:
-                            equality = Expression.LessThan(
-                                Expression.Property(property, "Value"),
-                                Expression.Constant(propertyDateTimeValue.Date)
+                            equality = Expression.OrElse(
+                                Expression.LessThan(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                Expression.OrElse(
+                                    Expression.AndAlso(
+                                        Expression.Equal(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                        Expression.LessThan(propertyMonth, Expression.Constant(propertyDateTimeValue.Value.Month))
+                                    ),
+                                    Expression.AndAlso(
+                                        Expression.Equal(propertyYear, Expression.Constant(propertyDateTimeValue.Value.Year)),
+                                        Expression.AndAlso(
+                                            Expression.Equal(propertyMonth, Expression.Constant(propertyDateTimeValue.Value.Month)),
+                                            Expression.LessThan(propertyDay, Expression.Constant(propertyDateTimeValue.Value.Day))
+                                        )
+                                    )
+                                )
                             );
                             break;
                         default:
                             throw new NotSupportedException($"Filter type '{filterType}' is not supported for DateTime properties.");
                     }
-                }
-            }
-            else if (property.Type == typeof(DateTime?))
-            {
-                DateTime? propertyDateTimeValue = null;
-                if (DateTime.TryParse(propertyValue, out DateTime parsedValue))
-                {
-                    propertyDateTimeValue = parsedValue.Date;
-                }
-                if (propertyDateTimeValue != default(DateTime))
-                {
-                    switch (filterType)
-                    {
-                        case FilterType.Equal:
-                            equality = Expression.Equal(
-                                Expression.Property(Expression.Property(property, "Value"), "Year"),
-                                Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Year)
-                            );
-                            equality = Expression.AndAlso(
-                                equality,
-                                Expression.Equal(
-                                    Expression.Property(Expression.Property(property, "Value"), "Month"),
-                                    Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Month)
-                                )
-                            );
-                            equality = Expression.AndAlso(
-                                equality,
-                                Expression.Equal(
-                                    Expression.Property(Expression.Property(property, "Value"), "Day"),
-                                    Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Day)
-                                )
-                            );
-                            break;
-                        case FilterType.NotEqual:
-                            equality = Expression.NotEqual(
-                                Expression.Property(Expression.Property(property, "Value"), "Year"),
-                                Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Year)
-                            );
-                            equality = Expression.OrElse(
-                                equality,
-                                Expression.NotEqual(
-                                    Expression.Property(Expression.Property(property, "Value"), "Month"),
-                                    Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Month)
-                                )
-                            );
-                            equality = Expression.OrElse(
-                                equality,
-                                Expression.NotEqual(
-                                    Expression.Property(Expression.Property(property, "Value"), "Day"),
-                                    Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Day)
-                                )
-                            );
-                            break;
-                        case FilterType.GreaterThan:
-                            equality = Expression.GreaterThan(
-                                Expression.Property(Expression.Property(property, "Value"), "Date"),
-                                Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Date)
-                            );
-                            break;
-                        case FilterType.LessThan:
-                            equality = Expression.LessThan(
-                                Expression.Property(Expression.Property(property, "Value"), "Date"),
-                                Expression.Constant(propertyDateTimeValue.GetValueOrDefault().Date)
-                            );
-                            break;
-                        default:
-                            throw new NotSupportedException($"Filter type '{filterType}' is not supported for DateTime properties.");
-                    }
-
                 }
             }
             else if (property.Type == typeof(decimal))

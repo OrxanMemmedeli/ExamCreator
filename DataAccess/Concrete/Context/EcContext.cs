@@ -1,10 +1,13 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.Concrete.CombineEntities;
+using EntityLayer.Concrete.ExceptionalEntities;
 using EntityLayer.Concrete.ForRoles;
 using EntityLayer.Configuration;
+using EntityLayer.Configuration.CombineConfigs;
+using EntityLayer.Configuration.Exceptional;
 using EntityLayer.Configuration.ForRoles;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace DataAccess.Concrete.Context
 {
@@ -40,6 +43,9 @@ namespace DataAccess.Concrete.Context
 
         #region Base Entities
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<PaymentSummary> PaymentSummary { get; set; }
+
         #endregion
 
 
@@ -47,7 +53,6 @@ namespace DataAccess.Concrete.Context
         #region Base Entities With User
         public DbSet<AcademicYear> AcademicYears { get; set; }
         public DbSet<Booklet> Booklets { get; set; }
-        public DbSet<Company> Companies { get; set; }
         public DbSet<Exam> Exams { get; set; }
         public DbSet<ExamParameter> ExamParameters { get; set; }
         public DbSet<Grade> Grades { get; set; }
@@ -70,6 +75,7 @@ namespace DataAccess.Concrete.Context
         #region Simple Entities
         public DbSet<RoleUrl> RoleUrls { get; set; }
         public DbSet<SysException> SysExceptions { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         #endregion
 
 
@@ -77,6 +83,7 @@ namespace DataAccess.Concrete.Context
         #region Combination Entities
         public DbSet<QuestionAttahment> QuestionAttahments { get; set; }
         public DbSet<CombineRoleUrl> CombineRoleUrls { get; set; }
+        public DbSet<CompanyUser> CompanyUsers { get; set; }
         #endregion
 
 
@@ -88,32 +95,14 @@ namespace DataAccess.Concrete.Context
             //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Manually configure 
-            builder.ApplyConfiguration(new AcademicYearConfig());
-            builder.ApplyConfiguration(new AppUserConfig());
-            builder.ApplyConfiguration(new BookletConfig());
-            builder.ApplyConfiguration(new CompanyConfig());
-            builder.ApplyConfiguration(new ExamConfig());
-            builder.ApplyConfiguration(new ExamParameterConfig());
-            builder.ApplyConfiguration(new GradeConfig());
-            builder.ApplyConfiguration(new GroupConfig());
-            builder.ApplyConfiguration(new QuestionConfig());
-            builder.ApplyConfiguration(new QuestionLevelConfig());
-            builder.ApplyConfiguration(new QuestionParameterConfig());
-            builder.ApplyConfiguration(new QuestionTypeConfig());
-            builder.ApplyConfiguration(new ResponseConig());
-            builder.ApplyConfiguration(new SectionConfig());
-            builder.ApplyConfiguration(new SubjectConfig());
-            builder.ApplyConfiguration(new SubjectParameterConfig());
-            builder.ApplyConfiguration(new TextConfig());
-            builder.ApplyConfiguration(new UserTypeConfig());
-            builder.ApplyConfiguration(new VariantConfig());
-            builder.ApplyConfiguration(new AttachmentConfig());
+            AddConfigurations(builder);
 
-            builder.ApplyConfiguration(new QuestionAttahmentConfig());
-            builder.ApplyConfiguration(new CombineRoleUrlConfig());
+
 
         }
 
+
+        #region SaveChangesAsync
         //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         //{
         //    var datas = ChangeTracker.Entries<IEntity>();
@@ -160,7 +149,43 @@ namespace DataAccess.Concrete.Context
         //    return await base.SaveChangesAsync(cancellationToken);
 
         //}
+        #endregion
 
+        static void AddConfigurations(ModelBuilder builder)
+        {
+            //base
+            builder.ApplyConfiguration(new AcademicYearConfig());
+            builder.ApplyConfiguration(new AppUserConfig());
+            builder.ApplyConfiguration(new BookletConfig());
+            builder.ApplyConfiguration(new CompanyConfig());
+            builder.ApplyConfiguration(new ExamConfig());
+            builder.ApplyConfiguration(new ExamParameterConfig());
+            builder.ApplyConfiguration(new GradeConfig());
+            builder.ApplyConfiguration(new GroupConfig());
+            builder.ApplyConfiguration(new PaymentSummaryConfig());
+            builder.ApplyConfiguration(new QuestionConfig());
+            builder.ApplyConfiguration(new QuestionLevelConfig());
+            builder.ApplyConfiguration(new QuestionParameterConfig());
+            builder.ApplyConfiguration(new QuestionTypeConfig());
+            builder.ApplyConfiguration(new ResponseConig());
+            builder.ApplyConfiguration(new SectionConfig());
+            builder.ApplyConfiguration(new SubjectConfig());
+            builder.ApplyConfiguration(new SubjectParameterConfig());
+            builder.ApplyConfiguration(new TextConfig());
+            builder.ApplyConfiguration(new UserTypeConfig());
+            builder.ApplyConfiguration(new VariantConfig());
+            builder.ApplyConfiguration(new AttachmentConfig());
+            
+            //simple 
+            builder.ApplyConfiguration(new PaymentConfig());
+
+            //combination
+            builder.ApplyConfiguration(new QuestionAttahmentConfig());
+            builder.ApplyConfiguration(new CombineRoleUrlConfig());
+            builder.ApplyConfiguration(new CompanyUserConfig());
+        }
 
     }
+
+
 }

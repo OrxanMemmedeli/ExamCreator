@@ -1,5 +1,6 @@
 ﻿using CoreLayer.Enums;
 using EntityLayer.Concrete.Base;
+using EntityLayer.Concrete.CombineEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace EntityLayer.Concrete
     {
         public Attachment()
         {
-            this.QuestionAttahments = new HashSet<QuestionAttahment>();
+            QuestionAttahments = new HashSet<QuestionAttahment>();
         }
         public AttachmentType ProductType { get; set; }
         public string FileName { get; set; }

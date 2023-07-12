@@ -1,28 +1,26 @@
 ﻿using Business.Abstract;
+using Business.Abstract.Exceptional;
 using DataAccess.Abstract;
 using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
     public class CompanyManager : ICompanyService
     {
         private readonly ICompanyDal _dal;
-
-        public CompanyManager(ICompanyDal dal)
+        private readonly IPaymentSummaryService _paymentSummaryService;
+        public CompanyManager(ICompanyDal dal, IPaymentSummaryService paymentSummaryService)
         {
             _dal = dal;
+            _paymentSummaryService = paymentSummaryService;
         }
 
         public async Task Delete(Company t)
         {
             await _dal.Delete(t);
+            await _dal.SaveAsync();
         }
 
         public IQueryable<Company> GetAllAsnyc(params Expression<Func<Company, object>>[] includes)
@@ -47,22 +45,31 @@ namespace Business.Concrete
 
         public async Task Insert(Company t)
         {
+            t.Id = Guid.NewGuid();
+            t.StartDate = null;
+            t.IsPenal = false;
+
             await _dal.Insert(t);
+
+            await _paymentSummaryService.Insert(new PaymentSummary()
+            {
+                CompanyId = t.Id,
+                TotalDebt = 0,
+                TotalPayment = 0,
+            });
+            await _dal.SaveAsync();
         }
 
         public async Task Remove(Company t)
         {
             await _dal.Remove(t);
-        }
-
-        public async Task Update(Company t, Guid id)
-        {
-            await _dal.Update(t, id);
+            await _dal.SaveAsync();
         }
 
         public async Task Update(Company t, Action<EntityEntry<Company>> rules = null)
         {
             await _dal.Update(t, rules);
+            await _dal.SaveAsync();
         }
     }
 }

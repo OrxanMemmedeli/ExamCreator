@@ -11,7 +11,6 @@ namespace ExamCreator.AutoMapper
             CreateMap<Booklet, BookletIndexDTO>()
                 .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName))
                 .ForMember(dest => dest.ExamName, opt => opt.MapFrom(src => src.Exam.Name))
-                .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Company.Name))
                 .ForMember(dest => dest.AcademicYearName, opt => opt.MapFrom(src => src.AcademicYear.Name))
                 .ForMember(dest => dest.VariantName, opt => opt.MapFrom(src => src.Variant.Name))
                 .ForMember(dest => dest.GroupName, opt => opt.MapFrom(src => src.Group.Name))

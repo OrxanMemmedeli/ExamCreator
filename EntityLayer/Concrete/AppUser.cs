@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EntityLayer.Concrete;
+using EntityLayer.Concrete.CombineEntities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,6 @@ namespace EntityLayer.Concrete
             this.Responses = new HashSet<Response>();
             this.Subjects = new HashSet<Subject>();
             this.Sections = new HashSet<Section>();
-            this.Companies = new HashSet<Company>();
             this.Exams = new HashSet<Exam>();
             this.SubjectParameters = new HashSet<SubjectParameter>();
             this.ExamParameters = new HashSet<ExamParameter>();
@@ -40,7 +41,6 @@ namespace EntityLayer.Concrete
             this.ResponsesM = new HashSet<Response>();
             this.SubjectsM = new HashSet<Subject>();
             this.SectionsM = new HashSet<Section>();
-            this.CompaniesM = new HashSet<Company>();
             this.ExamsM = new HashSet<Exam>();
             this.SubjectParametersM = new HashSet<SubjectParameter>();
             this.ExamParametersM = new HashSet<ExamParameter>();
@@ -50,6 +50,10 @@ namespace EntityLayer.Concrete
             this.BookletsM = new HashSet<Booklet>();
             this.GroupsM = new HashSet<Group>();
             this.AttachmentsM = new HashSet<Attachment>();
+
+
+            this.CompanyUsers = new HashSet<CompanyUser>();
+
         }
 
         public string FullName { get; set; }
@@ -72,7 +76,6 @@ namespace EntityLayer.Concrete
         public ICollection<Response> Responses { get; set; }
         public ICollection<Subject> Subjects { get; set; }
         public ICollection<Section> Sections { get; set; }
-        public ICollection<Company> Companies { get; set; }
         public ICollection<Exam> Exams { get; set; }
         public ICollection<SubjectParameter> SubjectParameters { get; set; }
         public ICollection<ExamParameter> ExamParameters { get; set; }
@@ -93,7 +96,6 @@ namespace EntityLayer.Concrete
         public ICollection<Response> ResponsesM { get; set; }
         public ICollection<Subject> SubjectsM { get; set; }
         public ICollection<Section> SectionsM { get; set; }
-        public ICollection<Company> CompaniesM { get; set; }
         public ICollection<Exam> ExamsM { get; set; }
         public ICollection<SubjectParameter> SubjectParametersM { get; set; }
         public ICollection<ExamParameter> ExamParametersM { get; set; }
@@ -103,6 +105,10 @@ namespace EntityLayer.Concrete
         public ICollection<Booklet> BookletsM { get; set; }
         public ICollection<Group> GroupsM { get; set; }
         public ICollection<Attachment> AttachmentsM { get; set; }
+
+
+        public ICollection<CompanyUser> CompanyUsers { get; set; }
+
 
     }
 }

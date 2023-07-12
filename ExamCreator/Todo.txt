@@ -8,13 +8,7 @@
 		* Muellim ve userler arasinda multi company elaqesi
 		* Sual company muellimden ve ya adminden gelecek
 
-		* Companilere expired qoy son 10 gün qalsa bildiriş ver. Free account hissəsidə Əlavə et. Compaynyə bagli butun user ve muellimler blok
-			* Sutunlar startDate(sifrelenmis acarla), EndDate(sifrelenmis acarla), sifreleme mentni(sifrelenmis Xusisi metnle), Free account hissesi(1,0) (haslanmis??)
-		* Company-lerde lizenziya isleri ucun gunluk olaraq mebleg teyin edilsin. Aktiv oldugu tarixdan cari tarixe qeder olan gun hesablanacaq ve buna uygun Odenis teyin edilecek. Borc cedvelinden olan ödenisler cemlenib cari gune qeder olan borcdan cixilacaq yekun balans olacaq. Hər bir müəssisə üçün isə kredit məbləğ limiti olacaq. Əgər kredit limiti keçilərsə, məbləğ daha artıq hesablanacaq. Günlük 15 faiz artımla ve ya benzeri
-			* UI hissede yekun meblegi ve borcu gosteren BALANS hissesi olacaq. Ajax ile muraciet edib Cedvelden getirecek ve borclar her yeni gunun tamaminda job ile hasablanib yazilacaq. Odenis edilmeyibse menfi mebleg gosterecek. Eger limit asilarsa bu zaman gunluk odenise faizde elave edilecek. 
-			* Yeni Table (StartDate, AmountOfDay, AmountOfLimit, AmountOfFine(faiz ilə) = 0 - min 0 max 100, DebtToLimit?, ExpiredDate?, DebtFromLimit?   ) 
-			* Elave odenis cedveli olacaq. Her odenis edilen zaman companye uygun odenis melumatlari saxlanilacaq (CompanyID, Date, Amount(AZN)-decimal)
-
+	* Validasiyalari duzelt
 
 	* BaseFieldsForEdit hissesinde Creat/ModifyUserId nullable hisselerini legv et
 	* AppUSER DTO hissesine xususi baxis edilmelidir.  (AppUserProfile) 
@@ -23,6 +17,22 @@
 		* Bir basa Context Sinifinden olan asililigi aradan qaldir (her iki repositoride)
 		* DBContext istenilen yerde - Teyin edilmis contextdi ver. 
 
+
+	* Sonda Table columlar uzre configuration sahesinde mehdudluqlar teyin et (max size max value ve s.)
+	* Birbasa Context ist eden yerleri İnterface uzerinden islemeni temin et
+	* UpdateRange Methodu elave et ve bu zaman SaveChange methodu ayrica olaraq olsun ki her yerde cagrila bilsin
+		* saveChange methodunu her cagiris ucun elave et Controller ve diger sahelerde
+
+
+NATAMAM olanlar
+	* Company-lerde lizenziya isleri ucun gunluk olaraq mebleg teyin edilsin. Aktiv oldugu tarixdan cari tarixe qeder olan gun hesablanacaq ve buna uygun Odenis teyin edilecek. Borc cedvelinden olan ödenisler cemlenib cari gune qeder olan borcdan cixilacaq yekun balans olacaq. Hər bir müəssisə üçün isə kredit məbləğ limiti olacaq. Əgər kredit limiti keçilərsə, məbləğ daha artıq hesablanacaq. Günlük 15 faiz artımla ve ya benzeri
+			*  Ajax ile muraciet edib Cedvelden getirecek ve borclar her yeni gunun tamaminda job ile hasablanib yazilacaq. Odenis edilmeyibse menfi mebleg gosterecek. Eger limit asilarsa bu zaman gunluk odenise faizde elave edilecek. 
+			* Yeni Table (StartDate, AmountOfDay, AmountOfLimit, AmountOfFine(faiz ilə) = 0 - min 0 max 100, DebtToLimit?, ExpiredDate?, DebtFromLimit?   ) 
+			* Elave odenis cedveli olacaq. Her odenis edilen zaman companye uygun odenis melumatlari saxlanilacaq (CompanyID, Date, Amount(AZN)-decimal)
+
+
+
+--------------------------------------------------------
 hazir olanlar
 	* Mail ucun yeni mail adresi yarad ve elave et (12-06-23)
 	* Mapper hissesinde yeni DTO -larin map funksiyalarini yaz
@@ -30,3 +40,17 @@ hazir olanlar
 	* Connection String metumati dinamik olsun
 	* RouteDataFilter hissesinde melumatlari kes uzerinden yoxla. 
 	* Umumi try Catch yaradilsin
+
+	* company businesde yeni deyisikliklere gore insert ve diger hisseleri nezere al (businessde)
+		* Company ile 1-1 elaqeli PaymentSummary table elave et
+
+
+
+Son edilene uygun edilmeliler
+		* StartDate baslayaraq her gun bazaya borc yazan job yaz (eger odenilen odenisin meblegi borcun totalindan cixdiqda limit meblegini kececekse bu zaman isPanel sahesini true et, BlockedDate ucun cari terixe 20 gun elave et ve cermeli meblegi bor olaraq yaz. 
+		* Borc ucun teyin edilen muddet BlockedDate 20 gunu kecmis olarsa, bu yazan yazilmis atribut ile her methoda control et ve borc sehifesine yonlendir. (borcdan baglanmaq ucun nece gun qaldigini bildiris olaraq goster 20 gune qederki muddetde)
+		* Borc odenildikden sonra BlockedDate sahesini 0-la ve isPanel false et. 
+		* ikinci bir job ile her gun sonunda Company ile 1-1 elaqesi olan Summary cedveline Toplam odenis, Toplam Borc, cari borc odenisden cix toplam borcu sahelerinde melumati yenileyir. 
+		* UI hissesi summeryden melumat cekir
+
+	* job yaz her gun 00.01 de yoxla limite ve borca gore hesablama et. 

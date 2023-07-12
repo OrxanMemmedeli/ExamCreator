@@ -8,8 +8,7 @@ namespace ExamCreator.AutoMapper
     {
         public CompanyProfile()
         {
-            CreateMap<Company, CompanyIndexDTO>()
-                .ForMember(dest => dest.ModifyUserName, opt => opt.MapFrom(src => src.ModifyUser.UserName)).ReverseMap();
+            CreateMap<Company, CompanyIndexDTO>().ReverseMap();
 
             CreateMap<Company, CompanyCreateDTO>().ReverseMap();
             CreateMap<Company, CompanyEditDTO>().ReverseMap();

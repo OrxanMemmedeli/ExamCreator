@@ -1,41 +1,22 @@
 ﻿using CoreLayer.Helpers.Extensions;
-using DataAccess.Abstract;
+using DataAccess.Abstract.Generic;
 using DataAccess.Concrete.Context;
+using DTOLayer.DTOs;
 using EntityLayer.Concrete.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public partial class GenericRepository<T> : IGenericDal<T> where T : BaseEntity, IEntity
+    public class GenericRepository<T> : GenericBaseRepository<T>, IGenericDal<T> where T : BaseEntity
     {
         private readonly ECContext _context;
 
-        public GenericRepository(ECContext context)
+        public GenericRepository(ECContext context) : base(context)
         {
             _context = context;
         }
-
-        public DbSet<T> Table => _context.Set<T>();
-
-        private IQueryable<T> IncludeMultiple<T>(IQueryable<T> query, params Expression<Func<T, object>>[] includes) where T : class
-        {
-            if (includes != null)
-            {
-                query = includes.Aggregate(query,
-                          (current, include) => current.Include(include));
-            }
-
-            return query;
-        }
-        private async Task<int> SaveAsync() => await _context.SaveChangesAsync();
 
         public async Task Delete(T t)
         {
@@ -46,54 +27,18 @@ namespace DataAccess.Repositories
 
             updateBaseField(ref t);
 
-            await SaveAsync();
         }
 
-        public async Task Remove(T t)
-        {
-            EntityEntry entityEntry = _context.Entry(t);
-            entityEntry.State = EntityState.Deleted;
 
-            //Table.Remove(t);
-            await SaveAsync();
-        }
 
-        public IQueryable<T> GetAllAsnyc(params Expression<Func<T, object>>[] includes)
-        {
-            if (includes.Any())
-                return IncludeMultiple<T>(Table.AsQueryable(), includes);
-            return Table.AsQueryable();
-        }
 
-        public IQueryable<T> GetAllAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
-        {
-            if (includes.Any())
-                return IncludeMultiple<T>(Table.Where(filter).AsQueryable(), includes);
-            return Table.Where(filter).AsQueryable();
-        }
 
-        public async Task<T> GetByAsnyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
-        {
-            if (includes.Any())
-            {
-                var query = IncludeMultiple<T>(Table.Where(filter).AsQueryable(), includes);
-                return await query.FirstOrDefaultAsync();
 
-            }
-            return await Table.FirstOrDefaultAsync(filter);
-        }
 
-        public async Task<T> GetByIdAsnyc(Guid id)
-        {
-            var data = await Table.FindAsync(id);
-            return data;
-        }
-
-        public async Task Insert(T t)
+        public override async Task Insert(T t)
         {
             addBaseFields(ref t);
             await Table.AddAsync(t);
-            await SaveAsync();
         }
 
         private static void addBaseFields(ref T t)
@@ -112,26 +57,11 @@ namespace DataAccess.Repositories
             //}
         }
 
-        public async Task Update(T t, Guid id)
-        {
-            updateBaseField(ref t);
-
-
-            EntityEntry entityEntry = _context.Entry(t);
-            entityEntry.State = EntityState.Modified;
-
-            //var local = await Table.FindAsync(id);
-            //if (local != null)
-            //{
-            //    _context.Entry(local).State = EntityState.Detached;
-            //}
-
-            //entityEntry.State = EntityState.Modified;
 
 
 
-            await SaveAsync();
-        }
+
+
 
         private static void updateBaseField(ref T t)
         {
@@ -145,7 +75,7 @@ namespace DataAccess.Repositories
             //}
         }
 
-        public async Task Update(T t, Action<EntityEntry<T>> rules = null)
+        public override async Task Update(T t, Action<EntityEntry<T>> rules = null)
         {
             var entry = _context.Entry(t);
 
@@ -153,14 +83,12 @@ namespace DataAccess.Repositories
                 goto summary;
 
             foreach (var propertyInfo in typeof(T).GetProperties().Where(x => Extension.IsEditable(x)))
-            {
                 entry.Property(propertyInfo.Name).IsModified = false;
-            }
 
 
             rules(entry);
 
-            summary:
+        summary:
 
             entry.Property(nameof(t.ModifyedDate)).IsModified = true;
             if (typeof(T).GetProperty("ModifiedUser") != null)
@@ -169,7 +97,37 @@ namespace DataAccess.Repositories
 
             entry.State = EntityState.Modified;
 
-            await SaveAsync();
         }
+
+
+        public override async Task UpdateRange(IEnumerable<GenericUpdateRangeModel<T>> rangeModels)
+        {
+            foreach (var item in rangeModels)
+            {
+                await Update(item.t, item.rules);
+            }
+        }
+
+
+        //public override async Task Update(T t, Guid id)
+        //{
+        //    updateBaseField(ref t);
+
+
+        //    EntityEntry entityEntry = _context.Entry(t);
+        //    entityEntry.State = EntityState.Modified;
+
+        //    //var local = await Table.FindAsync(id);
+        //    //if (local != null)
+        //    //{
+        //    //    _context.Entry(local).State = EntityState.Detached;
+        //    //}
+
+        //    //entityEntry.State = EntityState.Modified;
+
+
+
+        //    await SaveAsync();
+        //}
     }
 }
