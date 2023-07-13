@@ -34,7 +34,7 @@ namespace ExamCreator.Attributes
             try
             {
                 var httpContextAccessor = (IHttpContextAccessor)context.HttpContext.RequestServices.GetService(_httpContextAccessorType);
-                var companyID = CompanyHttpContex.GetCompanyID(httpContextAccessor);
+                var companyID = CompanyIdFinder.GetCompanyID(httpContextAccessor);
 
                 base.OnActionExecuting(context);
             }

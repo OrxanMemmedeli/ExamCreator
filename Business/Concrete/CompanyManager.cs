@@ -1,6 +1,10 @@
 ﻿using Business.Abstract;
 using Business.Abstract.Exceptional;
+using Business.Attributes;
+using CoreLayer.Helpers.Extensions;
 using DataAccess.Abstract;
+using DTOLayer.DTOs.Company;
+using DTOLayer.DTOs.PaymentSummary;
 using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
@@ -43,6 +47,7 @@ namespace Business.Concrete
             return _dal.GetByIdAsnyc(id);
         }
 
+        [Transaction]
         public async Task Insert(Company t)
         {
             t.Id = Guid.NewGuid();
@@ -51,7 +56,7 @@ namespace Business.Concrete
 
             await _dal.Insert(t);
 
-            await _paymentSummaryService.Insert(new PaymentSummary()
+            await _paymentSummaryService.Insert(new PaymentSummaryCreateDTO()
             {
                 CompanyId = t.Id,
                 TotalDebt = 0,
@@ -70,6 +75,20 @@ namespace Business.Concrete
         {
             await _dal.Update(t, rules);
             await _dal.SaveAsync();
+        }
+
+        public async Task UpdateForJob(CompanyJobUpdateDTO t)
+        {
+            var company = await GetByIdAsnyc(t.CompanyId);
+            await _dal.Update(company, entry =>
+            {
+                entry.SetValue<Company, >()
+            })
+        }
+
+        public Task UpdateForStatus(bool status)
+        {
+            throw new NotImplementedException();
         }
     }
 }
