@@ -31,7 +31,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
             var grades = await _gradeService.GetAllAsnyc().OrderBy(x => x.Name).ToListAsync();
             var datas = _mapper.Map<List<Grade>, List<GradeIndexDTO>>(grades);

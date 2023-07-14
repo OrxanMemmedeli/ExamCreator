@@ -21,5 +21,15 @@ namespace CoreLayer.Helpers.Tools
             else
                 throw new InvalidOperationException("Company claim not found or invalid.");
         }
+
+        public static Guid GetCompanyID(IHttpContextAccessor httpContextAccessor)
+        {
+            var companyClaim = httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Company");
+
+            if (companyClaim != null && Guid.TryParse(companyClaim.Value, out Guid parsedCompanyID))
+                return parsedCompanyID;
+            else
+                throw new InvalidOperationException("Company claim not found or invalid.");
+        }
     }
 }

@@ -2,6 +2,8 @@
 
 	* Sessionda CompanyID melumatini saxla (Core )
 	* Loglama
+	* Pagination
+
 	* Question/response/section Custom Views	* Sual hissesinde simple upload picture hissesi elave et (Attahment)
 
 	* Response controllerde index, create ve edit pencereleri olmayacaq. Evezinde Suallar hissesinde cavablarin editlenmesi olacaq.
