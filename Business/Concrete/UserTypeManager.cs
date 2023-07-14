@@ -2,12 +2,7 @@
 using DataAccess.Abstract;
 using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -23,6 +18,7 @@ namespace Business.Concrete
         public async Task Delete(UserType t)
         {
             await _dal.Delete(t);
+            await _dal.SaveAsync();
         }
 
         public IQueryable<UserType> GetAllAsnyc(params Expression<Func<UserType, object>>[] includes)
@@ -48,21 +44,19 @@ namespace Business.Concrete
         public async Task Insert(UserType t)
         {
             await _dal.Insert(t);
+            await _dal.SaveAsync();
         }
 
         public async Task Remove(UserType t)
         {
             await _dal.Remove(t);
-        }
-
-        public async Task Update(UserType t, Guid id)
-        {
-            await _dal.Update(t, id);
+            await _dal.SaveAsync();
         }
 
         public async Task Update(UserType t, Action<EntityEntry<UserType>> rules = null)
         {
             await _dal.Update(t, rules);
+            await _dal.SaveAsync();
         }
     }
 }

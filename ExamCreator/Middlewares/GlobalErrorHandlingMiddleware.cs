@@ -7,6 +7,7 @@ namespace ExamCreator.Middlewares
 {
     internal class GlobalErrorHandlingMiddleware
     {
+        //middleware olmasi ucun esas teleblerden birincisi
         private readonly RequestDelegate _next;
 
         public GlobalErrorHandlingMiddleware(RequestDelegate next)
@@ -14,6 +15,7 @@ namespace ExamCreator.Middlewares
             _next = next;
         }
 
+        //middleware olmasi ucun esas teleblerden ikincisi
         public async Task Invoke(HttpContext context)
         {
             try
@@ -62,7 +64,7 @@ namespace ExamCreator.Middlewares
 
     internal static class GlobalErrorHandlingMiddlewareExtention
     {
-        internal static IApplicationBuilder AddGlobalErrorHandling(this IApplicationBuilder builder)
+        internal static IApplicationBuilder UseGlobalErrorHandling(this IApplicationBuilder builder)
         {
             builder.UseMiddleware<GlobalErrorHandlingMiddleware>();
             return builder;

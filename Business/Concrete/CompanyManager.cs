@@ -1,28 +1,30 @@
 ﻿using Business.Abstract;
+using Business.Abstract.Exceptional;
+using Business.Attributes;
+using CoreLayer.Helpers.Extensions;
 using DataAccess.Abstract;
+using DTOLayer.DTOs.Company;
+using DTOLayer.DTOs.PaymentSummary;
 using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
     public class CompanyManager : ICompanyService
     {
         private readonly ICompanyDal _dal;
-
-        public CompanyManager(ICompanyDal dal)
+        private readonly IPaymentSummaryService _paymentSummaryService;
+        public CompanyManager(ICompanyDal dal, IPaymentSummaryService paymentSummaryService)
         {
             _dal = dal;
+            _paymentSummaryService = paymentSummaryService;
         }
 
         public async Task Delete(Company t)
         {
             await _dal.Delete(t);
+            await _dal.SaveAsync();
         }
 
         public IQueryable<Company> GetAllAsnyc(params Expression<Func<Company, object>>[] includes)
@@ -45,24 +47,50 @@ namespace Business.Concrete
             return _dal.GetByIdAsnyc(id);
         }
 
+        [Transaction]
         public async Task Insert(Company t)
         {
+            t.Id = Guid.NewGuid();
+            t.StartDate = null;
+            t.IsPenal = false;
+
             await _dal.Insert(t);
+
+            await _paymentSummaryService.Insert(new PaymentSummaryCreateDTO()
+            {
+                CompanyId = t.Id,
+                TotalDebt = 0,
+                TotalPayment = 0,
+            });
+            await _dal.SaveAsync();
         }
 
         public async Task Remove(Company t)
         {
             await _dal.Remove(t);
-        }
-
-        public async Task Update(Company t, Guid id)
-        {
-            await _dal.Update(t, id);
+            await _dal.SaveAsync();
         }
 
         public async Task Update(Company t, Action<EntityEntry<Company>> rules = null)
         {
             await _dal.Update(t, rules);
+            await _dal.SaveAsync();
+        }
+
+        public async Task UpdateForJob(CompanyJobUpdateDTO t)
+        {
+            var company = await GetByIdAsnyc(t.CompanyId);
+            await _dal.Update(company, entry =>
+            {
+                entry.SetValue(x => x.IsPenal, t.IsPenal);
+                entry.SetValue(x => x.BlockedDate, t.BlockedDate);
+            });
+        }
+
+        public async Task UpdateForStatus(Guid companyId, bool status)
+        {
+            var company = await GetByIdAsnyc(companyId);
+            await _dal.Update(company, entry => entry.SetValue(x => x.Status, status));
         }
     }
 }

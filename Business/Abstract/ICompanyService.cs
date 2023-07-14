@@ -1,4 +1,6 @@
-﻿using EntityLayer.Concrete;
+﻿using Business.Abstract.Generic;
+using DTOLayer.DTOs.Company;
+using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +11,7 @@ namespace Business.Abstract
 {
     public interface ICompanyService : IGenericService<Company>
     {
+        Task UpdateForJob(CompanyJobUpdateDTO t);
+        Task UpdateForStatus(Guid companyId, bool status);
     }
 }

@@ -1,4 +1,5 @@
-﻿using CoreLayer;
+﻿using Business;
+using CoreLayer;
 using DataAccess;
 using ExamCreator;
 using ExamCreator.Middlewares;
@@ -38,7 +39,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.Register(); //dependence ucun
 builder.Services.CoreServiceRegister(); //core layer dependence
-
+builder.Services.BusinessServiceRegister(); //business
 builder.Services.Validators(); // validation ucun
 
 var app = builder.Build();
@@ -50,7 +51,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     
    
-    app.AddGlobalErrorHandling(); // custom middleware for error and log saveing
+    app.UseGlobalErrorHandling(); // custom middleware for error and log saveing
 
     app.UseHsts();
 }
@@ -62,6 +63,8 @@ app.UseApp();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseDbTransaction(); // Tranzaksiya 
 
 app.UseRouting();
 

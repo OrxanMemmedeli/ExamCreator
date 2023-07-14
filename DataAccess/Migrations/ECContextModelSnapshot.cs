@@ -237,10 +237,6 @@ namespace DataAccess.Migrations
                     b.Property<Guid>("AcademicYearId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CompanyId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("CreatUserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -277,8 +273,6 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AcademicYearId");
 
-                    b.HasIndex("CompanyId");
-
                     b.HasIndex("CreatUserId");
 
                     b.HasIndex("ExamId");
@@ -294,21 +288,54 @@ namespace DataAccess.Migrations
                     b.ToTable("Booklets");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.CombineEntities.CompanyUser", b =>
+                {
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CompanyId", "AppUserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("CompanyUsers");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.CombineEntities.QuestionAttahment", b =>
+                {
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AttachmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("QuestionId", "AttachmentId");
+
+                    b.HasIndex("AttachmentId");
+
+                    b.ToTable("QuestionAttahments");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Company", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CreatUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime?>("BlockedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ExpiredDate")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("DailyAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DebtLimit")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -316,15 +343,12 @@ namespace DataAccess.Migrations
                     b.Property<bool>("IsFree")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Key")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsPenal")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LogoUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ModifyUserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifyedDate")
                         .HasColumnType("datetime2");
@@ -333,6 +357,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("PersentOfFine")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -340,10 +367,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatUserId");
-
-                    b.HasIndex("ModifyUserId");
 
                     b.ToTable("Companies");
                 });
@@ -439,6 +462,31 @@ namespace DataAccess.Migrations
                     b.HasIndex("ModifyUserId");
 
                     b.ToTable("ExamParameters");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.ExceptionalEntities.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amout")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.ForRoles.CombineRoleUrl", b =>
@@ -547,6 +595,45 @@ namespace DataAccess.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.PaymentSummary", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("CurrentDebt")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifyedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("TotalDebt")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPayment")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId")
+                        .IsUnique();
+
+                    b.ToTable("PaymentSummary");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -619,21 +706,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("TextId");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.QuestionAttahment", b =>
-                {
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AttachmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("QuestionId", "AttachmentId");
-
-                    b.HasIndex("AttachmentId");
-
-                    b.ToTable("QuestionAttahments");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.QuestionLevel", b =>
@@ -1278,12 +1350,6 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("EntityLayer.Concrete.Company", "Company")
-                        .WithMany("Booklets")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.HasOne("EntityLayer.Concrete.AppUser", "CreatUser")
                         .WithMany("Booklets")
                         .HasForeignKey("CreatUserId")
@@ -1320,8 +1386,6 @@ namespace DataAccess.Migrations
 
                     b.Navigation("AcademicYear");
 
-                    b.Navigation("Company");
-
                     b.Navigation("CreatUser");
 
                     b.Navigation("Exam");
@@ -1335,21 +1399,42 @@ namespace DataAccess.Migrations
                     b.Navigation("Variant");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.Company", b =>
+            modelBuilder.Entity("EntityLayer.Concrete.CombineEntities.CompanyUser", b =>
                 {
-                    b.HasOne("EntityLayer.Concrete.AppUser", "CreatUser")
-                        .WithMany("Companies")
-                        .HasForeignKey("CreatUserId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                    b.HasOne("EntityLayer.Concrete.AppUser", "AppUser")
+                        .WithMany("CompanyUsers")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("EntityLayer.Concrete.AppUser", "ModifyUser")
-                        .WithMany("CompaniesM")
-                        .HasForeignKey("ModifyUserId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                    b.HasOne("EntityLayer.Concrete.Company", "Company")
+                        .WithMany("CompanyUsers")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("CreatUser");
+                    b.Navigation("AppUser");
 
-                    b.Navigation("ModifyUser");
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.CombineEntities.QuestionAttahment", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Attachment", "Attachment")
+                        .WithMany("QuestionAttahments")
+                        .HasForeignKey("AttachmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrete.Question", "Question")
+                        .WithMany("QuestionAttahments")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Attachment");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Exam", b =>
@@ -1400,6 +1485,17 @@ namespace DataAccess.Migrations
                     b.Navigation("CreatUser");
 
                     b.Navigation("ModifyUser");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.ExceptionalEntities.Payment", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Company", "Company")
+                        .WithMany("Payments")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.ForRoles.CombineRoleUrl", b =>
@@ -1453,6 +1549,17 @@ namespace DataAccess.Migrations
                     b.Navigation("CreatUser");
 
                     b.Navigation("ModifyUser");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.PaymentSummary", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Company", "Company")
+                        .WithOne("PaymentSummary")
+                        .HasForeignKey("EntityLayer.Concrete.PaymentSummary", "CompanyId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Question", b =>
@@ -1526,25 +1633,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Subject");
 
                     b.Navigation("Text");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.QuestionAttahment", b =>
-                {
-                    b.HasOne("EntityLayer.Concrete.Attachment", "Attachment")
-                        .WithMany("QuestionAttahments")
-                        .HasForeignKey("AttachmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EntityLayer.Concrete.Question", "Question")
-                        .WithMany("QuestionAttahments")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Attachment");
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.QuestionLevel", b =>
@@ -1851,9 +1939,7 @@ namespace DataAccess.Migrations
 
                     b.Navigation("BookletsM");
 
-                    b.Navigation("Companies");
-
-                    b.Navigation("CompaniesM");
+                    b.Navigation("CompanyUsers");
 
                     b.Navigation("ExamParameters");
 
@@ -1919,7 +2005,11 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("EntityLayer.Concrete.Company", b =>
                 {
-                    b.Navigation("Booklets");
+                    b.Navigation("CompanyUsers");
+
+                    b.Navigation("PaymentSummary");
+
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Exam", b =>

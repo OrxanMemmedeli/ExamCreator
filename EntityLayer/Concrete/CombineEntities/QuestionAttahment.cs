@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EntityLayer.Concrete
+﻿namespace EntityLayer.Concrete.CombineEntities
 {
-    public class QuestionAttahment 
+    public class QuestionAttahment
     {
         public Guid QuestionId { get; set; }
         public Guid AttachmentId { get; set; }

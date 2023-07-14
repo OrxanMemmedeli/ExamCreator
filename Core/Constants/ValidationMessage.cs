@@ -24,5 +24,8 @@ namespace CoreLayer.Constants
         public static string DateTimeMinValue { get; private set; } = "Daxil edilmiş tarix cari tarixdən kiçik ola bilməz";
         public static string GreaterThanOrEqualTo { get; private set; } = "{0} sahəsi {1} və ya daha böyük dəyər olmalıdır";
         public static string ContainsTextForTextTitle { get; private set; } = "Mətn Başlığında mütləq formada \"{0} – {1}\" ifadəsi yer almalıdır. (Sual nömrələrini avtomatik vermək üçün)";
+
+        public static string PaymentGreaterFromDebt { get; private set; } = "Ödəniş məbləği borcdan az ola bilməz. {0} tarixi üçün minimal ödəniş məbləği {1} olmalıdır.";
+
     }
 }

@@ -14,7 +14,6 @@ namespace EntityLayer.Concrete
         public Guid? GroupId { get; set; }
         public Guid VariantId { get; set; }
         public Guid ExamId { get; set; }
-        public Guid? CompanyId { get; set; }
         public Guid AcademicYearId { get; set; }
 
 
@@ -22,7 +21,6 @@ namespace EntityLayer.Concrete
         public virtual Group Group { get; set; }
         public virtual Variant Variant { get; set; }
         public virtual Exam Exam { get; set; }
-        public virtual Company Company { get; set; }
         public virtual AcademicYear AcademicYear { get; set; }
 
     }

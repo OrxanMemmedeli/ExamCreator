@@ -36,11 +36,6 @@ namespace EntityLayer.Configuration
                 .HasForeignKey(x => x.ExamId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
-            builder.HasOne(x => x.Company)
-                .WithMany(x => x.Booklets)
-                .HasForeignKey(x => x.CompanyId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-
             builder.HasOne(x => x.AcademicYear)
                 .WithMany(x => x.Booklets)
                 .HasForeignKey(x => x.AcademicYearId)

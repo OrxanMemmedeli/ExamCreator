@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Business.Abstract;
 using DTOLayer.DTOs.AcademicYear;
-using EntityLayer.Concrete;
-using EntityLayer.Concrete.Base;
 using Microsoft.AspNetCore.Mvc;
 using CoreLayer.Helpers.Extensions;
 using CoreLayer.Helpers.FieldComparer;
 using static iTextSharp.text.pdf.events.IndexEvents;
 using Newtonsoft.Json;
+using EntityLayer.Concrete.Base;
+using Business.Abstract.Generic;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {

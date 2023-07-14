@@ -107,18 +107,6 @@ namespace EntityLayer.Configuration
                 .HasForeignKey(x => x.ModifyUserId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
-
-            builder.HasMany(x => x.Companies)
-                .WithOne(x => x.CreatUser)
-                .HasForeignKey(x => x.CreatUserId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-
-            builder.HasMany(x => x.CompaniesM)
-                .WithOne(x => x.ModifyUser)
-                .HasForeignKey(x => x.ModifyUserId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-
-
             builder.HasMany(x => x.Exams)
                 .WithOne(x => x.CreatUser)
                 .HasForeignKey(x => x.CreatUserId)
