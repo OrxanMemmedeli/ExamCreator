@@ -82,13 +82,15 @@ namespace Business.Concrete
             var company = await GetByIdAsnyc(t.CompanyId);
             await _dal.Update(company, entry =>
             {
-                entry.SetValue<Company, >()
-            })
+                entry.SetValue(x => x.IsPenal, t.IsPenal);
+                entry.SetValue(x => x.BlockedDate, t.BlockedDate);
+            });
         }
 
-        public Task UpdateForStatus(bool status)
+        public async Task UpdateForStatus(Guid companyId, bool status)
         {
-            throw new NotImplementedException();
+            var company = await GetByIdAsnyc(companyId);
+            await _dal.Update(company, entry => entry.SetValue(x => x.Status, status));
         }
     }
 }

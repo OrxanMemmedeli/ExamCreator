@@ -25,18 +25,12 @@ namespace DataAccess.Concrete.Context
             {
                 string computerName = Environment.MachineName;
                 if (computerName == "DESKTOP-TROAMS4")
-                {
                     optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=HilalDemoSecond; Integrated Security=true; MultipleActiveResultSets=True");
-                }
                 else if (computerName == "ORXAN")
-                {
                     optionsBuilder.UseSqlServer(@"Server=ORXAN\SQLEXPRESS01; Database=Demo; Integrated Security = true; MultipleActiveResultSets = True");
-                }
             }
             else if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
-            {
                 optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoSecond; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
-            }
         }
 
 
@@ -175,7 +169,7 @@ namespace DataAccess.Concrete.Context
             builder.ApplyConfiguration(new UserTypeConfig());
             builder.ApplyConfiguration(new VariantConfig());
             builder.ApplyConfiguration(new AttachmentConfig());
-            
+
             //simple 
             builder.ApplyConfiguration(new PaymentConfig());
 

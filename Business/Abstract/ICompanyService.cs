@@ -12,6 +12,6 @@ namespace Business.Abstract
     public interface ICompanyService : IGenericService<Company>
     {
         Task UpdateForJob(CompanyJobUpdateDTO t);
-        Task UpdateForStatus(bool status);
+        Task UpdateForStatus(Guid companyId, bool status);
     }
 }
