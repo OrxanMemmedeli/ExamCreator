@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcademicYear" xml:space="preserve">
+    <value>Tədris ili</value>
+  </data>
+  <data name="AcademicYearId" xml:space="preserve">
+    <value>Seçilmiş tədris ili</value>
+  </data>
+  <data name="AmountForQuestion" xml:space="preserve">
+    <value>Sual qiyməti</value>
+  </data>
+  <data name="AppRole" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="AppUser" xml:space="preserve">
+    <value>İstifadəçi</value>
+  </data>
+  <data name="Booklet" xml:space="preserve">
+    <value>Kitabça</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Şirkət</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Mətn adı</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Açıqlama</value>
+  </data>
+  <data name="EndQuestionNumber" xml:space="preserve">
+    <value>Sualın bitmə nömrəsi</value>
+  </data>
+  <data name="Exam" xml:space="preserve">
+    <value>İmtahan</value>
+  </data>
+  <data name="ExamId" xml:space="preserve">
+    <value>Seçilmiş imtahan</value>
+  </data>
+  <data name="ExamParameter" xml:space="preserve">
+    <value>İmtahan parametri</value>
+  </data>
+  <data name="ExamParameterId" xml:space="preserve">
+    <value>Seçilmiş imtahan parametri</value>
+  </data>
+  <data name="ExpiredDate" xml:space="preserve">
+    <value>Bitmə tarixi</value>
+  </data>
+  <data name="Grade" xml:space="preserve">
+    <value>Sinif</value>
+  </data>
+  <data name="GradeId" xml:space="preserve">
+    <value>Seçilmiş sinif</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Qrup</value>
+  </data>
+  <data name="IsFree" xml:space="preserve">
+    <value>Ödənişsiz</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Açar</value>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Sıra</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Sual mətni</value>
+  </data>
+  <data name="QuestionCount" xml:space="preserve">
+    <value>Sual sayı</value>
+  </data>
+  <data name="QuestionId" xml:space="preserve">
+    <value>Seçilmiş sual</value>
+  </data>
+  <data name="QuestionLevel" xml:space="preserve">
+    <value>Səviyyə qiyməti</value>
+  </data>
+  <data name="QuestionLevelId" xml:space="preserve">
+    <value>Seçilmiş sual səviyyəsi</value>
+  </data>
+  <data name="QuestionLevelName" xml:space="preserve">
+    <value>Sual səviyyəsi</value>
+  </data>
+  <data name="QuestionParameter" xml:space="preserve">
+    <value>Sual parametri</value>
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value>Sual tipi</value>
+  </data>
+  <data name="QuestionTypeId" xml:space="preserve">
+    <value>Seçilmiş sual tipi</value>
+  </data>
+  <data name="Response" xml:space="preserve">
+    <value>Cavab</value>
+  </data>
+  <data name="ResponseContent" xml:space="preserve">
+    <value>Sual məzmunu</value>
+  </data>
+  <data name="ResponseCount" xml:space="preserve">
+    <value>Cavab sayı</value>
+  </data>
+  <data name="ResponseTitle" xml:space="preserve">
+    <value>Sual başlığı</value>
+  </data>
+  <data name="ResponseType" xml:space="preserve">
+    <value>Cavab tipi</value>
+  </data>
+  <data name="Section" xml:space="preserve">
+    <value>Bölmə</value>
+  </data>
+  <data name="SectionId" xml:space="preserve">
+    <value>Seçilmiş bölmə</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Başlanğıc tarixi</value>
+  </data>
+  <data name="StartQuestionNumber" xml:space="preserve">
+    <value>Sualın başlama nömrəsi</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Fənn</value>
+  </data>
+  <data name="SubjectCount" xml:space="preserve">
+    <value>Fənn sayı</value>
+  </data>
+  <data name="SubjectId" xml:space="preserve">
+    <value>Seçilmiş fənn</value>
+  </data>
+  <data name="SubjectParameter" xml:space="preserve">
+    <value>Fənn parametri</value>
+  </data>
+  <data name="SubjectParameterId" xml:space="preserve">
+    <value>Seçilmiş fənn parametri</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Mətn</value>
+  </data>
+  <data name="TextName" xml:space="preserve">
+    <value>Başlıq</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Məzmun</value>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>İstifadəçi tipi</value>
+  </data>
+  <data name="Variant" xml:space="preserve">
+    <value>Variant</value>
+  </data>
+  <data name="VariantId" xml:space="preserve">
+    <value>Seçilmiş variant</value>
+  </data>
+</root>
