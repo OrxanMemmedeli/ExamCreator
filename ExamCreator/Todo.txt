@@ -29,10 +29,10 @@
 		* Ajax ile muraciet edib Summary Cedvelden getirecek.
 
 
-
+	* Tranzaksiya Middlaware - ag sehife problemi
 --------------------------------------------------------
 NATAMAM olanlar
-
+	* yeni middlewarede Invoke methodunu tamamla(Create ve Editt ucun)
 
 
 --------------------------------------------------------

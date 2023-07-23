@@ -1,108 +1,40 @@
-﻿@model IEnumerable<EntityLayer.Concrete.Company>
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+                    @{
+                        ViewData["Title"] = "CONTROLLERNAME";
+                        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+                    }
 
-<h1>Index</h1>
+                    <h1>"CONTROLLERNAME"</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LogoUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BlockedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DailyAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DebtLimit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersentOfFine)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsFree)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPenal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifyedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LogoUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BlockedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DailyAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DebtLimit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersentOfFine)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsFree)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPenal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifyedDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+                    <p>
+                        <a asp-action="Create" class="btn btn-vimeo" title="Yeni məlumat" style="justify-content: center;">
+                            Yeni "MODELTYPE"
+                            <lord-icon src="https://cdn.lordicon.com/rfbqeber.json"
+                                        trigger="hover"
+                                        style="width:40px;height:40px">
+                            </lord-icon>
+                        </a>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th><th>LogoUrl</th><th>StartDate</th><th>BlockedDate</th><th>DailyAmount</th><th>DebtLimit</th><th>PersentOfFine</th><th>IsFree</th><th>IsPenal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td>
+                            <td>
+                                @await Html.PartialAsync("~/Views/Shared/_ToolsButtonPartial.cshtml", new ToolsButtonViewModel{ Area="Admin", Controller="Company", RouteId = @item.Id.ToString()})
+                            </td>                        
+                        </tr>
+                    }
+
+                            </tbody>
+                        </table>
+                    </div>

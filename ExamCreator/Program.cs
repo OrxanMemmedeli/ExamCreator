@@ -54,7 +54,12 @@ if (!app.Environment.IsDevelopment())
     app.UseGlobalErrorHandling(); // custom middleware for error and log saveing
 
     app.UseHsts();
+
+
+
 }
+
+//app.UseDbTransaction(); // Tranzaksiya 
 
 app.DALAppRegister();
 app.UseApp();
@@ -64,14 +69,12 @@ app.UseApp();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseDbTransaction(); // Tranzaksiya 
-
 app.UseRouting();
 
 //app.UseAuthentication();
 app.UseAuthorization();
 
-
+app.UseAutoGenerateViewMiddleware();
 
 app.UseEndpoints(endpoints =>
 {

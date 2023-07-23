@@ -12,12 +12,12 @@ namespace Business
         public static void BusinessServiceRegister(this IServiceCollection services)
         {
             // Quartz.NET yapılandırması
-            services.AddSingleton<IJobFactory, JobFactory>();
-            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-            services.AddSingleton<CreateDebtJob>();
-            services.AddSingleton<CreatePaymentSummaryJob>();
+            //services.AddSingleton<IJobFactory, JobFactory>();
+            //services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            //services.AddSingleton<CreateDebtJob>();
+            //services.AddSingleton<CreatePaymentSummaryJob>();
 
-            services.AddHostedService<QuartzHostedService>();
+            //services.AddHostedService<QuartzHostedService>();
         }
     }
 }

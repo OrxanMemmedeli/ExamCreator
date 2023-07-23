@@ -7,6 +7,9 @@ using static iTextSharp.text.pdf.events.IndexEvents;
 using Newtonsoft.Json;
 using EntityLayer.Concrete.Base;
 using Business.Abstract.Generic;
+using ExamCreator.Attributes;
+using DTOLayer.DTOs.Company;
+using ExamCreator.Models;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
@@ -41,6 +44,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AutoGenerateActionView(MethodType.Create)]
         public virtual async Task<IActionResult> Create(TCreateDTO t)
         {
             var model = _mapper.Map<TCreateDTO, TEntity>(t);
@@ -74,6 +78,7 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AutoGenerateActionView(Models.MethodType.Edit)]
         public virtual async Task<IActionResult> Edit(TEditDto t)
         {
             if (!ModelState.IsValid)
