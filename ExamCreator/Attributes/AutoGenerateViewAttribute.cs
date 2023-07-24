@@ -6,9 +6,9 @@ namespace ExamCreator.Attributes
     public class AutoGenerateActionViewAttribute : Attribute
     {
         public MethodType ViewType { get; private set; }
-        public Type ListDTOType { get; private set; }
-        public Type CreateDTOType { get; private set; }
-        public Type EditDTOType { get; private set; }
+        public Type ListDTOType { get; set; }
+        public Type CreateDTOType { get; set; }
+        public Type EditDTOType { get; set; }
 
         public AutoGenerateActionViewAttribute()
         {

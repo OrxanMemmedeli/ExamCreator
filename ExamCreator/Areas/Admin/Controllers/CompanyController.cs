@@ -6,6 +6,7 @@ using ExamCreator.Attributes;
 using ExamCreator.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
@@ -14,6 +15,7 @@ namespace ExamCreator.Areas.Admin.Controllers
     {
         private readonly ICompanyService _companyService;
         private readonly IMapper _mapper;
+        protected override List<string> MiddlewareControlledMethods => new List<string> { "Create", "Edit" };
 
         public CompanyController(ICompanyService service, IMapper mapper) : base(service, mapper)
         {

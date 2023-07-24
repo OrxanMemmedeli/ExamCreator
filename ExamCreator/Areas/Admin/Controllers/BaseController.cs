@@ -1,26 +1,27 @@
 ﻿using AutoMapper;
-using DTOLayer.DTOs.AcademicYear;
-using Microsoft.AspNetCore.Mvc;
+using Business.Abstract.Generic;
 using CoreLayer.Helpers.Extensions;
 using CoreLayer.Helpers.FieldComparer;
-using static iTextSharp.text.pdf.events.IndexEvents;
-using Newtonsoft.Json;
 using EntityLayer.Concrete.Base;
-using Business.Abstract.Generic;
 using ExamCreator.Attributes;
-using DTOLayer.DTOs.Company;
 using ExamCreator.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
     [Area("Admin")]
     //[CompanyAccess(typeof(IHttpContextAccessor))]
+    [AutoGenerateActionView]
     public class BaseController<TService, TCreateDTO, TEditDto, TEntity> : Controller
     where TService : IGenericService<TEntity>
     where TEntity : BaseEntity
     {
         protected readonly TService _service;
         private readonly IMapper _mapper;
+        protected virtual List<string> MiddlewareControlledMethods { get; } = new List<string>();
+
 
         public BaseController(TService service, IMapper mapper)
         {

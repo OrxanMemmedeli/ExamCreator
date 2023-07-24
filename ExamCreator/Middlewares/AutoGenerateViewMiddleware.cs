@@ -1,6 +1,9 @@
-﻿using ExamCreator.Attributes;
+﻿using ExamCreator.Areas.Admin.Controllers;
+using ExamCreator.Attributes;
 using ExamCreator.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using System.Linq;
 using System.Reflection;
 
 namespace ExamCreator.Middlewares
@@ -24,18 +27,13 @@ namespace ExamCreator.Middlewares
                 if (endpoint?.Metadata.GetMetadata<ControllerActionDescriptor>() is ControllerActionDescriptor actionDescriptor)
                 {
                     var hasControllerAttribute = actionDescriptor.ControllerTypeInfo.GetCustomAttributes(typeof(AutoGenerateActionViewAttribute), true).Any();
-                    //var hasActionAttribute = actionDescriptor.MethodInfo.GetCustomAttributes(typeof(AutoGenerateActionViewAttribute), true).Any();
+                    var hasActionAttribute = actionDescriptor.MethodInfo.GetCustomAttributes(typeof(AutoGenerateActionViewAttribute), true).Any();
 
-                    // New code starts here
-                    var methodHasActionAttribute = actionDescriptor.MethodInfo.GetCustomAttributes(typeof(AutoGenerateActionViewAttribute), true).Any();
-                    var baseControllerType = actionDescriptor.ControllerTypeInfo.BaseType;
-                    var baseMethodHasActionAttribute = baseControllerType.GetMethod(actionDescriptor.MethodInfo.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, Type.DefaultBinder, new Type[] { /* Parameter types of the method (if any) */ }, null)?.GetCustomAttributes(typeof(AutoGenerateActionViewAttribute), true).Any() ?? false;
+                    // Kontrol edilecek methodların listesi içinde mi?
+                    var isControlledMethod = (actionDescriptor.ControllerTypeInfo as TypeInfo)?.DeclaredProperties.Any(p => p.Name == "MiddlewareControlledMethods") ?? false;
 
-                    var hasActionAttribute = methodHasActionAttribute || baseMethodHasActionAttribute;
-                    // New code ends here
-
-
-                    if (hasControllerAttribute && hasActionAttribute)
+                    // Middleware'ın kontrol ettiği methodları kontrol et
+                    if (hasControllerAttribute && (hasActionAttribute || isControlledMethod))
                     {
                         // View oluşturma işlemleri
                         GenerateViewForAction(actionDescriptor, _env);
@@ -45,22 +43,29 @@ namespace ExamCreator.Middlewares
 
             await _next(context);
         }
-
         private void GenerateViewForAction(ControllerActionDescriptor actionDescriptor, IWebHostEnvironment env)
         {
             var controllerAttribute = actionDescriptor.ControllerTypeInfo.GetCustomAttribute<AutoGenerateActionViewAttribute>();
             var actionAttribute = actionDescriptor.MethodInfo.GetCustomAttribute<AutoGenerateActionViewAttribute>();
 
-            if (actionAttribute != null && controllerAttribute != null)
-            {
-                var viewType = actionAttribute.ViewType;
 
-                if (viewType == MethodType.List)
-                    GenerateListViewContent(actionDescriptor, env, controllerAttribute.ListDTOType);
-                else if (viewType == MethodType.Create)
-                    GenerateFormViewContent(actionDescriptor, env, viewType, controllerAttribute.CreateDTOType);
-                else if (viewType == MethodType.Edit)
-                    GenerateFormViewContent(actionDescriptor, env, viewType, controllerAttribute.EditDTOType);
+            if (controllerAttribute != null && actionAttribute != null)
+            {
+                switch (actionAttribute.ViewType)
+                {
+                    case MethodType.List:
+                        GenerateListViewContent(actionDescriptor, env, controllerAttribute.ListDTOType);
+                        break;
+                    case MethodType.Create:
+                        GenerateFormViewContent(actionDescriptor, env, MethodType.Create, controllerAttribute.CreateDTOType);
+                        break;
+                    case MethodType.Edit:
+                        GenerateFormViewContent(actionDescriptor, env, MethodType.Edit, controllerAttribute.EditDTOType);
+                        break;
+                    default:
+                        // Handle other cases, if needed
+                        break;
+                }
             }
         }
 
