@@ -3,6 +3,7 @@ using CoreLayer;
 using DataAccess;
 using ExamCreator;
 using ExamCreator.Middlewares;
+using ExamCreator.Utilities.ViewGenerator;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,15 +50,17 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    
-   
+
+
     app.UseGlobalErrorHandling(); // custom middleware for error and log saveing
 
     app.UseHsts();
 
 
+    //app.UseAutoGenerateViewMiddleware();
 
 }
+app.GenerateViews(app.Environment);
 
 //app.UseDbTransaction(); // Tranzaksiya 
 
@@ -74,7 +77,6 @@ app.UseRouting();
 //app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseAutoGenerateViewMiddleware();
 
 app.UseEndpoints(endpoints =>
 {

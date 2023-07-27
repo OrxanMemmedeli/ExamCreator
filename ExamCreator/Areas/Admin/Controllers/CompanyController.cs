@@ -10,12 +10,11 @@ using System.Reflection;
 
 namespace ExamCreator.Areas.Admin.Controllers
 {
-    [AutoGenerateActionView(typeof(CompanyIndexDTO), typeof(CompanyCreateDTO), typeof(CompanyEditDTO))]
+    [AutoGenerateActionView]
     public class CompanyController : BaseController<ICompanyService, CompanyCreateDTO, CompanyEditDTO, Company>
     {
         private readonly ICompanyService _companyService;
         private readonly IMapper _mapper;
-        protected override List<string> MiddlewareControlledMethods => new List<string> { "Create", "Edit" };
 
         public CompanyController(ICompanyService service, IMapper mapper) : base(service, mapper)
         {
@@ -24,7 +23,7 @@ namespace ExamCreator.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [AutoGenerateActionView(MethodType.List)]
+        [AutoGenerateActionView(MethodType.List, typeof(CompanyIndexDTO))]
         public async Task<IActionResult> Index(int page = 1)
         {
 
@@ -32,6 +31,22 @@ namespace ExamCreator.Areas.Admin.Controllers
             var companies = await _companyService.GetAllAsnyc().ToListAsync();
             var datas = _mapper.Map<List<Company>, List<CompanyIndexDTO>>(companies);
             return View(datas);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AutoGenerateActionView(MethodType.Create, typeof(CompanyCreateDTO))]
+        public override Task<IActionResult> Create(CompanyCreateDTO t)
+        {
+            return base.Create(t);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AutoGenerateActionView(MethodType.Edit, typeof(CompanyEditDTO))]
+        public override Task<IActionResult> Edit(CompanyEditDTO t)
+        {
+            return base.Edit(t);
         }
     }
 }

@@ -1,40 +1,53 @@
 
-                    @{
-                        ViewData["Title"] = "CONTROLLERNAME";
-                        Layout = "~/Views/Shared/_AdminLayout.cshtml";
-                    }
+$@model IEnumerable<DTOLayer.DTOs.Company.CompanyIndexDTO>
 
-                    <h1>"CONTROLLERNAME"</h1>
+@{
+    ViewData["Title"] = "DTOLayer.DTOs.Company.CompanyIndexDTO";
+                    Layout = "~/Views/Shared/_AdminLayout.cshtml"; //Layouta  diqqet et
+}
 
+<h1>@ViewData["Title"]</h1>
 
-                    <p>
-                        <a asp-action="Create" class="btn btn-vimeo" title="Yeni məlumat" style="justify-content: center;">
-                            Yeni "MODELTYPE"
-                            <lord-icon src="https://cdn.lordicon.com/rfbqeber.json"
-                                        trigger="hover"
-                                        style="width:40px;height:40px">
-                            </lord-icon>
-                        </a>
-                    </p>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th><th>LogoUrl</th><th>StartDate</th><th>BlockedDate</th><th>DailyAmount</th><th>DebtLimit</th><th>PersentOfFine</th><th>IsFree</th><th>IsPenal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td>
-                            <td>
-                                @await Html.PartialAsync("~/Views/Shared/_ToolsButtonPartial.cshtml", new ToolsButtonViewModel{ Area="Admin", Controller="Company", RouteId = @item.Id.ToString()})
-                            </td>                        
-                        </tr>
-                    }
+<p>
+    <a asp-action="Create" class="btn btn-vimeo" title="Yeni məlumat" style="justify-content: center;">
+        Yeni
+        <lord-icon src="https://cdn.lordicon.com/rfbqeber.json"
+                    trigger="hover"
+                    style="width:40px;height:40px">
+        </lord-icon>
+    </a>
+</p>
 
-                            </tbody>
-                        </table>
-                    </div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+<th>LogoUrl</th>
+<th>StartDate</th>
+<th>BlockedDate</th>
+<th>DailyAmount</th>
+<th>DebtLimit</th>
+<th>PersentOfFine</th>
+<th>IsFree</th>
+<th>IsPenal</th>
+<th>Id</th>
+<th>Status</th>
+<th>IsDeleted</th>
+<th>ModifyedDate</th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+           @foreach (var item in Model)
+            {
+                <tr><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td><td>@item.Name</td><td>@item.LogoUrl</td><td>@item.StartDate</td><td>@item.BlockedDate</td><td>@item.DailyAmount</td><td>@item.DebtLimit</td><td>@item.PersentOfFine</td><td>@item.IsFree</td><td>@item.IsPenal</td><td>@item.Id</td><td>@item.Status</td><td>@item.IsDeleted</td><td>@item.ModifyedDate</td>
+            <td>
+                @await Html.PartialAsync("~/Views/Shared/_ToolsButtonPartial.cshtml", new ToolsButtonViewModel{ Area="Admin", Controller="CompanyController", RouteId = @item.Id.ToString()})
+            </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

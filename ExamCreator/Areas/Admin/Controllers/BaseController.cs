@@ -13,15 +13,12 @@ namespace ExamCreator.Areas.Admin.Controllers
 {
     [Area("Admin")]
     //[CompanyAccess(typeof(IHttpContextAccessor))]
-    [AutoGenerateActionView]
     public class BaseController<TService, TCreateDTO, TEditDto, TEntity> : Controller
     where TService : IGenericService<TEntity>
     where TEntity : BaseEntity
     {
         protected readonly TService _service;
         private readonly IMapper _mapper;
-        protected virtual List<string> MiddlewareControlledMethods { get; } = new List<string>();
-
 
         public BaseController(TService service, IMapper mapper)
         {
@@ -45,7 +42,6 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AutoGenerateActionView(MethodType.Create)]
         public virtual async Task<IActionResult> Create(TCreateDTO t)
         {
             var model = _mapper.Map<TCreateDTO, TEntity>(t);
@@ -79,7 +75,6 @@ namespace ExamCreator.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AutoGenerateActionView(Models.MethodType.Edit)]
         public virtual async Task<IActionResult> Edit(TEditDto t)
         {
             if (!ModelState.IsValid)

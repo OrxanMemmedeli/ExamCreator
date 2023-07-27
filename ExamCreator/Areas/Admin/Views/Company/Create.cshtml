@@ -1,0 +1,54 @@
+
+@model DTOLayer.DTOs.Company.CompanyCreateDTO
+
+@{
+    ViewData["Title"] = "Yeni DTOLAYER.DTOS.COMPANY.COMPANYCREATEDTO";
+                    Layout = "~/Views/Shared/_AdminLayout.cshtml"; //Layouta  diqqet et
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+
+            
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Name</label>
+                <input asp-for="Name" class="form-control" value="@Model?.Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LogoUrl" class="control-label">LogoUrl</label>
+                <input asp-for="LogoUrl" class="form-control" value="@Model?.LogoUrl" />
+                <span asp-validation-for="LogoUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DailyAmount" class="control-label">DailyAmount</label>
+                <input asp-for="DailyAmount" class="form-control" value="@Model?.DailyAmount" />
+                <span asp-validation-for="DailyAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DebtLimit" class="control-label">DebtLimit</label>
+                <input asp-for="DebtLimit" class="form-control" value="@Model?.DebtLimit" />
+                <span asp-validation-for="DebtLimit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersentOfFine" class="control-label">PersentOfFine</label>
+                <input asp-for="PersentOfFine" class="form-control" value="@Model?.PersentOfFine" />
+                <span asp-validation-for="PersentOfFine" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsFree" class="control-label">IsFree</label>
+                <input asp-for="IsFree" class="form-control" value="@Model?.IsFree" />
+                <span asp-validation-for="IsFree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Əlavə Et" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-dark">Geri</a>
+            </div>
+        </form>
+    </div>
+</div>
