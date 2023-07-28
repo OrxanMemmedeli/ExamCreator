@@ -76,11 +76,11 @@ namespace ExamCreator.Utilities.ViewGenerator
 
             if (methodType == MethodType.List)
             {
-                var tableHeaders = string.Join("", propertyNames.Select(prop => $"<th>{prop}</th>\n\r"));
+                var tableHeaders = string.Join("", propertyNames.Select(prop => $"<th>{prop}</th>\n"));
                 var tableBody = GenerateListViewBodyContent(areaName, controllerName, propertyNames);
 
                 content = $@"
-$@model IEnumerable<{modelName}>
+@model IEnumerable<{modelName}>
 
 @{{
     ViewData[""Title""] = ""{modelName}"";
@@ -158,8 +158,8 @@ $@model IEnumerable<{modelName}>
         private static string GenerateListViewBodyContent(string areaName, string controllerName, List<string> propertyNames)
         {
             var rows = "<tr>";
-            foreach (var propName in propertyNames)
-                rows += $@"{string.Join("", propertyNames.Select(prop => $@"<td>@item.{prop}</td>"))}";
+
+            rows += string.Join("", propertyNames.Select(prop => $"<td>@item.{prop}</td>\n"));
 
             rows += $@"
             <td>

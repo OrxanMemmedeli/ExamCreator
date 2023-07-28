@@ -3,6 +3,7 @@ using CoreLayer;
 using DataAccess;
 using ExamCreator;
 using ExamCreator.Middlewares;
+using ExamCreator.Utilities.PropertyTranslateAndSave;
 using ExamCreator.Utilities.ViewGenerator;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,7 +62,7 @@ if (!app.Environment.IsDevelopment())
 
 }
 app.GenerateViews(app.Environment);
-
+app.UpdateResourceFile(app.Environment);
 //app.UseDbTransaction(); // Tranzaksiya 
 
 app.DALAppRegister();
