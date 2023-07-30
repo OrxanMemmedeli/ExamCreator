@@ -1,6 +1,7 @@
 ﻿Exam Creator
 
 	* Sessionda CompanyID melumatini saxla (Core )
+		* Role ucun melumatlari (url0leri saxla)
 	* Loglama
 	* Pagination
 
@@ -32,7 +33,7 @@
 	* Tranzaksiya Middlaware - ag sehife problemi
 --------------------------------------------------------
 NATAMAM olanlar
-	* yeni middlewarede Invoke methodunu tamamla(Create ve Editt ucun)
+	* Joblarin islemesi natamam veziyyetdedir.
 
 
 --------------------------------------------------------
@@ -52,4 +53,5 @@ hazir olanlar
 		* Borc odenildikden sonra BlockedDate sahesini 0-la ve isPanel false et. 
 	* UpdateRange Methodu elave et ve bu zaman SaveChange methodu ayrica olaraq olsun ki her yerde cagrila bilsin
 		* saveChange methodunu her cagiris ucun elave et Controller ve diger sahelerde
+	* Avtomatik olaraq View.cshtml sehifelerinin elave edilmesi.
 
