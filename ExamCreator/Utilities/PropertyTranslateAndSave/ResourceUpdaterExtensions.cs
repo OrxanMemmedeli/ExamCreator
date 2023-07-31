@@ -6,6 +6,8 @@ using System.IO;
 using System.Collections.Generic;
 using Google.Cloud.Translation.V2;
 using CoreLayer.Constants;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ExamCreator.Utilities.PropertyTranslateAndSave
 {
@@ -14,6 +16,7 @@ namespace ExamCreator.Utilities.PropertyTranslateAndSave
         private static bool _initialized = false;
 
         public static void UpdateResourceFile(this IApplicationBuilder app, IWebHostEnvironment env)
+
         {
             if (!_initialized && env.IsDevelopment())
             {
@@ -68,6 +71,53 @@ namespace ExamCreator.Utilities.PropertyTranslateAndSave
             return projectFolderPath;
         }
 
+        private static List<string> GetPropertyNamesFromCsFiles(string projectFolderPath, string folderPath)
+        {
+            List<string> propertyNames = new List<string>();
+            string fullFolderPath = Path.Combine(projectFolderPath, folderPath);
+
+            if (!Directory.Exists(fullFolderPath))
+                return propertyNames;
+
+            string[] files = Directory.GetFiles(fullFolderPath, "*.cs", SearchOption.AllDirectories);
+
+            foreach (string filePath in files)
+            {
+                var fullName = PathConvertToFullName(filePath, out string layerName);
+                var type = Type.GetType(fullName);
+
+                if (type == null)
+                    foreach (var a in AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.Contains(layerName)))
+                    {
+                        type = a.GetType(fullName);
+                        if (type != null)
+                            break;
+                    }
+
+                var names = type?.GetProperties().Select(x => x.Name);
+
+                if (names != null && names.Any())
+                    propertyNames.AddRange(names);
+            }
+
+            return propertyNames.Distinct().ToList();
+        }
+
+        private static string PathConvertToFullName(string filePath, out string layerName)
+        {
+
+
+            var result = filePath.Remove(0, filePath.IndexOf("repos\\ExamCreator\\")).Replace("repos\\ExamCreator\\", "").Replace("\\", ".").Replace(".cs", "");
+
+            string[] parts = result.Split('.');
+            layerName = parts[0];
+
+            Assembly asm = Assembly.GetExecutingAssembly();
+            var mainAsmName = asm.GetReferencedAssemblies().FirstOrDefault(x => x.Name.Contains(parts[0])).FullName;
+
+            return $"{result}, {mainAsmName}";
+        }
+
 
 
         private static bool ResourceExists(string resourceName, ResourceSet resourceSet)
@@ -82,33 +132,6 @@ namespace ExamCreator.Utilities.PropertyTranslateAndSave
             }
             return false;
         }
-
-        private static List<string> GetPropertyNamesFromCsFiles(string projectFolderPath, string folderPath)
-        {
-            List<string> propertyNames = new List<string>();
-            string fullFolderPath = Path.Combine(projectFolderPath, folderPath);
-
-            if (!Directory.Exists(fullFolderPath))
-                return propertyNames;
-
-            string[] files = Directory.GetFiles(fullFolderPath, "*.cs", SearchOption.AllDirectories);
-
-            foreach (string filePath in files)
-            {
-                // Dosya içeriğini okuyoruz ve property isimlerini alıyoruz
-                string fileContent = File.ReadAllText(filePath);
-                var properties = fileContent.Split(new[] { ' ', '\n', '\r', '\t', '(', ')', ';', '{', '}' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Where((token, index) => token == "public" || token == "private" || token == "protected" || token == "internal")
-                    .Select((token, index) => fileContent.Split(new[] { ' ', '\n', '\r', '\t', '(', ')', ';', '{', '}' }, StringSplitOptions.RemoveEmptyEntries)[index + 1])
-                    .Where(token => token != "class" && token != "interface" && token != "enum" && token != "struct" && token != "delegate")
-                    .ToList();
-
-                //propertyNames.AddRange(test);
-            }
-
-            return propertyNames.Distinct().ToList();
-        }
-
 
         private static string GetAzerbaijaniEquivalent(string propertyName, TranslationClient translationClient)
         {
